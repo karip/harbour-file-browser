@@ -1,0 +1,28 @@
+Name: harbour-file-browser
+Summary: File Browser for Sailfish OS
+Version: 1.0
+Release: 0
+Group: Qt/Qt
+License: Public domain
+Sources:
+- '%{name}-%{version}.tar.bz2'
+Description: |-
+  File Browser for Sailfish OS. Browse the entire local file system.
+Configure: none
+Builder: qtc5
+PkgConfigBR:
+- Qt5Core
+- Qt5Qml
+- Qt5Quick
+- sailfishapp
+
+Requires:
+- libsailfishapp
+Files:
+# Do not include whole %{_datadir}/applications as that would include tests too
+- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
+- '%{_datadir}/applications/%{name}.desktop'
+- '%{_datadir}/%{name}/qml'
+
+- '%{_bindir}/%{name}'
+PkgBR: []
