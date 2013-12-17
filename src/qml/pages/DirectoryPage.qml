@@ -20,6 +20,8 @@ Page {
 
         model: fileModel
 
+        VerticalScrollDecorator { flickable: fileList }
+
         PullDownMenu {
             MenuItem {
                 text: "About"
@@ -31,10 +33,7 @@ Page {
             }
         }
 
-        header: PageHeader {
-            id: header
-            title: Functions.formatPathForTitle(page.dir)
-        }
+        header: PageHeader { title: Functions.formatPathForTitle(page.dir) }
 
         delegate: ListItem {
             id: fileItem

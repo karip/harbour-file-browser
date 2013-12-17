@@ -6,19 +6,19 @@ Page {
     id: page
     allowedOrientations: Orientation.All
 
-    PageHeader {
-        id: pageHeader
-        title: "About File Browser"
-    }
-
     SilicaFlickable {
+        id: flickable
         anchors.fill: parent
-        contentHeight: contentItem.childrenRect.height
+        contentHeight: column.height
 
+        VerticalScrollDecorator { flickable: flickable }
         Column {
+            id: column
             width: parent.width
             anchors.leftMargin: Theme.paddingLarge
             anchors.rightMargin: Theme.paddingLarge
+
+            PageHeader { title: "About File Browser" }
 
             Item { // used for spacing, different spacing for portrait and landscape
                 width: parent.width
