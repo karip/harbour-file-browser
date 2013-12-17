@@ -5,23 +5,38 @@ File Browser to access the file system on
 [Sailfish OS](https://sailfishos.org/) and 
 [Jolla phones](http://jolla.com/).
 
-USE FILE BROWSER AT YOUR OWN RISK. Note that File Browser may corrupt 
-files on an actual phone. The authors of File Browser do not take any 
-responsibility if that happens. So, be careful.
+USE FILE BROWSER AT YOUR OWN RISK. Note that File Browser may be used
+to corrupt files on an actual phone. It may make the phone unusable.
+The authors of File Browser do not take any responsibility if that 
+happens. So, be careful.
+
+File Browser is based on the excellent 
+[Helloworld Pro](https://github.com/amarchen/helloworld-pro-sailfish) 
+template.
+
+## Other file managers
+
+The Jolla phone also ships with its own file manager called Files.
+It is not installed by default, but the installation package is 
+on the phone. You can install it by typing the following command 
+in Terminal (requires Developer Mode).
+
+    pkcon install jolla-fileman
 
 ## Building
 
 1. Get the source code
 2. Open the harbour-file-browser.pro in Sailfish OS IDE 
    (Qt Creator for Sailfish)
-3. To run on emulator, select i486 and press the run button
-4. To build for the device, select armv7hl and deploy all, 
+3. To run on emulator, select the i486 target and press the run button
+4. To build for the device, select the armv7hl target and deploy all, 
    the rpm packages will be in the RPMS folder
 
 ## License
 
-Everything has been released into public domain, which means that you can 
-do whatever you want with this software. See below for details.
+All File Browser files have been released into public domain, which means 
+that you can do whatever you want with this software. See below for 
+details.
 
 ***
 

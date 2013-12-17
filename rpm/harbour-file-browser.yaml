@@ -7,7 +7,7 @@ License: Public domain
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |-
-  File Browser for Sailfish OS. Browse the entire local file system.
+  File Browser for Sailfish OS. Browse the local file system.
 Configure: none
 Builder: qtc5
 PkgConfigBR:
