@@ -17,8 +17,6 @@ Page {
     SilicaListView {
         id: fileList
         anchors.fill: parent
-        anchors.leftMargin: Theme.paddingLarge
-        anchors.rightMargin: Theme.paddingLarge
 
         model: fileModel
 
@@ -41,20 +39,24 @@ Page {
         delegate: ListItem {
             id: fileItem
             width: ListView.view.width
-            //height: Theme.itemSizeSmall
 
             Image {
                 id: listIcon
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.paddingLarge
                 anchors.top: parent.top
-                anchors.topMargin: 6
+                anchors.topMargin: 9
                 source: "../images/small-"+fileIcon+".png"
             }
             Label {
                 id: listLabel
                 anchors.left: listIcon.right
                 anchors.leftMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.paddingLarge
+                anchors.top: parent.top
+                anchors.topMargin: 3
                 text: filename
-                width: parent.width-20-Theme.paddingLarge
                 elide: Text.ElideRight
             }
             Label {
@@ -75,7 +77,7 @@ Page {
             }
             Label {
                 anchors.top: listLabel.bottom
-                anchors.right: parent.right
+                anchors.right: listLabel.right
                 text: modified
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
