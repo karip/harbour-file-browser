@@ -7,6 +7,7 @@ Page {
     id: page
     allowedOrientations: Orientation.All
     property string dir: "/"
+    property bool initial: false // this is set to true if the page is initial page
 
     FileModel {
         id: fileModel
@@ -32,6 +33,10 @@ Page {
             MenuItem {
                 text: "Go to Root"
                 onClicked: Functions.goToRoot()
+            }
+            MenuItem {
+                text: "Go to Home"
+                onClicked: Functions.goToHome(StandardPaths.documents, page.dir)
             }
         }
 
@@ -132,6 +137,11 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.dir)+"/";
+            // go to Home on startup
+            if (page.initial) {
+                page.initial = false;
+                Functions.goToHome(StandardPaths.documents);
+            }
         }
     }
 

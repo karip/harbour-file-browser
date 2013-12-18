@@ -25,6 +25,10 @@ Page {
                 onClicked: Functions.goToRoot()
             }
             MenuItem {
+                text: "Go to Home"
+                onClicked: Functions.goToHome(StandardPaths.documents, page.file)
+            }
+            MenuItem {
                 text: "Install"
                 visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm"
                 onClicked: {

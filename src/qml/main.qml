@@ -5,7 +5,9 @@ import "pages"
 ApplicationWindow
 {
     initialPage: Component {
-        DirectoryPage { }
+        DirectoryPage {
+            initial: true
+        }
     }
 
     cover: CoverBackground {
