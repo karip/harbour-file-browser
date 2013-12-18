@@ -22,7 +22,7 @@ Page {
 
             Item { // used for spacing, different spacing for portrait and landscape
                 width: parent.width
-                height: page.orientation === Orientation.Portrait ? 150 : 80
+                height: page.orientation === Orientation.Portrait ? 150 : 0
             }
 
             Image {
