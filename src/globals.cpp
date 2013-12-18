@@ -1,5 +1,4 @@
 #include "globals.h"
-#include <QDebug>
 
 QString suffixToIconName(QString suffix)
 {

@@ -3,7 +3,6 @@ import Sailfish.Silica 1.0
 import harbour.file.browser.FileModel 1.0
 import "functions.js" as Functions
 
-// Main page of File Browser
 Page {
     id: page
     allowedOrientations: Orientation.All

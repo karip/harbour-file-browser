@@ -3,7 +3,6 @@ import Sailfish.Silica 1.0
 import harbour.file.browser.FileInfo 1.0
 import "functions.js" as Functions
 
-// File page of File Browser
 Page {
     id: page
     allowedOrientations: Orientation.All
@@ -22,8 +21,62 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Go to root"
+                text: "Go to Root"
                 onClicked: Functions.goToRoot()
+            }
+            MenuItem {
+                text: "Install"
+                visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm"
+                onClicked: {
+                    if (fileInfo.suffix === "apk") {
+                        pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                                       { title: "Install",
+                                           successText: "Install Launched",
+                                           infoText: "If the application is already installed, this will probably do nothing.",
+                                           command: "apkd-install",
+                                           arguments: [ fileInfo.file ] })
+                    }
+                    if (fileInfo.suffix === "rpm") {
+                        pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                                       { title: "Install",
+                                           successText: "Installed Successfully",
+                                           command: "pkcon",
+                                           arguments: [ "-y", "-p", "install-local", fileInfo.file ] })
+                    }
+                }
+            }
+            MenuItem {
+                text: "View Contents"
+                // file formats based on zip
+                visible: fileInfo.suffix === "apk" || fileInfo.suffix === "zip" ||
+                         fileInfo.suffix === "jar" || fileInfo.suffix === "docx" ||
+                         fileInfo.suffix === "xlsx" || fileInfo.suffix === "pptx" ||
+                         fileInfo.suffix === "odt" || fileInfo.suffix === "ods" ||
+                         fileInfo.suffix === "odp"
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                                   { title: "View Contents",
+                                       initialText: "Reading Package",
+                                       successText: "Files",
+                                       command: "unzip",
+                                       arguments: [ "-l", fileInfo.file ],
+                                       consoleColor: "white"
+                                   })
+                }
+            }
+            MenuItem {
+                text: "View Contents"
+                visible: fileInfo.suffix === "rpm"
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                                   { title: "View Contents",
+                                       initialText: "Reading Package",
+                                       successText: "Files",
+                                       command: "rpm",
+                                       arguments: [ "-qlp", fileInfo.file ],
+                                       consoleColor: "white"
+                                   })
+                }
             }
         }
 

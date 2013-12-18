@@ -1,7 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// About page of File Browser
 Page {
     id: page
     allowedOrientations: Orientation.All

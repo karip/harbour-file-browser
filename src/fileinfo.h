@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QDir>
+#include <QProcess>
+#include <QVariantList>
 
 /**
  * @brief The FileInfo class provides access to information of one file.
@@ -19,8 +21,10 @@ class FileInfo : public QObject
     Q_PROPERTY(QString created READ created() NOTIFY createdChanged())
     Q_PROPERTY(QString absolutePath READ absolutePath() NOTIFY absolutePathChanged())
     Q_PROPERTY(QString name READ name() NOTIFY nameChanged())
+    Q_PROPERTY(QString suffix READ suffix() NOTIFY suffixChanged())
     Q_PROPERTY(QString symLinkTarget READ symLinkTarget() NOTIFY symLinkTargetChanged())
     Q_PROPERTY(QString errorMessage READ errorMessage() NOTIFY errorMessageChanged())
+    Q_PROPERTY(QString processOutput READ processOutput() NOTIFY processOutputChanged())
 
 public:
     explicit FileInfo(QObject *parent = 0);
@@ -38,8 +42,13 @@ public:
     QString created() const;
     QString absolutePath() const;
     QString name() const;
+    QString suffix() const;
     QString symLinkTarget() const;
     QString errorMessage() const;
+    QString processOutput() const;
+
+    // methods accessible from QML
+    Q_INVOKABLE void executeCommand(QString command, QStringList arguments);
 
 signals:
     void fileChanged();
@@ -50,9 +59,17 @@ signals:
     void modifiedChanged();
     void createdChanged();
     void nameChanged();
+    void suffixChanged();
     void absolutePathChanged();
     void symLinkTargetChanged();
     void errorMessageChanged();
+    void processOutputChanged();
+    void processExited(int exitCode);
+
+private slots:
+    void readProcessChannels();
+    void handleProcessFinish(int exitCode, QProcess::ExitStatus status);
+    void handleProcessError(QProcess::ProcessError error);
 
 private:
     void readFile();
@@ -60,6 +77,8 @@ private:
     QString m_file;
     QFileInfo m_fileInfo;
     QString m_errorMessage;
+    QProcess *m_process;
+    QString m_processOutput;
 };
 
 #endif // FILEINFO_H
