@@ -5,16 +5,29 @@ File Browser to access the file system on
 [Sailfish OS](https://sailfishos.org/) and 
 [Jolla phones](http://jolla.com/).
 
+### Warning
+
 USE FILE BROWSER AT YOUR OWN RISK. Note that File Browser may be used
 to corrupt files on an actual phone. It may make the phone unusable.
 The authors of File Browser do not take any responsibility if that 
 happens. So, be careful.
 
+### Features
+
+ * Browse directories and files on the phone
+ * Install Android APK and Sailfish RPM packages
+ * View contents of Android APK, Sailfish RPM packages
+ * View contents of zip and jar packages, docx, xlsx, pptx, odt, ods, 
+   and odp documents.
+ * Delete files and directories (by long pressing an item in a list)
+
+### Acknowledgements
+
 File Browser is based on the excellent 
 [Helloworld Pro](https://github.com/amarchen/helloworld-pro-sailfish) 
 template.
 
-## Other file managers
+### Other file managers
 
 The Jolla phone also ships with its own file manager called Files.
 It is not installed by default, but the installation package is 
@@ -34,9 +47,9 @@ in Terminal (requires Developer Mode).
 
 ## License
 
-All File Browser files have been released into public domain, which means 
-that you can do whatever you want with this software. See below for 
-details.
+All files in this project have been released into public domain, which 
+means  that you can do whatever you want with this software. See below 
+for details.
 
 ***
 
