@@ -119,6 +119,34 @@ QString FileModel::parentPath()
     return QDir::cleanPath(QDir(m_dir).absoluteFilePath(".."));
 }
 
+bool FileModel::deleteFile(int fileIndex)
+{
+    if (fileIndex < 0 || fileIndex >= m_files.count())
+        return false;
+
+    // remove file from file system
+
+    // TODO: this should be performed in bg thread and progress given to user as delete may
+    // take a long time
+    QFileInfo info = m_files.at(fileIndex).info;
+    if (info.isDir()) {
+        bool ok = QDir(info.absoluteFilePath()).removeRecursively();
+        if (!ok)
+            return false;
+    } else {
+        bool ok = QFile(info.absoluteFilePath()).remove();
+        if (!ok)
+            return false;
+    }
+
+    // remove file from model
+
+    beginRemoveRows(index(fileIndex).parent(), fileIndex, fileIndex);
+    m_files.removeAt(fileIndex);
+    endRemoveRows();
+    return true;
+}
+
 void FileModel::readDirectory()
 {
     // wrapped in reset model methods to get views notified

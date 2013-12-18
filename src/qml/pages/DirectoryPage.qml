@@ -15,7 +15,10 @@ Page {
 
     SilicaListView {
         id: fileList
-        anchors.fill: parent
+        anchors {
+            fill: parent
+            bottomMargin: notificationPanel.margin
+        }
 
         model: fileModel
 
@@ -36,7 +39,9 @@ Page {
 
         delegate: ListItem {
             id: fileItem
+            menu: contextMenu
             width: ListView.view.width
+            contentHeight: Theme.itemSizeMedium
 
             Image {
                 id: listIcon
@@ -89,6 +94,26 @@ Page {
                     pageStack.push(Qt.resolvedUrl("FilePage.qml"),
                                    { file: fileModel.appendPath(listLabel.text) });
             }
+
+            // delete file
+            ListView.onRemove: animateRemoval(fileItem)
+            function deleteFile() {
+                remorseAction("Deleting", function() {
+                    if (!fileModel.deleteFile(index))
+                        notificationPanel.showWithText("Delete Failed!");
+                })
+            }
+
+            // context menu is activated with long press
+            Component {
+                 id: contextMenu
+                 ContextMenu {
+                     MenuItem {
+                         text: "Delete"
+                         onClicked: deleteFile();
+                     }
+                 }
+             }
         }
 
     }
@@ -107,6 +132,43 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.dir)+"/";
+        }
+    }
+
+    // notification panel to display messages at top of the screen
+    DockedPanel {
+        id: notificationPanel
+
+        width: parent.width
+        height: Theme.itemSizeExtraLarge + Theme.paddingLarge
+
+        dock: Dock.Top
+        open: false
+        onOpenChanged: if (open === true) notificationTimer.start()
+
+        function showWithText(txt) {
+            notificationText.text = txt;
+            notificationPanel.show();
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: "black"
+            opacity: 0.7
+        }
+        Label {
+            id: notificationText
+            anchors.centerIn: parent
+            text: ""
+            color: Theme.primaryColor
+        }
+        Timer {
+            id: notificationTimer
+            interval: 5000
+            onTriggered: {
+                notificationPanel.hide()
+                stop()
+            }
         }
     }
 }
