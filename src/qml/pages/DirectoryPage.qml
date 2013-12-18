@@ -30,7 +30,7 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
             MenuItem {
-                text: "Go to root"
+                text: "Go to Root"
                 onClicked: Functions.goToRoot()
             }
         }
