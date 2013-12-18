@@ -39,43 +39,10 @@ Page {
                     if (fileInfo.suffix === "rpm") {
                         pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                                        { title: "Install",
-                                           successText: "Installed Successfully",
+                                           successText: "Installation Finished",
                                            command: "pkcon",
                                            arguments: [ "-y", "-p", "install-local", fileInfo.file ] })
                     }
-                }
-            }
-            MenuItem {
-                text: "View Contents"
-                // file formats based on zip
-                visible: fileInfo.suffix === "apk" || fileInfo.suffix === "zip" ||
-                         fileInfo.suffix === "jar" || fileInfo.suffix === "docx" ||
-                         fileInfo.suffix === "xlsx" || fileInfo.suffix === "pptx" ||
-                         fileInfo.suffix === "odt" || fileInfo.suffix === "ods" ||
-                         fileInfo.suffix === "odp"
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                                   { title: "View Contents",
-                                       initialText: "Reading Package",
-                                       successText: "Files",
-                                       command: "unzip",
-                                       arguments: [ "-l", fileInfo.file ],
-                                       consoleColor: "white"
-                                   })
-                }
-            }
-            MenuItem {
-                text: "View Contents"
-                visible: fileInfo.suffix === "rpm"
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                                   { title: "View Contents",
-                                       initialText: "Reading Package",
-                                       successText: "Files",
-                                       command: "rpm",
-                                       arguments: [ "-qlp", fileInfo.file ],
-                                       consoleColor: "white"
-                                   })
                 }
             }
         }
