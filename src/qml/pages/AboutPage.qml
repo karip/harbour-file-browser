@@ -13,7 +13,8 @@ Page {
         VerticalScrollDecorator { flickable: flickable }
         Column {
             id: column
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
             anchors.leftMargin: Theme.paddingLarge
             anchors.rightMargin: Theme.paddingLarge
 

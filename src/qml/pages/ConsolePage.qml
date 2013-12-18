@@ -44,8 +44,6 @@ Page {
         Column {
             id: column
             width: parent.width
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
 
             PageHeader { title: page.title }
 
@@ -64,7 +62,10 @@ Page {
                 id: infoLabel
                 visible: text !== ""
                 text: ""
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.rightMargin: Theme.paddingLarge
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeTiny
                 horizontalAlignment: Text.AlignHCenter
