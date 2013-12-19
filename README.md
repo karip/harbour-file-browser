@@ -45,7 +45,7 @@ in Terminal (requires Developer Mode).
 ## License
 
 All files in this project have been released into public domain, which 
-means  that you can do whatever you want with this software. See below 
+means that you can do whatever you want with this software. See below 
 for details.
 
 ***
