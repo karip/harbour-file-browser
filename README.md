@@ -7,18 +7,15 @@ File Browser to access the file system on
 
 ### Warning
 
-USE FILE BROWSER AT YOUR OWN RISK. Note that File Browser may be used
+USE AT YOUR OWN RISK. Note that File Browser may be used
 to corrupt files on an actual phone. It may make the phone unusable.
-The authors of File Browser do not take any responsibility if that 
+The author of File Browser do not take any responsibility if that 
 happens. So, be careful.
 
 ### Features
 
  * Browse directories and files on the phone
  * Install Android APK and Sailfish RPM packages
- * View contents of Android APK, Sailfish RPM packages
- * View contents of zip and jar packages, docx, xlsx, pptx, odt, ods, 
-   and odp documents.
  * Delete files and directories (by long pressing an item in a list)
 
 ### Acknowledgements
