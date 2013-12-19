@@ -19,27 +19,38 @@ function goToRoot(operationType)
     pageStack.pop(firstPage, operationType);
 }
 
+function startsWith(s1, s2)
+{
+    if (!s1 || !s2)
+        return false;
+
+    var start = s1.substring(0, s2.length);
+    return start === s2;
+}
+
 function goToFolder(folder, fromFolder)
 {
+    if (folder === fromFolder)
+        return;
+
     // if only moving up in hierarchy, then just pop
-    if (fromFolder) {
-        var fromFolderStart = fromFolder.substring(0, folder.length); // hack to do startsWith
-        if (fromFolderStart === folder) {
-            var from = fromFolder.split("/").length;
-            var to = folder.split("/").length;
-            for (var i = 0; i < from-to; ++i) {
-                // animate the last pop
-                var action = (i < from-to-1) ? PageStackAction.Immediate
-                                             : PageStackAction.Animated;
-                pageStack.pop(pageStack.previousPage(), action);
-            }
-            return;
+    if (fromFolder && startsWith(fromFolder, folder)) {
+
+        // get previous pages until folder page
+        var fromCount = fromFolder.split("/").length;
+        var toCount = folder.split("/").length;
+        var page = pageStack.currentPage;
+        for (var i = 0; i < fromCount-toCount; ++i) {
+            page = pageStack.previousPage(page);
         }
+
+        pageStack.pop(page, PageStackAction.Animated);
+        return;
     }
 
     goToRoot(PageStackAction.Immediate);
 
-    // go down the folders one by one
+    // open the folders one by one
     var dirs = folder.split("/");
     var path = "";
     for (var i = 1; i < dirs.length; ++i) {
