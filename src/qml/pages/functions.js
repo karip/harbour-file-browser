@@ -40,7 +40,7 @@ function goToFolder(folder, fromFolder)
         var fromCount = fromFolder.split("/").length;
         var toCount = folder.split("/").length;
         var page = pageStack.currentPage;
-        for (var i = 0; i < fromCount-toCount; ++i) {
+        for (var j = 0; j < fromCount-toCount; ++j) {
             page = pageStack.previousPage(page);
         }
 
