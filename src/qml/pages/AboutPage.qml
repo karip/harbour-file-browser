@@ -46,7 +46,7 @@ Page {
             }
             Label {
                 width: parent.width
-                text: "Version 1.0" // Version number must be changed manually!
+                text: "Version 1.1" // Version number must be changed manually!
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor

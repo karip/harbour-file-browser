@@ -7,10 +7,10 @@ File Browser to access the file system on
 
 ### Warning
 
-USE AT YOUR OWN RISK. Note that File Browser may be used
-to corrupt files on an actual phone. It may make the phone unusable.
-The author of File Browser do not take any responsibility if that 
-happens. So, be careful.
+USE AT YOUR OWN RISK. Note that this app can be used to 
+corrupt files on an actual phone. It can make the phone 
+unusable. The author of File Browser does not take any 
+responsibility if that happens. So, be careful.
 
 ### Features
 
