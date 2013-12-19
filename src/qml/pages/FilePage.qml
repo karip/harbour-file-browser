@@ -43,7 +43,7 @@ Page {
                     if (fileInfo.suffix === "rpm") {
                         pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                                        { title: "Install",
-                                           successText: "Installation Finished",
+                                           successText: "Install Finished",
                                            command: "pkcon",
                                            arguments: [ "-y", "-p", "install-local", fileInfo.file ] })
                     }
