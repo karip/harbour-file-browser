@@ -1,13 +1,13 @@
 Name: harbour-file-browser
 Summary: File Browser for Sailfish OS
 Version: 1.1
-Release: 0
+Release: 1
 Group: Qt/Qt
 License: Public domain
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |-
-  File Browser for Sailfish OS. Browse the local file system.
+  File Browser for Sailfish OS. Browse files on the phone.
 Configure: none
 Builder: qtc5
 PkgConfigBR:
@@ -16,13 +16,16 @@ PkgConfigBR:
 - Qt5Quick
 - sailfishapp
 
+NoAutoReqProv: yes
 Requires:
 - libsailfishapp
 Files:
 # Do not include whole %{_datadir}/applications as that would include tests too
+# the following defattr will cause two defattrs in .spec file, how to get only one?
+- '%defattr(644,root,root,755)' # default permissions for all files and folders
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
 - '%{_datadir}/applications/%{name}.desktop'
 - '%{_datadir}/%{name}/qml'
+- '%attr(755,root,root) %{_bindir}/%{name}' # permission to run the exeutable
 
-- '%{_bindir}/%{name}'
 PkgBR: []
