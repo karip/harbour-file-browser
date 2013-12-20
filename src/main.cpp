@@ -12,6 +12,7 @@
 
 #include "filemodel.h"
 #include "fileinfo.h"
+#include "engine.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,11 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
+
+    // global engine object
+    QScopedPointer<Engine> engine(new Engine);
+    view->rootContext()->setContextProperty("engine", engine);
+
     view->show();
 
     return app->exec();
