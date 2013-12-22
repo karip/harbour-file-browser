@@ -13,42 +13,69 @@ FileWorker::~FileWorker()
 {
 }
 
-bool FileWorker::startDeleteFiles(QStringList filenames)
+void FileWorker::startDeleteFiles(QStringList filenames)
 {
-    if (isRunning())
-        return false;
+    if (isRunning()) {
+        emit errorOccurred(tr("File operation already in progress"), "");
+        return;
+    }
+
+    // basic validity check
+    foreach (QString filename, filenames) {
+        if (filename.isEmpty()) {
+            emit errorOccurred(tr("Empty filename"), "");
+            return;
+        }
+    }
 
     m_mode = DeleteMode;
     m_filenames = filenames;
     m_cancelled.storeRelease(KeepRunning);
     start();
-    return true;
 }
 
-bool FileWorker::startCopyFiles(QStringList filenames, QString destDirectory)
+void FileWorker::startCopyFiles(QStringList filenames, QString destDirectory)
 {
-    if (isRunning())
-        return false;
+    if (isRunning()) {
+        emit errorOccurred(tr("File operation already in progress"), "");
+        return;
+    }
+
+    // basic validity check
+    foreach (QString filename, filenames) {
+        if (filename.isEmpty()) {
+            emit errorOccurred(tr("Empty filename"), "");
+            return;
+        }
+    }
 
     m_mode = CopyMode;
     m_filenames = filenames;
     m_destDirectory = destDirectory;
     m_cancelled.storeRelease(KeepRunning);
     start();
-    return true;
 }
 
-bool FileWorker::startMoveFiles(QStringList filenames, QString destDirectory)
+void FileWorker::startMoveFiles(QStringList filenames, QString destDirectory)
 {
-    if (isRunning())
-        return false;
+    if (isRunning()) {
+        emit errorOccurred(tr("File operation already in progress"), "");
+        return;
+    }
+
+    // basic validity check
+    foreach (QString filename, filenames) {
+        if (filename.isEmpty()) {
+            emit errorOccurred(tr("Empty filename"), "");
+            return;
+        }
+    }
 
     m_mode = MoveMode;
     m_filenames = filenames;
     m_destDirectory = destDirectory;
     m_cancelled.storeRelease(KeepRunning);
     start();
-    return true;
 }
 
 void FileWorker::cancel()
@@ -74,88 +101,148 @@ QString FileWorker::deleteFile(QString filename)
 {
     QFileInfo info(filename);
     if (!info.exists())
-        return tr("File not found: %1").arg(info.absoluteFilePath());
+        return tr("File not found");
 
     if (info.isDir()) {
+        // this should be custom function to get better error reporting
         bool ok = QDir(info.absoluteFilePath()).removeRecursively();
         if (!ok)
-            return tr("Can't remove %1").arg(info.absoluteFilePath());
+            return tr("Directory remove failed");
 
     } else {
-        bool ok = QFile(info.absoluteFilePath()).remove();
+        QFile file(info.absoluteFilePath());
+        bool ok = file.remove();
         if (!ok)
-            return tr("Can't remove %1").arg(info.absoluteFilePath());
+            return file.errorString();
     }
     return QString();
 }
 
 void FileWorker::deleteFiles()
 {
-    emit progressChanged(0);
     int fileIndex = 0;
     int fileCount = m_filenames.count();
 
     foreach (QString filename, m_filenames) {
+        emit progressChanged(100 * fileIndex / fileCount, filename);
 
         // stop if cancelled
         if (m_cancelled.loadAcquire() == Cancelled) {
-            emit cancelOccurred();
+            emit done();
             return;
         }
 
         // delete file and stop if errors
         QString errMsg = deleteFile(filename);
         if (!errMsg.isEmpty()) {
-            emit errorOccurred(errMsg);
+            emit errorOccurred(errMsg, filename);
             return;
         }
 
-        emit progressChanged(fileIndex / fileCount);
+        fileIndex++;
     }
 
-    emit progressChanged(100);
+    emit progressChanged(100, "");
     emit done();
 }
 
 void FileWorker::copyOrMoveFiles()
 {
-    emit progressChanged(0);
     int fileIndex = 0;
     int fileCount = m_filenames.count();
 
     QDir dest(m_destDirectory);
     foreach (QString filename, m_filenames) {
+        emit progressChanged(100 * fileIndex / fileCount, filename);
 
         // stop if cancelled
         if (m_cancelled.loadAcquire() == Cancelled) {
-            emit cancelOccurred();
+            emit done();
             return;
         }
 
         // check destination does not exists, otherwise copy/move fails
         QFileInfo fileInfo(filename);
         QString newname = dest.absoluteFilePath(fileInfo.fileName());
-        if (QFile::exists(newname)) {
-            emit errorOccurred(tr("File already exists: %1").arg(filename));
-            return;
-        }
 
         // move or copy and stop if errors
+        QFile file(filename);
         if (m_mode == MoveMode) {
-            if (!QFile::rename(filename, newname)) {
-                emit errorOccurred(tr("Can't move %1").arg(filename));
+            if (!file.rename(newname)) {
+                emit errorOccurred(file.errorString(), filename);
                 return;
             }
         } else {
-            if (!QFile::copy(filename, newname)) {
-                emit errorOccurred(tr("Can't copy %1").arg(filename));
-                return;
+            if (fileInfo.isDir()) {
+                QString errmsg = copyDirRecursively(filename, newname);
+                if (!errmsg.isEmpty()) {
+                    emit errorOccurred(errmsg, filename);
+                    return;
+                }
+            } else {
+                QString errmsg = copyOverwrite(filename, newname);
+                if (!errmsg.isEmpty()) {
+                    emit errorOccurred(errmsg, filename);
+                    return;
+                }
             }
         }
 
-        emit progressChanged(fileIndex / fileCount);
+        fileIndex++;
     }
 
-    emit progressChanged(100);
+    emit progressChanged(100, "");
     emit done();
+}
+
+QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirectory)
+{
+    QDir srcDir(srcDirectory);
+    if (!srcDir.exists())
+        return tr("Source directory doesn't exist");
+
+    QDir destDir(destDirectory);
+    if (!destDir.exists()) {
+        QDir d(destDir);
+        d.cdUp();
+        if (!d.mkdir(destDir.dirName()))
+            return tr("Can't create target directory %1").arg(destDirectory);
+    }
+
+    QStringList names = srcDir.entryList(QDir::Files);
+    for (int i = 0 ; i < names.count() ; ++i) {
+        QString filename = names.at(i);
+        QString spath = srcDir.absoluteFilePath(filename);
+        QString dpath = destDir.absoluteFilePath(filename);
+        QString errmsg = copyOverwrite(spath, dpath);
+        if (!errmsg.isEmpty())
+            return errmsg;
+    }
+
+    names = srcDir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs);
+    for (int i = 0 ; i < names.count() ; ++i) {
+        QString filename = names.at(i);
+        QString spath = srcDir.absoluteFilePath(filename);
+        QString dpath = destDir.absoluteFilePath(filename);
+        QString errmsg = copyDirRecursively(spath, dpath);
+        if (!errmsg.isEmpty())
+            return errmsg;
+    }
+
+    return QString();
+}
+
+QString FileWorker::copyOverwrite(QString src, QString dest)
+{
+    QFile dfile(dest);
+    if (dfile.exists()) {
+        if (!dfile.remove())
+            return dfile.errorString();
+    }
+
+    QFile sfile(src);
+    if (!sfile.copy(dest))
+        return sfile.errorString();
+
+    return QString();
 }

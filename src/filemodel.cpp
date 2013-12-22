@@ -1,6 +1,7 @@
 #include "filemodel.h"
 #include <QDateTime>
 #include "globals.h"
+#include <QDebug>
 
 enum {
     FilenameRole = Qt::UserRole + 1,
@@ -13,9 +14,14 @@ enum {
 };
 
 FileModel::FileModel(QObject *parent) :
-    QAbstractListModel(parent)
+    QAbstractListModel(parent),
+    m_active(false),
+    m_dirty(false)
 {
     m_dir = "";
+    m_watcher = new QFileSystemWatcher(this);
+    connect(m_watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(refresh()));
+    connect(m_watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(refresh()));
 }
 
 FileModel::~FileModel()
@@ -103,9 +109,17 @@ void FileModel::setDir(QString dir)
     if (m_dir == dir)
         return;
 
+    // update watcher to watch the new directory
+    if (!m_dir.isEmpty())
+        m_watcher->removePath(m_dir);
+    if (!dir.isEmpty())
+        m_watcher->addPath(dir);
+
     m_dir = dir;
 
     readDirectory();
+    m_dirty = false;
+
     emit dirChanged();
 }
 
@@ -114,37 +128,42 @@ QString FileModel::appendPath(QString dirName)
     return QDir::cleanPath(QDir(m_dir).absoluteFilePath(dirName));
 }
 
+void FileModel::setActive(bool active)
+{
+    if (m_active == active)
+        return;
+
+    m_active = active;
+    emit activeChanged();
+
+    if (m_dirty)
+        readDirectory();
+
+    m_dirty = false;
+}
+
 QString FileModel::parentPath()
 {
     return QDir::cleanPath(QDir(m_dir).absoluteFilePath(".."));
 }
 
-bool FileModel::deleteFile(int fileIndex)
+QString FileModel::fileNameAt(int fileIndex)
 {
     if (fileIndex < 0 || fileIndex >= m_files.count())
-        return false;
+        return QString();
 
-    // remove file from file system
+    return m_files.at(fileIndex).info.absoluteFilePath();
+}
 
-    // TODO: this should be performed in bg thread and progress given to user as delete may
-    // take a long time
-    QFileInfo info = m_files.at(fileIndex).info;
-    if (info.isDir()) {
-        bool ok = QDir(info.absoluteFilePath()).removeRecursively();
-        if (!ok)
-            return false;
-    } else {
-        bool ok = QFile(info.absoluteFilePath()).remove();
-        if (!ok)
-            return false;
+void FileModel::refresh()
+{
+    if (!m_active) {
+        m_dirty = true;
+        return;
     }
 
-    // remove file from model
-
-    beginRemoveRows(index(fileIndex).parent(), fileIndex, fileIndex);
-    m_files.removeAt(fileIndex);
-    endRemoveRows();
-    return true;
+    readDirectory();
+    m_dirty = false;
 }
 
 void FileModel::readDirectory()
@@ -155,9 +174,8 @@ void FileModel::readDirectory()
     m_files.clear();
     m_errorMessage = "";
 
-    if (!m_dir.isEmpty()) {
+    if (!m_dir.isEmpty())
         readEntries();
-    }
 
     endResetModel();
     emit fileCountChanged();

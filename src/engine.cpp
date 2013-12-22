@@ -11,13 +11,13 @@ Engine::Engine(QObject *parent) :
     m_fileWorker = new FileWorker;
 
     // update progress property when worker progresses
-    connect(m_fileWorker, SIGNAL(progressChanged(double)), this, SLOT(setProgress(double)));
+    connect(m_fileWorker, SIGNAL(progressChanged(int, QString)),
+            this, SLOT(setProgress(int, QString)));
 
     // pass worker end signals to QML
     connect(m_fileWorker, SIGNAL(done()), this, SIGNAL(workerDone()));
-    connect(m_fileWorker, SIGNAL(workerErrorOccurred(QString message)),
-            this, SIGNAL(workerDone(QString message)));
-    connect(m_fileWorker, SIGNAL(workerCancelOccurred()), this, SIGNAL(workerDone()));
+    connect(m_fileWorker, SIGNAL(errorOccurred(QString, QString)),
+            this, SIGNAL(workerErrorOccurred(QString, QString)));
 }
 
 Engine::~Engine()
@@ -28,53 +28,77 @@ Engine::~Engine()
     delete m_fileWorker;    // delete it
 }
 
-bool Engine::deleteFiles(QStringList filenames)
+void Engine::deleteFiles(QStringList filenames)
 {
-    setProgress(0);
-    return m_fileWorker->startDeleteFiles(filenames);
+    setProgress(0, "");
+    m_fileWorker->startDeleteFiles(filenames);
 }
 
-bool Engine::cutFiles(QStringList files)
+void Engine::cutFiles(QStringList filenames)
 {
-    m_clipboardFiles = files;
+    m_clipboardFiles = filenames;
     m_clipboardCut = true;
     emit clipboardCountChanged();
-    return true;
+    emit clipboardCutChanged();
 }
 
-bool Engine::copyFiles(QStringList files)
+void Engine::copyFiles(QStringList filenames)
 {
-    m_clipboardFiles = files;
+    m_clipboardFiles = filenames;
     m_clipboardCut = false;
     emit clipboardCountChanged();
-    return true;
+    emit clipboardCutChanged();
 }
 
-bool Engine::pasteFiles(QString destDirectory)
+void Engine::pasteFiles(QString destDirectory)
 {
-    if (m_clipboardFiles.isEmpty())
-        return true;
+    if (m_clipboardFiles.isEmpty()) {
+        emit workerErrorOccurred("No files to paste", "");
+        return;
+    }
 
     QStringList files = m_clipboardFiles;
-    m_clipboardFiles.clear();
-    emit clipboardCountChanged();
-    setProgress(0);
+    setProgress(0, "");
 
     QDir dest(destDirectory);
     if (!dest.exists()) {
-        m_errorMessage = tr("Destination does not exist: %1").arg(destDirectory);
-        return false;
+        emit workerErrorOccurred(tr("Destination does not exist"), destDirectory);
+        return;
     }
 
-    if (m_clipboardCut)
-        return m_fileWorker->startMoveFiles(files, destDirectory);
+    foreach (QString filename, files) {
+        QFileInfo fileInfo(filename);
+        QString newname = dest.absoluteFilePath(fileInfo.fileName());
 
-    return m_fileWorker->startCopyFiles(files, destDirectory);
+        // source and dest filenames are the same?
+        if (filename == newname) {
+            emit workerErrorOccurred(tr("Destination is the same as source"), newname);
+            return;
+        }
+
+        // dest is under source? (directory)
+        if (newname.startsWith(filename)) {
+            emit workerErrorOccurred(tr("Can't move/copy to itself"), filename);
+            return;
+        }
+    }
+
+    m_clipboardFiles.clear();
+    emit clipboardCountChanged();
+
+    if (m_clipboardCut) {
+        m_fileWorker->startMoveFiles(files, destDirectory);
+        return;
+    }
+
+    m_fileWorker->startCopyFiles(files, destDirectory);
 }
 
-void Engine::setProgress(double progress)
+void Engine::setProgress(int progress, QString filename)
 {
     m_progress = progress;
+    m_progressFilename = filename;
     emit progressChanged();
+    emit progressFilenameChanged();
 }
 

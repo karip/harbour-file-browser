@@ -63,6 +63,7 @@ signals:
     void absolutePathChanged();
     void symLinkTargetChanged();
     void errorMessageChanged();
+
     void processOutputChanged();
     void processExited(int exitCode);
 

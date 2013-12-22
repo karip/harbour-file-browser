@@ -16,19 +16,18 @@ public:
     ~FileWorker();
 
     // call these to start the thread, returns false if start failed
-    bool startDeleteFiles(QStringList filenames);
-    bool startCopyFiles(QStringList filenames, QString destDirectory);
-    bool startMoveFiles(QStringList filenames, QString destDirectory);
+    void startDeleteFiles(QStringList filenames);
+    void startCopyFiles(QStringList filenames, QString destDirectory);
+    void startMoveFiles(QStringList filenames, QString destDirectory);
 
     void cancel();
 
 signals: // signals, can be connected from a thread to another
-    void progressChanged(double progress);
+    void progressChanged(int progress, QString filename);
 
     // one of these is emitted when thread ends
     void done();
-    void errorOccurred(QString message);
-    void cancelOccurred();
+    void errorOccurred(QString message, QString filename);
 
 protected:
     void run();
@@ -44,6 +43,8 @@ private:
     QString deleteFile(QString filenames);
     void deleteFiles();
     void copyOrMoveFiles();
+    QString copyDirRecursively(QString srcDirectory, QString destDirectory);
+    QString copyOverwrite(QString src, QString dest);
 
     FileWorker::Mode m_mode;
     QStringList m_filenames;

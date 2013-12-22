@@ -12,35 +12,46 @@ class Engine : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int clipboardCount READ clipboardCount() NOTIFY clipboardCountChanged())
-    Q_PROPERTY(double progress READ progress() NOTIFY progressChanged())
+    Q_PROPERTY(int clipboardCut READ clipboardCut() NOTIFY clipboardCutChanged())
+    Q_PROPERTY(int progress READ progress() NOTIFY progressChanged())
+    Q_PROPERTY(QString progressFilename READ progressFilename() NOTIFY progressFilenameChanged())
 
 public:
     explicit Engine(QObject *parent = 0);
     ~Engine();
 
     int clipboardCount() const { return m_clipboardFiles.count(); }
-    double progress() const { return m_progress; }
+    bool clipboardCut() const { return m_clipboardCut; }
+    int progress() const { return m_progress; }
+    QString progressFilename() const { return m_progressFilename; }
 
     // methods accessible from QML
-    Q_INVOKABLE bool deleteFiles(QStringList filenames);
-    Q_INVOKABLE bool cutFiles(QStringList filenames);
-    Q_INVOKABLE bool copyFiles(QStringList filenames);
-    Q_INVOKABLE bool pasteFiles(QString destDirectory);
+
+    // asynch methods send signals when done or error occurs
+    Q_INVOKABLE void deleteFiles(QStringList filenames);
+    Q_INVOKABLE void cutFiles(QStringList filenames);
+    Q_INVOKABLE void copyFiles(QStringList filenames);
+    Q_INVOKABLE void pasteFiles(QString destDirectory);
+
+    Q_INVOKABLE QString errorMessage() const { return m_errorMessage; }
 
 signals:
     void clipboardCountChanged();
+    void clipboardCutChanged();
     void progressChanged();
+    void progressFilenameChanged();
     void workerDone();
-    void workerErrorOccurred(QString message);
-    void workerCancelOccurred();
+    void workerErrorOccurred(QString message, QString filename);
+    void workerCancelDone();
 
 private slots:
-    void setProgress(double progress);
+    void setProgress(int progress, QString filename);
 
 private:
     QStringList m_clipboardFiles;
     bool m_clipboardCut;
-    double m_progress;
+    int m_progress;
+    QString m_progressFilename;
     QString m_errorMessage;
     FileWorker *m_fileWorker;
 };
