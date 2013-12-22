@@ -114,7 +114,7 @@ Page {
                 remorseAction("Deleting", function() {
                     progressPanel.showWithText("Deleting");
                     engine.deleteFiles([ fileModel.fileNameAt(index) ]);
-                }, 3)
+                }, 3000)
             }
 
             // context menu is activated with long press
