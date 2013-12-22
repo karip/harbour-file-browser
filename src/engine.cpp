@@ -72,7 +72,7 @@ void Engine::pasteFiles(QString destDirectory)
 
         // source and dest filenames are the same?
         if (filename == newname) {
-            emit workerErrorOccurred(tr("Destination is the same as source"), newname);
+            emit workerErrorOccurred(tr("Can't overwrite itself"), newname);
             return;
         }
 
