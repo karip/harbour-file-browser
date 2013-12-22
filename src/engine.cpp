@@ -94,6 +94,11 @@ void Engine::pasteFiles(QString destDirectory)
     m_fileWorker->startCopyFiles(files, destDirectory);
 }
 
+bool Engine::exists(QString filename)
+{
+    return QFile::exists(filename);
+}
+
 void Engine::setProgress(int progress, QString filename)
 {
     m_progress = progress;

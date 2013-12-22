@@ -14,14 +14,21 @@ Page {
 
         // called when open command exits
         onProcessExited: {
-            if (exitCode === 1) {
-                notificationPanel.showWithText("Internal error");
+            if (exitCode === 0) {
+                notificationPanel.showWithText("Open successful",
+                                               "Sometimes the application is left into background");
+            } else if (exitCode === 1) {
+                notificationPanel.showWithText("Internal error",
+                                               "xdg-open exit code 1");
             } else if (exitCode === 2) {
-                notificationPanel.showWithText("File not found");
+                notificationPanel.showWithText("File not found",
+                                               page.file);
             } else if (exitCode === 3) {
-                notificationPanel.showWithText("No application to open the file");
+                notificationPanel.showWithText("No application to open the file",
+                                               "xdg-open found no preferred application (3)");
             } else if (exitCode === 4) {
-                notificationPanel.showWithText("Action failed");
+                notificationPanel.showWithText("Action failed",
+                                               "xdg-open exit code 4");
             } else if (exitCode === -88888) {
                 notificationPanel.showWithText("xdg-open not found");
             }
@@ -36,8 +43,15 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Go to Root"
-                onClicked: Functions.goToRoot()
+                text: "Go to SD Card"
+                onClicked: {
+                    var sdcard = Functions.sdcardPath();
+                    if (engine.exists(sdcard)) {
+                        Functions.goToFolder(sdcard, page.file);
+                    } else {
+                        notificationPanel.showWithText("SDCard not found", sdcard);
+                    }
+                }
             }
             MenuItem {
                 text: "Go to Home"
@@ -223,9 +237,9 @@ Page {
             page.backNavigation = !open; // disable back navigation
         }
 
-        function showWithText(header) {
+        function showWithText(header, txt) {
             notificationHeader.text = header;
-            notificationText.text = "";
+            notificationText.text = txt;
             notificationPanel.show();
             notificationTimer.start();
         }

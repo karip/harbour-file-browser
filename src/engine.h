@@ -35,6 +35,8 @@ public:
 
     Q_INVOKABLE QString errorMessage() const { return m_errorMessage; }
 
+    Q_INVOKABLE bool exists(QString filename);
+
 signals:
     void clipboardCountChanged();
     void clipboardCutChanged();

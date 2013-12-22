@@ -72,6 +72,11 @@ function goToHome(documentPath, fromFolder)
     goToFolder(homePath, fromFolder);
 }
 
+function sdcardPath()
+{
+    return "/run/user/100000/media/sdcard";
+}
+
 function formatPathForTitle(path)
 {
     if (path === "/")

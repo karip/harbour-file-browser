@@ -33,19 +33,26 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
             MenuItem {
+                text: "Go to SD Card"
+                onClicked: {
+                    var sdcard = Functions.sdcardPath();
+                    if (engine.exists(sdcard)) {
+                        Functions.goToFolder(sdcard, page.dir);
+                    } else {
+                        notificationPanel.showWithText("SDCard not found", sdcard);
+                    }
+                }
+            }
+            MenuItem {
+                text: "Go to Home"
+                onClicked: Functions.goToHome(StandardPaths.documents, page.dir)
+            }
+            MenuItem {
                 text: "Paste" + (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
                 onClicked: {
                     progressPanel.showWithText(engine.clipboardCut ? "Moving" : "Copying")
                     engine.pasteFiles(page.dir);
                 }
-            }
-            MenuItem {
-                text: "Go to Root"
-                onClicked: Functions.goToRoot()
-            }
-            MenuItem {
-                text: "Go to Home"
-                onClicked: Functions.goToHome(StandardPaths.documents, page.dir)
             }
         }
 
