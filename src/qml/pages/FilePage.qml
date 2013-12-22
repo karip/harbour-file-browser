@@ -11,6 +11,21 @@ Page {
     FileInfo {
         id: fileInfo
         file: page.file
+
+        // called when open command exits
+        onProcessExited: {
+            if (exitCode === 1) {
+                notificationPanel.showWithText("Internal error");
+            } else if (exitCode === 2) {
+                notificationPanel.showWithText("File not found");
+            } else if (exitCode === 3) {
+                notificationPanel.showWithText("No application to open the file");
+            } else if (exitCode === 4) {
+                notificationPanel.showWithText("Action failed");
+            } else if (exitCode === -88888) {
+                notificationPanel.showWithText("xdg-open not found");
+            }
+        }
     }
 
     SilicaFlickable {
@@ -45,9 +60,16 @@ Page {
                                        { title: "Install",
                                            successText: "Install Finished",
                                            command: "pkcon",
-                                           arguments: [ "-y", "-p", "install-local", fileInfo.file ] })
+                                           arguments: [ "-y", "-p", "install-local",
+                                                        fileInfo.file ] })
                     }
                 }
+            }
+            // open menu tries to open the file and fileInfo.onProcessExited show error if it fails
+            MenuItem {
+                text: "Open"
+                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm"
+                onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
         }
 
@@ -185,6 +207,72 @@ Page {
             coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.file);
         }
     }
+
+
+    // notification panel to display messages at top of the screen
+    DockedPanel {
+        id: notificationPanel
+
+        width: parent.width
+        height: Theme.itemSizeExtraLarge + Theme.paddingLarge
+
+        dock: Dock.Top
+        open: false
+        onOpenChanged: {
+            interactionBlocker.visible = open; // disable row selection and menus
+            page.backNavigation = !open; // disable back navigation
+        }
+
+        function showWithText(header) {
+            notificationHeader.text = header;
+            notificationText.text = "";
+            notificationPanel.show();
+            notificationTimer.start();
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: "black"
+            opacity: 0.7
+        }
+        Label {
+            id: notificationHeader
+            visible: notificationPanel.open
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.leftMargin: Theme.paddingLarge
+            anchors.rightMargin: Theme.paddingLarge
+            anchors.topMargin: 40
+            horizontalAlignment: Text.AlignHCenter
+            text: ""
+            wrapMode: Text.Wrap
+            color: Theme.primaryColor
+        }
+        Label {
+            id: notificationText
+            visible: notificationPanel.open
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: notificationHeader.bottom
+            anchors.leftMargin: Theme.paddingLarge
+            anchors.rightMargin: Theme.paddingLarge
+            horizontalAlignment: Text.AlignHCenter
+            text: ""
+            wrapMode: Text.Wrap
+            font.pixelSize: Theme.fontSizeTiny
+            color: Theme.primaryColor
+        }
+        Timer {
+            id: notificationTimer
+            interval: 5000
+            onTriggered: {
+                notificationPanel.hide();
+                stop();
+            }
+        }
+    }
+
 }
 
 
