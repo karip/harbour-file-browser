@@ -5,7 +5,8 @@
 FileWorker::FileWorker(QObject *parent) :
     QThread(parent),
     m_mode(DeleteMode),
-    m_cancelled(KeepRunning)
+    m_cancelled(KeepRunning),
+    m_progress(0)
 {
 }
 
@@ -124,7 +125,8 @@ void FileWorker::deleteFiles()
     int fileCount = m_filenames.count();
 
     foreach (QString filename, m_filenames) {
-        emit progressChanged(100 * fileIndex / fileCount, filename);
+        m_progress = 100 * fileIndex / fileCount;
+        emit progressChanged(m_progress, filename);
 
         // stop if cancelled
         if (m_cancelled.loadAcquire() == Cancelled) {
@@ -142,7 +144,8 @@ void FileWorker::deleteFiles()
         fileIndex++;
     }
 
-    emit progressChanged(100, "");
+    m_progress = 100;
+    emit progressChanged(m_progress, "");
     emit done();
 }
 
@@ -153,7 +156,8 @@ void FileWorker::copyOrMoveFiles()
 
     QDir dest(m_destDirectory);
     foreach (QString filename, m_filenames) {
-        emit progressChanged(100 * fileIndex / fileCount, filename);
+        m_progress = 100 * fileIndex / fileCount;
+        emit progressChanged(m_progress, filename);
 
         // stop if cancelled
         if (m_cancelled.loadAcquire() == Cancelled) {
@@ -191,7 +195,8 @@ void FileWorker::copyOrMoveFiles()
         fileIndex++;
     }
 
-    emit progressChanged(100, "");
+    m_progress = 100;
+    emit progressChanged(m_progress, "");
     emit done();
 }
 
@@ -212,6 +217,7 @@ QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirecto
     QStringList names = srcDir.entryList(QDir::Files);
     for (int i = 0 ; i < names.count() ; ++i) {
         QString filename = names.at(i);
+        emit progressChanged(m_progress, filename);
         QString spath = srcDir.absoluteFilePath(filename);
         QString dpath = destDir.absoluteFilePath(filename);
         QString errmsg = copyOverwrite(spath, dpath);
@@ -222,6 +228,7 @@ QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirecto
     names = srcDir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs);
     for (int i = 0 ; i < names.count() ; ++i) {
         QString filename = names.at(i);
+        emit progressChanged(m_progress, filename);
         QString spath = srcDir.absoluteFilePath(filename);
         QString dpath = destDir.absoluteFilePath(filename);
         QString errmsg = copyDirRecursively(spath, dpath);

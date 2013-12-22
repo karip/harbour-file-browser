@@ -50,6 +50,7 @@ private:
     QStringList m_filenames;
     QString m_destDirectory;
     QAtomicInt m_cancelled; // atomic so no locks needed
+    int m_progress;
 };
 
 #endif // FILEWORKER_H
