@@ -13,9 +13,9 @@ Your disk (phone or sd card) is most likely full.
 
 ### What does error 'Unknown error' mean?
 
-It happens if you try to move a file from SD Card to phone or
+It happens if you try to move a directory from SD Card to phone or
 from phone to SD Card. Instead of moving (cut-paste), you should 
-copy the file and then delete it manually.
+copy the directory and then delete it manually.
 
 ### Why opening a file does not work, but gives error "No application 
 to open the file"?
