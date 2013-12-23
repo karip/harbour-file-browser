@@ -17,14 +17,12 @@ It happens if you try to move a directory from SD Card to phone or
 from phone to SD Card. Instead of moving (cut-paste), you should 
 copy the directory and then delete it manually.
 
-### Why opening a file does not work, but gives error "No application 
-to open the file"?
+### Why opening a file does not work, but gives error "No application to open the file"?
 
 It means that the xdg-open command used to open files does not recognize
 the file type or it doesn't find a preferred program to open it.
 
-### How can I see how much space is left on storage (on phone or
-SD Card)?
+### How can I see how much space is left on storage (on phone or SD Card)?
 
 I don't know.
 
