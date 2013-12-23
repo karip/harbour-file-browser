@@ -108,7 +108,7 @@ QString FileWorker::deleteFile(QString filename)
         // this should be custom function to get better error reporting
         bool ok = QDir(info.absoluteFilePath()).removeRecursively();
         if (!ok)
-            return tr("Directory remove failed");
+            return tr("Directory delete failed");
 
     } else {
         QFile file(info.absoluteFilePath());
