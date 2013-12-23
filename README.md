@@ -1,22 +1,30 @@
 
 # File Browser for Sailfish OS
 
-File Browser to access the file system on 
+A minimal file browser tool to view files on 
 [Sailfish OS](https://sailfishos.org/) and 
 [Jolla phones](http://jolla.com/).
 
+FAQ is available at 
+https://github.com/karip/harbour-file-browser/blob/master/FAQ.md
+
 ### Warning
 
-USE AT YOUR OWN RISK. Note that this app can be used to 
-corrupt files on an actual phone. It can make the phone 
-unusable. The author of File Browser does not take any 
+USE AT YOUR OWN RISK. This app can be used to corrupt files on the phone
+and make the phone unusable. The author of File Browser does not take any
 responsibility if that happens. So, be careful.
 
 ### Features
 
  * Browse directories and files on the phone
+ * Open files (if xdg-open finds a preferred application)
  * Install Android APK and Sailfish RPM packages
+ * Cut, copy and paste files (move/copy files) (by long pressing an 
+   item in a list)
  * Delete files and directories (by long pressing an item in a list)
+
+If you need more features, then enable Developer Mode and use the
+terminal. It can do all the tricks.
 
 ### Acknowledgements
 

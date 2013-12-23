@@ -26,3 +26,11 @@ the file type or it doesn't find a preferred program to open it.
 
 I don't know.
 
+### Does it have XXX feature?
+
+It can't rename files, find files, change permissions, change owners, 
+sudo, show hidden files, show Android home folder, multi-select files, 
+edit files, share files, send email, mms or sms, open ftp sites, 
+connect to samba server, simulate vi and it does not blend or make coffee.
+
+
