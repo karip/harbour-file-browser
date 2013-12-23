@@ -39,7 +39,7 @@ Page {
                     if (engine.exists(sdcard)) {
                         Functions.goToFolder(sdcard, page.dir);
                     } else {
-                        notificationPanel.showWithText("SDCard not found", sdcard);
+                        notificationPanel.showWithText("SD Card not found", sdcard);
                     }
                 }
             }
@@ -176,8 +176,8 @@ Page {
 
         anchors.fill: parent
         visible: false
-        color: "#808080"
-        opacity: 0.3
+        color: "#000000"
+        opacity: 0.4
 
         MouseArea {
             anchors.fill: parent
@@ -292,6 +292,11 @@ Page {
                 // the error signal goes to all pages in pagestack, show it only in the active one
                 if (progressPanel.open) {
                     progressPanel.hide();
+                    if (message === "Unknown error")
+                        filename = "Trying to move between phone and SD Card? It doesn't work, try copying.";
+                    else if (message === "Failure to write block")
+                        filename = "Perhaps the storage is full?";
+
                     notificationPanel.showWithText(message, filename);
                 }
             }
@@ -315,10 +320,30 @@ Page {
             running: true
             size: BusyIndicatorSize.Small
         }
+        Rectangle {
+            id: cancelButton
+            anchors.right: parent.right
+            width: 100
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            color: cancelMouseArea.pressed ? Theme.secondaryHighlightColor : "transparent"
+            MouseArea {
+                id: cancelMouseArea
+                anchors.fill: parent
+                onClicked: engine.cancel()
+                enabled: true
+                Text {
+                    anchors.centerIn: parent
+                    color: Theme.primaryColor
+                    text: "X"
+                }
+            }
+        }
         Label {
             id: progressHeader
             visible: progressPanel.open
             anchors.left: parent.left
+            anchors.right: cancelButton.left
             anchors.top: parent.top
             anchors.topMargin: 40
             anchors.leftMargin: progressBusy.width + Theme.paddingLarge*4
@@ -330,7 +355,7 @@ Page {
             id: progressText
             visible: progressPanel.open
             anchors.left: progressHeader.left
-            anchors.right: parent.right
+            anchors.right: cancelButton.left
             anchors.rightMargin: Theme.paddingLarge
             anchors.top: progressHeader.bottom
             text: ""

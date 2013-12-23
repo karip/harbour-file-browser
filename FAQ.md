@@ -23,3 +23,8 @@ to open the file"?
 It means that the xdg-open command used to open files does not recognize
 the file type or it doesn't find a preferred program to open it.
 
+### How can I see how much space is left on storage (on phone or
+SD Card)?
+
+I don't know.
+

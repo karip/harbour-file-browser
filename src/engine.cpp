@@ -94,6 +94,11 @@ void Engine::pasteFiles(QString destDirectory)
     m_fileWorker->startCopyFiles(files, destDirectory);
 }
 
+void Engine::cancel()
+{
+    m_fileWorker->cancel();
+}
+
 bool Engine::exists(QString filename)
 {
     return QFile::exists(filename);

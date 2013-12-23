@@ -33,6 +33,8 @@ public:
     Q_INVOKABLE void copyFiles(QStringList filenames);
     Q_INVOKABLE void pasteFiles(QString destDirectory);
 
+    Q_INVOKABLE void cancel();
+
     Q_INVOKABLE QString errorMessage() const { return m_errorMessage; }
 
     Q_INVOKABLE bool exists(QString filename);

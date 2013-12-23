@@ -130,7 +130,7 @@ void FileWorker::deleteFiles()
 
         // stop if cancelled
         if (m_cancelled.loadAcquire() == Cancelled) {
-            emit done();
+            emit errorOccurred(tr("Cancelled"), filename);
             return;
         }
 
@@ -161,7 +161,7 @@ void FileWorker::copyOrMoveFiles()
 
         // stop if cancelled
         if (m_cancelled.loadAcquire() == Cancelled) {
-            emit done();
+            emit errorOccurred(tr("Cancelled"), filename);
             return;
         }
 
@@ -214,8 +214,13 @@ QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirecto
             return tr("Can't create target directory %1").arg(destDirectory);
     }
 
+    // copy files
     QStringList names = srcDir.entryList(QDir::Files);
     for (int i = 0 ; i < names.count() ; ++i) {
+        // stop if cancelled
+        if (m_cancelled.loadAcquire() == Cancelled)
+            return tr("Cancelled");
+
         QString filename = names.at(i);
         emit progressChanged(m_progress, filename);
         QString spath = srcDir.absoluteFilePath(filename);
@@ -225,8 +230,13 @@ QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirecto
             return errmsg;
     }
 
+    // copy dirs
     names = srcDir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs);
     for (int i = 0 ; i < names.count() ; ++i) {
+        // stop if cancelled
+        if (m_cancelled.loadAcquire() == Cancelled)
+            return tr("Cancelled");
+
         QString filename = names.at(i);
         emit progressChanged(m_progress, filename);
         QString spath = srcDir.absoluteFilePath(filename);

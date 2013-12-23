@@ -49,7 +49,7 @@ Page {
                     if (engine.exists(sdcard)) {
                         Functions.goToFolder(sdcard, page.file);
                     } else {
-                        notificationPanel.showWithText("SDCard not found", sdcard);
+                        notificationPanel.showWithText("SD Card not found", sdcard);
                     }
                 }
             }
