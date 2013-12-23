@@ -121,7 +121,7 @@ Page {
                 remorseAction("Deleting", function() {
                     progressPanel.showWithText("Deleting");
                     engine.deleteFiles([ fileModel.fileNameAt(index) ]);
-                }, 3000)
+                }, 5000)
             }
 
             // context menu is activated with long press
@@ -201,7 +201,7 @@ Page {
         }
         Timer {
             id: blockerTimer
-            interval: 200
+            interval: 300
             onTriggered: {
                 interactionBlocker.opacity = 0.3;
                 stop();
