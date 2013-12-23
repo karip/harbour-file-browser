@@ -24,7 +24,7 @@ responsibility if that happens. So, be careful.
  * Delete files and directories (by long pressing an item in a list)
 
 If you need more features, then enable Developer Mode and use the
-terminal. It can do all the tricks.
+Terminal. It can do all the tricks.
 
 ### Acknowledgements
 
@@ -35,9 +35,8 @@ template.
 ### Other file managers
 
 The Jolla phone also ships with its own file manager called Files.
-It is not installed by default, but the installation package is 
-on the phone. You can install it by typing the following command 
-in Terminal (requires Developer Mode).
+It is not installed by default. You can install it by typing the 
+following command in Terminal (requires Developer Mode).
 
     pkcon install jolla-fileman
 
