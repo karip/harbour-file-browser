@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.file.browser.FileInfo 1.0
 import QtMultimedia 5.0
+import Sailfish.Media 1.0
 import "functions.js" as Functions
 
 Page {
@@ -87,21 +88,20 @@ Page {
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
             MenuItem {
-                text: "Play Music" //"Play " + (fileInfo.suffix == "mp3" ? "Music" : "Video")
+                text: "Play " + (fileInfo.suffix == "mp3" ? "Music" : "Video")
                 visible: fileInfo.suffix == "mp3" || fileInfo.suffix == "mp4"
                 onClicked: {
                     if (fileInfo.suffix == "mp3"){
                         playMedia.play();
-                      //  rectVideo.visible = false;
+                        videoOut.visible = false;
                     }
-                    /*
                     if (fileInfo.suffix == "mp4"){
-                        rectVideo.visible = true;
+                        videoOut.visible = true;
                         videoOut.play();
+
                     }
-                    */
                 }
-                MediaPlayer{
+                MediaPlayer{ //used to play audio since xdg-open will not work
                     id: playMedia
                     source: fileInfo.file
                 }
@@ -142,6 +142,19 @@ Page {
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Theme.fontSizeExtraSmall
+                }
+                Item { // used for spacing
+                    width: parent.width
+                    height: 40
+                }
+                VideoPlayer{ //used to play video since xdg-open will not work
+                    id: videoOut
+                    source: fileInfo.file
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: 400
+                    width: parent.width
+                    visible: false
                 }
                 Item { // used for spacing
                     width: parent.width
