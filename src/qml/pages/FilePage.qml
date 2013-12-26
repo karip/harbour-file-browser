@@ -254,6 +254,11 @@ Page {
         if (status === PageStatus.Activating) {
             coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.file);
         }
+        //Pop of page detected to reset video player visibility
+        if (status == 3 ){
+            videoOut.visible = false;
+
+        }
     }
 
 
