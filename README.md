@@ -1,4 +1,3 @@
-
 # File Browser for Sailfish OS
 
 A minimal file browser tool to view files on 
@@ -18,6 +17,7 @@ responsibility if that happens. So, be careful.
 
  * Browse directories and files on the phone
  * Open files (if xdg-open finds a preferred application)
+ * Open MP3 and MP4 inside the app
  * Install Android APK and Sailfish RPM packages
  * Cut, copy and paste files (move/copy files) (by long pressing an 
    item in a list)
