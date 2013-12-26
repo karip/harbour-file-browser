@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.file.browser.FileInfo 1.0
+import QtMultimedia 5.0
 import "functions.js" as Functions
 
 Page {
@@ -82,8 +83,28 @@ Page {
             // open menu tries to open the file and fileInfo.onProcessExited show error if it fails
             MenuItem {
                 text: "Open"
-                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm"
+                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm" && fileInfo.suffix !== "mp3" // && fileInfo.suffix !== "mp4"
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
+            }
+            MenuItem {
+                text: "Play Music" //"Play " + (fileInfo.suffix == "mp3" ? "Music" : "Video")
+                visible: fileInfo.suffix == "mp3" || fileInfo.suffix == "mp4"
+                onClicked: {
+                    if (fileInfo.suffix == "mp3"){
+                        playMedia.play();
+                      //  rectVideo.visible = false;
+                    }
+                    /*
+                    if (fileInfo.suffix == "mp4"){
+                        rectVideo.visible = true;
+                        videoOut.play();
+                    }
+                    */
+                }
+                MediaPlayer{
+                    id: playMedia
+                    source: fileInfo.file
+                }
             }
         }
 
