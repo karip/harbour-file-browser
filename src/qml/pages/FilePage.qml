@@ -334,7 +334,8 @@ Page {
     function isAudioFile(fileInfo)
     {
         return fileInfo.suffix === "wav" || fileInfo.suffix === "mp3" ||
-                fileInfo.suffix === "ogg" || fileInfo.suffix === "flac";
+                fileInfo.suffix === "ogg" || fileInfo.suffix === "flac" ||
+                fileInfo.suffix === "aac" || fileInfo.suffix === "m4a";
     }
 
     function isVideoFile(fileInfo)

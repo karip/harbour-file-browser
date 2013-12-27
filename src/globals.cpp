@@ -3,6 +3,7 @@
 
 QString suffixToIconName(QString suffix)
 {
+    // only formats that are understood by File Browser or Sailfish get a special icon
     if (suffix == "txt")
         return "file-txt";
     if (suffix == "rpm")
@@ -13,10 +14,9 @@ QString suffixToIconName(QString suffix)
             suffix == "gif")
         return "file-image";
     if (suffix == "wav" || suffix == "mp3" || suffix == "flac" ||
-            suffix == "aac" || suffix == "ogg")
+            suffix == "aac" || suffix == "ogg" || suffix == "m4a")
         return "file-audio";
-    if (suffix == "mp4" || suffix == "mpg" || suffix == "avi" ||
-            suffix == "mov")
+    if (suffix == "mp4")
         return "file-video";
 
     return "file";
