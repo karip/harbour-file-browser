@@ -16,7 +16,7 @@ QString suffixToIconName(QString suffix)
     if (suffix == "wav" || suffix == "mp3" || suffix == "flac" ||
             suffix == "aac" || suffix == "ogg" || suffix == "m4a")
         return "file-audio";
-    if (suffix == "mp4")
+    if (suffix == "mp4" || suffix == "m4v")
         return "file-video";
 
     return "file";

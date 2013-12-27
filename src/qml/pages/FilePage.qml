@@ -340,7 +340,7 @@ Page {
 
     function isVideoFile(fileInfo)
     {
-        return fileInfo.suffix === "mp4";
+        return fileInfo.suffix === "mp4" || fileInfo.suffix === "m4v";
     }
 
     function isMediaFile(fileInfo)
