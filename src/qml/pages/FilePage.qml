@@ -84,24 +84,23 @@ Page {
             // open menu tries to open the file and fileInfo.onProcessExited show error if it fails
             MenuItem {
                 text: "Open"
-                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm" && fileInfo.suffix !== "mp3" // && fileInfo.suffix !== "mp4"
+                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm" && !isAudioFile(fileInfo)
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
             MenuItem {
-                text: "Play " + (fileInfo.suffix == "mp3" ? "Music" : "Video")
-                visible: fileInfo.suffix == "mp3" || fileInfo.suffix == "mp4"
+                text: "Play " + (isAudioFile(fileInfo) ? "Music" : "Video")
+                visible: isMediaFile(fileInfo)
                 onClicked: {
-                    if (fileInfo.suffix == "mp3"){
+                    if (isAudioFile(fileInfo)) {
                         playMedia.play();
                         videoOut.visible = false;
                     }
-                    if (fileInfo.suffix == "mp4"){
+                    if (isVideoFile(fileInfo)) {
                         videoOut.visible = true;
                         videoOut.play();
-
                     }
                 }
-                MediaPlayer{ //used to play audio since xdg-open will not work
+                MediaPlayer { //used to play audio since xdg-open will not work
                     id: playMedia
                     source: fileInfo.file
                 }
@@ -147,7 +146,7 @@ Page {
                     width: parent.width
                     height: 40
                 }
-                VideoPlayer{ //used to play video since xdg-open will not work
+                VideoPlayer { // used to play video since xdg-open will not work
                     id: videoOut
                     source: fileInfo.file
                     anchors.left: parent.left
@@ -324,6 +323,22 @@ Page {
                 stop();
             }
         }
+    }
+
+    function isAudioFile(fileInfo)
+    {
+        return fileInfo.suffix === "wav" || fileInfo.suffix === "mp3" ||
+                fileInfo.suffix === "ogg" || fileInfo.suffix === "flac";
+    }
+
+    function isVideoFile(fileInfo)
+    {
+        return fileInfo.suffix === "mp4";
+    }
+
+    function isMediaFile(fileInfo)
+    {
+        return isAudioFile(fileInfo) | isVideoFile(fileInfo);
     }
 
 }
