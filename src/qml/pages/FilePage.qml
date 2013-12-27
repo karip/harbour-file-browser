@@ -81,10 +81,16 @@ Page {
                     }
                 }
             }
+            MenuItem {
+                text: "Go to Target"
+                visible: fileInfo.icon === "folder-link"
+                onClicked: Functions.goToFolder(fileInfo.symLinkTarget, page.file);
+            }
             // open menu tries to open the file and fileInfo.onProcessExited show error if it fails
             MenuItem {
                 text: "Open"
-                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm" && !isAudioFile(fileInfo)
+                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm" && !isAudioFile(fileInfo) &&
+                         fileInfo.icon !== "folder-link"
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
             MenuItem {
@@ -137,7 +143,7 @@ Page {
                 Label {
                     visible: fileInfo.symLinkTarget !== ""
                     width: parent.width
-                    text: "\u2192 "+fileInfo.symLinkTarget // uses unicode arrow
+                    text: Functions.arrow()+" "+fileInfo.symLinkTarget
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Theme.fontSizeExtraSmall

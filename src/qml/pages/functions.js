@@ -100,3 +100,8 @@ function formatPathForCover(path)
 
     return path.substring(i+1);
 }
+
+function arrow()
+{
+    return "\u2192"; // unicode for arrow symbol
+}

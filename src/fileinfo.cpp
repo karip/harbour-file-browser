@@ -26,14 +26,15 @@ void FileInfo::setFile(QString file)
 
 QString FileInfo::kind() const
 {
-    if (m_fileInfo.isDir()) return "d";
     if (m_fileInfo.isSymLink()) return "l";
+    if (m_fileInfo.isDir()) return "d";
     if (m_fileInfo.isFile()) return "-";
     return "?";
 }
 
 QString FileInfo::icon() const
 {
+    if (m_fileInfo.isSymLink() && m_fileInfo.isDir()) return "folder-link";
     if (m_fileInfo.isDir()) return "folder";
     if (m_fileInfo.isSymLink()) return "link";
     if (m_fileInfo.isFile()) {
@@ -50,7 +51,7 @@ QString FileInfo::permissions() const
 
 QString FileInfo::size() const
 {
-    if (m_fileInfo.isDir()) return "";
+    if (m_fileInfo.isDir()) return "-";
     return filesizeToString(m_fileInfo.size());
 }
 

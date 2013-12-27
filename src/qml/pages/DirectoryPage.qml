@@ -83,15 +83,15 @@ Page {
                 elide: Text.ElideRight
             }
             Label {
-                id: listFilesize
                 anchors.left: listIcon.right
                 anchors.leftMargin: 10
                 anchors.top: listLabel.bottom
-                text: filekind != "d" ? size : "dir"
+                text: !(isLink && isDir) ? size : Functions.arrow()+" "+symLinkTarget
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
             Label {
+                visible: !(isLink && isDir)
                 anchors.top: listLabel.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: filekind+permissions
@@ -99,6 +99,7 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
             Label {
+                visible: !(isLink && isDir)
                 anchors.top: listLabel.bottom
                 anchors.right: listLabel.right
                 text: modified
@@ -107,7 +108,7 @@ Page {
             }
 
             onClicked: {
-                if (listFilesize.text == "dir")
+                if (model.isDir)
                     pageStack.push(Qt.resolvedUrl("DirectoryPage.qml"),
                                    { dir: fileModel.appendPath(listLabel.text) });
                 else

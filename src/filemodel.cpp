@@ -10,7 +10,10 @@ enum {
     PermissionsRole = Qt::UserRole + 4,
     SizeRole = Qt::UserRole + 5,
     LastModifiedRole = Qt::UserRole + 6,
-    CreatedRole = Qt::UserRole + 7
+    CreatedRole = Qt::UserRole + 7,
+    IsDirRole = Qt::UserRole + 8,
+    IsLinkRole = Qt::UserRole + 9,
+    SymLinkTargetRole = Qt::UserRole + 10
 };
 
 FileModel::FileModel(QObject *parent) :
@@ -47,12 +50,13 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
         return info.fileName();
 
     case FileKindRole:
-        if (info.isDir()) return "d";
         if (info.isSymLink()) return "l";
+        if (info.isDir()) return "d";
         if (info.isFile()) return "-";
         return "?";
 
     case FileIconRole:
+        if (info.isSymLink() && info.isDir()) return "folder-link";
         if (info.isDir()) return "folder";
         if (info.isSymLink()) return "link";
         if (info.isFile()) {
@@ -65,16 +69,24 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
         return permissionsToString(info.permissions());
 
     case SizeRole:
-        if (info.isDir()) return "";
+        if (info.isSymLink() && info.isDir()) return "dir-link";
+        if (info.isDir()) return "dir";
         return filesizeToString(info.size());
 
-    case LastModifiedRole: {
+    case LastModifiedRole:
         return datetimeToString(info.lastModified());
-    }
 
-    case CreatedRole: {
+    case CreatedRole:
         return datetimeToString(info.created());
-    }
+
+    case IsDirRole:
+        return info.isDir();
+
+    case IsLinkRole:
+        return info.isSymLink();
+
+    case SymLinkTargetRole:
+        return info.symLinkTarget();
 
     default:
         return QVariant();
@@ -91,6 +103,9 @@ QHash<int, QByteArray> FileModel::roleNames() const
     roles.insert(SizeRole, QByteArray("size"));
     roles.insert(LastModifiedRole, QByteArray("modified"));
     roles.insert(CreatedRole, QByteArray("created"));
+    roles.insert(IsDirRole, QByteArray("isDir"));
+    roles.insert(IsLinkRole, QByteArray("isLink"));
+    roles.insert(SymLinkTargetRole, QByteArray("symLinkTarget"));
     return roles;
 }
 
