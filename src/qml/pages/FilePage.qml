@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.file.browser.FileInfo 1.0
+import QtMultimedia 5.0
+import Sailfish.Media 1.0
 import "functions.js" as Functions
 
 Page {
@@ -82,8 +84,27 @@ Page {
             // open menu tries to open the file and fileInfo.onProcessExited show error if it fails
             MenuItem {
                 text: "Open"
-                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm"
+                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm" && fileInfo.suffix !== "mp3" // && fileInfo.suffix !== "mp4"
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
+            }
+            MenuItem {
+                text: "Play " + (fileInfo.suffix == "mp3" ? "Music" : "Video")
+                visible: fileInfo.suffix == "mp3" || fileInfo.suffix == "mp4"
+                onClicked: {
+                    if (fileInfo.suffix == "mp3"){
+                        playMedia.play();
+                        videoOut.visible = false;
+                    }
+                    if (fileInfo.suffix == "mp4"){
+                        videoOut.visible = true;
+                        videoOut.play();
+
+                    }
+                }
+                MediaPlayer{ //used to play audio since xdg-open will not work
+                    id: playMedia
+                    source: fileInfo.file
+                }
             }
         }
 
@@ -121,6 +142,19 @@ Page {
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Theme.fontSizeExtraSmall
+                }
+                Item { // used for spacing
+                    width: parent.width
+                    height: 40
+                }
+                VideoPlayer{ //used to play video since xdg-open will not work
+                    id: videoOut
+                    source: fileInfo.file
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: 400
+                    width: parent.width
+                    visible: false
                 }
                 Item { // used for spacing
                     width: parent.width
@@ -219,6 +253,11 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.file);
+        }
+        //Pop of page detected to reset video player visibility
+        if (status == 3 ){
+            videoOut.visible = false;
+
         }
     }
 
