@@ -16,6 +16,7 @@ responsibility if that happens. So, be careful.
 ### Features
 
  * Browse directories and files on the phone
+ * Search files
  * Open files (if xdg-open finds a preferred application)
  * Preview JPEG, PNG and GIF files inside the app
  * Play back WAV, MP3, OGG, FLAC and MP4 inside the app
