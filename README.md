@@ -17,14 +17,12 @@ responsibility if that happens. So, be careful.
 
  * Browse directories and files on the phone
  * Open files (if xdg-open finds a preferred application)
+ * Preview JPEG, PNG and GIF files inside the app
  * Play back WAV, MP3, OGG, FLAC and MP4 inside the app
  * Install Android APK and Sailfish RPM packages
  * Cut, copy and paste files (move/copy files) (by long pressing an 
    item in a list)
  * Delete files and directories (by long pressing an item in a list)
-
-If you need more features, then enable Developer Mode and use the
-Terminal. It can do all the tricks.
 
 ### Acknowledgements
 
@@ -39,6 +37,8 @@ It is not installed by default. You can install it by typing the
 following command in Terminal (requires Developer Mode).
 
     pkcon install jolla-fileman
+
+Android stores also have file managers, such as ES File Explorer.
 
 ## Building
 
