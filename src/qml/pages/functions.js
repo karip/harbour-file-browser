@@ -28,26 +28,8 @@ function startsWith(s1, s2)
     return start === s2;
 }
 
-function goToFolder(folder, fromFolder)
+function goToFolder(folder)
 {
-    if (folder === fromFolder)
-        return;
-
-    // if only moving up in hierarchy, then just pop
-    if (fromFolder && startsWith(fromFolder, folder)) {
-
-        // get previous pages until folder page
-        var fromCount = fromFolder.split("/").length;
-        var toCount = folder.split("/").length;
-        var page = pageStack.currentPage;
-        for (var j = 0; j < fromCount-toCount; ++j) {
-            page = pageStack.previousPage(page);
-        }
-
-        pageStack.pop(page, PageStackAction.Animated);
-        return;
-    }
-
     goToRoot(PageStackAction.Immediate);
 
     // open the folders one by one
@@ -62,14 +44,14 @@ function goToFolder(folder, fromFolder)
 }
 
 // Goes to Home folder - requires document path from StandardPaths to resolve Home
-function goToHome(documentPath, fromFolder)
+function goToHome(documentPath)
 {
     var lastPos = documentPath.lastIndexOf("/");
     if (lastPos < 0)
         return;
 
     var homePath = documentPath.substring(0, lastPos);
-    goToFolder(homePath, fromFolder);
+    goToFolder(homePath);
 }
 
 function sdcardPath()
@@ -93,6 +75,18 @@ function formatPathForCover(path)
 {
     if (path === "/")
         return "";
+
+    var i = path.lastIndexOf("/");
+    if (i < -1)
+        return path;
+
+    return path.substring(i+1);
+}
+
+function formatPathForSearch(path)
+{
+    if (path === "/")
+        return "root";
 
     var i = path.lastIndexOf("/");
     if (i < -1)

@@ -29,8 +29,9 @@ icon.path = /usr/share/icons/hicolor/86x86/apps
 INSTALLS += target icon desktop  qml
 # End of Nov 2013 fix
 
-SOURCES += main.cpp filemodel.cpp fileinfo.cpp engine.cpp fileworker.cpp globals.cpp
-HEADERS += filemodel.h fileinfo.h engine.h fileworker.h globals.h
+SOURCES += main.cpp filemodel.cpp fileinfo.cpp engine.cpp fileworker.cpp searchengine.cpp \
+           searchworker.cpp globals.cpp
+HEADERS += filemodel.h fileinfo.h engine.h fileworker.h searchengine.h searchworker.h globals.h
 
 OTHER_FILES = \
 # You DO NOT want .yaml be listed here as Qt Creator's editor is completely not ready for multi package .yaml's

@@ -1,7 +1,6 @@
 #include "filemodel.h"
 #include <QDateTime>
 #include "globals.h"
-#include <QDebug>
 
 enum {
     FilenameRole = Qt::UserRole + 1,

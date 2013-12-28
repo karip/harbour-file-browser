@@ -1,29 +1,51 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.file.browser.FileModel 1.0
+import harbour.file.browser.SearchEngine 1.0
 import "functions.js" as Functions
 
 Page {
     id: page
     allowedOrientations: Orientation.All
+    showNavigationIndicator: false // hide back indicator because it would be on top of search field
     property string dir: "/"
-    property bool initial: false // this is set to true if the page is initial page
+    property string currentDirectory: ""
 
-    FileModel {
-        id: fileModel
+    // this and its bg worker thread will be destroyed when page in popped from stack
+    SearchEngine {
+        id: searchEngine
         dir: page.dir
-        // page.status does not exactly work - root folder seems to be active always??
-        active: page.status === PageStatus.Active
+
+        onProgressChanged: page.currentDirectory = directory
+        onMatchFound: listModel.append({ fullname: fullname, filename: filename,
+                                           absoluteDir: absoluteDir,
+                                           fileIcon: fileIcon, fileKind: fileKind });
+        onWorkerDone: { clearCover(); }
+        onWorkerErrorOccurred: { clearCover(); notificationPanel.showWithText(message, filename); }
     }
 
     SilicaListView {
         id: fileList
-        anchors {
-            fill: parent
-            bottomMargin: notificationPanel.margin
-        }
+        anchors.fill: parent
 
-        model: fileModel
+        // prevent newly added list delegates from stealing focus away from the search field
+        currentIndex: -1
+
+        model: ListModel {
+            id: listModel
+
+            function update(txt) {
+                if (txt === "")
+                    searchEngine.cancel();
+
+                clear();
+                if (txt !== "") {
+                    searchEngine.search(txt);
+                    coverPlaceholder.text = "Searching\n"+txt;
+                }
+            }
+
+            Component.onCompleted: update("")
+        }
 
         VerticalScrollDecorator { flickable: fileList }
 
@@ -31,11 +53,6 @@ Page {
             MenuItem {
                 text: "About"
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
-            }
-            MenuItem {
-                text: "Search"
-                onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"),
-                                          { dir: page.dir });
             }
             MenuItem {
                 text: "Go to SD Card"
@@ -52,16 +69,88 @@ Page {
                 text: "Go to Home"
                 onClicked: Functions.goToHome(StandardPaths.documents)
             }
-            MenuItem {
-                text: "Paste" + (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
-                onClicked: {
-                    progressPanel.showWithText(engine.clipboardCut ? "Moving" : "Copying")
-                    engine.pasteFiles(page.dir);
-                }
-            }
         }
 
-        header: PageHeader { title: Functions.formatPathForTitle(page.dir) }
+        header: Item {
+            width: parent.width
+            height: 100
+
+            SearchField {
+                id: searchField
+                anchors.left: parent.left
+                anchors.right: cancelSearchButton.left
+                placeholderText: "Search "+Functions.formatPathForSearch(page.dir)
+                inputMethodHints: Qt.ImhNoAutoUppercase
+
+                // get focus when page is shown for the first time
+                Component.onCompleted: forceActiveFocus()
+
+                // return key on virtual keyboard starts or restarts search
+                Keys.onPressed: {
+                    notificationPanel.hide();
+                    if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                        listModel.update(searchField.text);
+                        foundText.visible = true;
+                        searchField.focus = false;
+                    }
+                }
+            }
+            Rectangle {
+                id: cancelSearchButton
+                anchors.right: parent.right
+                width: 80
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                color: cancelSearchMouseArea.pressed ? Theme.secondaryHighlightColor : "transparent"
+                MouseArea {
+                    id: cancelSearchMouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        if (!searchEngine.running) {
+                            listModel.update(searchField.text);
+                            foundText.visible = true;
+                        } else {
+                            searchEngine.cancel()
+                        }
+                    }
+                    enabled: true
+                    Text {
+                        anchors.centerIn: parent
+                        color: Theme.primaryColor
+                        text: searchEngine.running ? "X" : ">"
+                    }
+                    BusyIndicator {
+                        id: searchBusy
+                        anchors.centerIn: parent
+                        running: searchEngine.running
+                        size: BusyIndicatorSize.Small
+                    }
+                }
+            }
+            Label {
+                id: foundText
+                visible: false
+                anchors.left: parent.left
+                anchors.leftMargin: searchField.textLeftMargin
+                anchors.top: searchField.bottom
+                anchors.topMargin: -26
+                text: "Found: "+listModel.count
+                font.pixelSize: Theme.fontSizeTiny
+                color: Theme.secondaryColor
+            }
+            Label {
+                anchors.left: parent.left
+                anchors.leftMargin: 240
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.paddingLarge
+                anchors.top: searchField.bottom
+                anchors.topMargin: -26
+                text: page.currentDirectory
+                font.pixelSize: Theme.fontSizeTiny
+                color: Theme.secondaryColor
+                elide: Text.ElideRight
+            }
+        }
 
         delegate: ListItem {
             id: fileItem
@@ -88,37 +177,25 @@ Page {
                 elide: Text.ElideRight
             }
             Label {
+                id: listAbsoluteDir
                 anchors.left: listIcon.right
                 anchors.leftMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.paddingLarge
                 anchors.top: listLabel.bottom
-                text: !(isLink && isDir) ? size : Functions.arrow()+" "+symLinkTarget
+                text: absoluteDir
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
-            }
-            Label {
-                visible: !(isLink && isDir)
-                anchors.top: listLabel.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: filekind+permissions
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeExtraSmall
-            }
-            Label {
-                visible: !(isLink && isDir)
-                anchors.top: listLabel.bottom
-                anchors.right: listLabel.right
-                text: modified
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeExtraSmall
+                elide: Text.ElideLeft
             }
 
             onClicked: {
-                if (model.isDir)
+                if (model.fileKind === "d")
                     pageStack.push(Qt.resolvedUrl("DirectoryPage.qml"),
-                                   { dir: fileModel.appendPath(listLabel.text) });
+                                   { dir: model.fullname });
                 else
                     pageStack.push(Qt.resolvedUrl("FilePage.qml"),
-                                   { file: fileModel.appendPath(listLabel.text) });
+                                   { file: model.fullname });
             }
 
             // delete file after remorse time
@@ -126,55 +203,46 @@ Page {
             function deleteFile() {
                 remorseAction("Deleting", function() {
                     progressPanel.showWithText("Deleting");
-                    engine.deleteFiles([ fileModel.fileNameAt(index) ]);
+                    engine.deleteFiles([ model.fullname ]);
                 }, 5000)
             }
 
-            // context menu is activated with long press
+            // context menu is activated with long press, visible if search is not running
             Component {
                  id: contextMenu
                  ContextMenu {
                      MenuItem {
+                         text: "Go to containing folder"
+                         onClicked: Functions.goToFolder(model.absoluteDir)
+                     }
+                     MenuItem {
                          text: "Cut"
-                         onClicked: engine.cutFiles([ fileModel.fileNameAt(index) ]);
+                         onClicked: engine.cutFiles([ model.fullname ]);
                      }
                      MenuItem {
                          text: "Copy"
-                         onClicked: engine.copyFiles([ fileModel.fileNameAt(index) ]);
+                         onClicked: engine.copyFiles([ model.fullname ]);
                      }
                      MenuItem {
                          text: "Delete"
-                         onClicked:  {
-                             deleteFile();
-                         }
+                         onClicked: deleteFile();
                      }
                  }
              }
         }
 
     }
+
     Label {
         anchors.centerIn: parent
-        text: "No files"
-        visible: fileModel.fileCount === 0 && fileModel.errorMessage === ""
-    }
-    Label {
-        anchors.centerIn: parent
-        text: fileModel.errorMessage
-        visible: fileModel.errorMessage !== ""
+        text: "No results"
+        visible: searchEngine.fileCount === 0
     }
 
     // update cover
     onStatusChanged: {
-        if (status === PageStatus.Activating) {
-            coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.dir)+"/";
-
-            // go to Home on startup
-            if (page.initial) {
-                page.initial = false;
-                Functions.goToHome(StandardPaths.documents);
-            }
-        }
+        if (status === PageStatus.Activating)
+            clearCover();
     }
 
     Rectangle {
@@ -297,12 +365,18 @@ Page {
                 // the error signal goes to all pages in pagestack, show it only in the active one
                 if (progressPanel.open) {
                     progressPanel.hide();
-                    if (message === "Unknown error")
-                        filename = "Trying to move between phone and SD Card? It doesn't work, try copying.";
-                    else if (message === "Failure to write block")
-                        filename = "Perhaps the storage is full?";
-
                     notificationPanel.showWithText(message, filename);
+                }
+            }
+
+            // item got deleted by worker, so remove it from list
+            onFileDeleted: {
+                for (var i = 0; i < listModel.count; ++i) {
+                    var item = listModel.get(i);
+                    if (item.fullname === fullname) {
+                        listModel.remove(i)
+                        return;
+                    }
                 }
             }
         }
@@ -368,6 +442,10 @@ Page {
             font.pixelSize: Theme.fontSizeTiny
             color: Theme.primaryColor
         }
+    }
+
+    function clearCover() {
+        coverPlaceholder.text = "Search";
     }
 }
 

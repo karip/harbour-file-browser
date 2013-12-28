@@ -13,11 +13,13 @@
 #include "filemodel.h"
 #include "fileinfo.h"
 #include "engine.h"
+#include "searchengine.h"
 
 int main(int argc, char *argv[])
 {
     qmlRegisterType<FileModel>("harbour.file.browser.FileModel", 1, 0, "FileModel");
     qmlRegisterType<FileInfo>("harbour.file.browser.FileInfo", 1, 0, "FileInfo");
+    qmlRegisterType<SearchEngine>("harbour.file.browser.SearchEngine", 1, 0, "SearchEngine");
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());

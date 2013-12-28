@@ -18,6 +18,7 @@ Engine::Engine(QObject *parent) :
     connect(m_fileWorker, SIGNAL(done()), this, SIGNAL(workerDone()));
     connect(m_fileWorker, SIGNAL(errorOccurred(QString, QString)),
             this, SIGNAL(workerErrorOccurred(QString, QString)));
+    connect(m_fileWorker, SIGNAL(fileDeleted(QString)), this, SIGNAL(fileDeleted(QString)));
 }
 
 Engine::~Engine()

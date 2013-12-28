@@ -12,4 +12,7 @@ QString permissionsToString(QFile::Permissions permissions);
 QString filesizeToString(qint64 filesize);
 QString datetimeToString(QDateTime datetime);
 
+QString infoToFileKind(QFileInfo info);
+QString infoToIconName(QFileInfo info);
+
 #endif // GLOBALS_H

@@ -49,7 +49,7 @@ Page {
                 onClicked: {
                     var sdcard = Functions.sdcardPath();
                     if (engine.exists(sdcard)) {
-                        Functions.goToFolder(sdcard, page.file);
+                        Functions.goToFolder(sdcard);
                     } else {
                         notificationPanel.showWithText("SD Card not found", sdcard);
                     }
@@ -57,7 +57,7 @@ Page {
             }
             MenuItem {
                 text: "Go to Home"
-                onClicked: Functions.goToHome(StandardPaths.documents, page.file)
+                onClicked: Functions.goToHome(StandardPaths.documents)
             }
             MenuItem {
                 text: "Install"
@@ -84,7 +84,7 @@ Page {
             MenuItem {
                 text: "Go to Target"
                 visible: fileInfo.icon === "folder-link"
-                onClicked: Functions.goToFolder(fileInfo.symLinkTarget, page.file);
+                onClicked: Functions.goToFolder(fileInfo.symLinkTarget);
             }
             // open menu tries to open the file and fileInfo.onProcessExited show error if it fails
             MenuItem {

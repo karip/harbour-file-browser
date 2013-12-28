@@ -29,6 +29,8 @@ signals: // signals, can be connected from a thread to another
     void done();
     void errorOccurred(QString message, QString filename);
 
+    void fileDeleted(QString fullname);
+
 protected:
     void run();
 

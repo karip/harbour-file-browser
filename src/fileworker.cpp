@@ -140,6 +140,7 @@ void FileWorker::deleteFiles()
             emit errorOccurred(errMsg, filename);
             return;
         }
+        emit fileDeleted(filename);
 
         fileIndex++;
     }

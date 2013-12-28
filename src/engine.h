@@ -46,7 +46,7 @@ signals:
     void progressFilenameChanged();
     void workerDone();
     void workerErrorOccurred(QString message, QString filename);
-    void workerCancelDone();
+    void fileDeleted(QString fullname);
 
 private slots:
     void setProgress(int progress, QString filename);
