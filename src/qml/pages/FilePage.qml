@@ -346,8 +346,8 @@ Page {
 
     function isImageFile(fileInfo)
     {
-        return fileInfo.suffix === "jpg" || fileInfo.suffix === "png" ||
-                fileInfo.suffix === "gif";
+        return fileInfo.suffix === "jpg" || fileInfo.suffix === "jpeg" ||
+                fileInfo.suffix === "png" || fileInfo.suffix === "gif";
     }
 
     function isAudioFile(fileInfo)
