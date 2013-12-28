@@ -77,7 +77,7 @@ QString FileInfo::name() const
 
 QString FileInfo::suffix() const
 {
-    return m_fileInfo.suffix();
+    return m_fileInfo.suffix().toLower();
 }
 
 QString FileInfo::symLinkTarget() const
