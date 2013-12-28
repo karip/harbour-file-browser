@@ -73,7 +73,7 @@ Page {
 
         header: Item {
             width: parent.width
-            height: 120
+            height: 110
 
             SearchField {
                 id: searchField
