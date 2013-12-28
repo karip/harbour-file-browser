@@ -106,7 +106,7 @@ Page {
                         videoOut.play();
                     }
                 }
-                MediaPlayer { //used to play audio since xdg-open will not work
+                MediaPlayer { // prelisten of audio
                     id: playMedia
                     source: fileInfo.file
                 }
@@ -133,6 +133,21 @@ Page {
                     anchors.topMargin: 6
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "../images/large-"+fileInfo.icon+".png"
+                    visible: !videoOut.visible
+                }
+                VideoPlayer { // preview of video
+                    id: videoOut
+                    source: fileInfo.file
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: 400
+                    width: parent.width
+                    visible: false
+                }
+                Item { // used for spacing if video is visible
+                    width: parent.width
+                    height: 40
+                    visible: videoOut.visible
                 }
                 Label {
                     width: parent.width
@@ -147,19 +162,6 @@ Page {
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Theme.fontSizeExtraSmall
-                }
-                Item { // used for spacing
-                    width: parent.width
-                    height: 40
-                }
-                VideoPlayer { // used to play video since xdg-open will not work
-                    id: videoOut
-                    source: fileInfo.file
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: 400
-                    width: parent.width
-                    visible: false
                 }
                 Item { // used for spacing
                     width: parent.width
