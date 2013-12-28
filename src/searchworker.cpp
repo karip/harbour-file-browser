@@ -52,14 +52,11 @@ QString SearchWorker::searchRecursively(QString directory, QString searchTerm)
             directory.startsWith("/sys/block"))
         return QString();
 
-    QFileInfo info(directory); // skip symlinks to prevent infinite loops
-    if (info.isSymLink())
-        return QString();
-
     QDir dir(directory);
     if (!dir.exists())  // skip "non-existent" directories (found in /dev)
         return QString();
 
+    // update progress
     m_currentDirectory = directory;
     emit progressChanged(m_currentDirectory);
 
@@ -89,6 +86,10 @@ QString SearchWorker::searchRecursively(QString directory, QString searchTerm)
 
         if (filename.toLower().indexOf(searchTerm) >= 0)
             emit matchFound(fullpath);
+
+        QFileInfo info(fullpath); // skip symlinks to prevent infinite loops
+        if (info.isSymLink())
+            continue;
 
         QString errmsg = searchRecursively(fullpath, searchTerm);
         if (!errmsg.isEmpty())
