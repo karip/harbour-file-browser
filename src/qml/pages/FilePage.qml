@@ -133,7 +133,18 @@ Page {
                     anchors.topMargin: 6
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "../images/large-"+fileInfo.icon+".png"
-                    visible: !videoOut.visible
+                    visible: !videoOut.visible && !imagePreview.visible
+                }
+                Image { // preview of image, max height 400
+                    id: imagePreview
+                    visible: isImageFile(fileInfo)
+                    source: fileInfo.file
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: implicitHeight < 400 && implicitHeight != 0 ? implicitHeight : 400
+                    width: parent.width
+                    fillMode: Image.PreserveAspectFit
+                    asynchronous: true
                 }
                 VideoPlayer { // preview of video
                     id: videoOut
@@ -144,10 +155,10 @@ Page {
                     width: parent.width
                     visible: false
                 }
-                Item { // used for spacing if video is visible
+                Item { // used for spacing if image or video is visible
                     width: parent.width
-                    height: 40
-                    visible: videoOut.visible
+                    height: 20
+                    visible: videoOut.visible | imagePreview.visible
                 }
                 Label {
                     width: parent.width
@@ -331,6 +342,12 @@ Page {
                 stop();
             }
         }
+    }
+
+    function isImageFile(fileInfo)
+    {
+        return fileInfo.suffix === "jpg" || fileInfo.suffix === "png" ||
+                fileInfo.suffix === "gif";
     }
 
     function isAudioFile(fileInfo)
