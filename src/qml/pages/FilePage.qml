@@ -64,6 +64,15 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("ViewPage.qml"),
                                           { path: page.file });
             }
+            // open menu tries to open the file and fileInfo.onProcessExited shows error if it fails
+            MenuItem {
+                text: "Open"
+                visible: fileInfo.icon !== "folder-link"
+                onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
+            }
+
+            // file type specific menu items
+
             MenuItem {
                 text: "Install"
                 visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm"
@@ -90,13 +99,6 @@ Page {
                 text: "Go to Target"
                 visible: fileInfo.icon === "folder-link"
                 onClicked: Functions.goToFolder(fileInfo.symLinkTarget);
-            }
-            // open menu tries to open the file and fileInfo.onProcessExited shows error if it fails
-            MenuItem {
-                text: "Open"
-                visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm" && !isAudioFile(fileInfo) &&
-                         fileInfo.icon !== "folder-link"
-                onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
             MenuItem {
                 text: playMedia.playbackState !== MediaPlayer.PlayingState ? "Play" : "Stop"
