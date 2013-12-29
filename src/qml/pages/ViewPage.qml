@@ -42,6 +42,7 @@ Page {
 
             Label {
                 id: portraitText
+                textFormat: Text.PlainText
                 width: parent.width
                 wrapMode: Text.WrapAnywhere
                 font.pixelSize: Theme.fontSizeTiny
@@ -51,6 +52,7 @@ Page {
             }
             Label {
                 id: landscapeText
+                textFormat: Text.PlainText
                 width: parent.width
                 wrapMode: Text.WrapAnywhere
                 font.pixelSize: Theme.fontSizeTiny
@@ -67,7 +69,7 @@ Page {
                 id: message
                 width: parent.width
                 wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeTiny
+                font.pixelSize: portraitText.text === "" ? Theme.fontSizeMedium : Theme.fontSizeTiny
                 color: Theme.primaryColor
                 horizontalAlignment: Text.AlignHCenter
                 visible: message.text !== ""
