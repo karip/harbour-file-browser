@@ -95,12 +95,13 @@ Page {
                     }
                 }
             }
+            // our own "IconButton" to make the mouse area large and easier to tap
             Rectangle {
                 id: cancelSearchButton
                 anchors.right: parent.right
-                width: 80
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+                anchors.top: searchField.top
+                width: Theme.iconSizeMedium+Theme.paddingLarge
+                height: searchField.height
                 color: cancelSearchMouseArea.pressed ? Theme.secondaryHighlightColor : "transparent"
                 MouseArea {
                     id: cancelSearchMouseArea
@@ -114,14 +115,17 @@ Page {
                         }
                     }
                     enabled: true
-                    Text {
-                        anchors.centerIn: parent
-                        color: Theme.primaryColor
-                        text: searchEngine.running ? "X" : ">"
+                    Image {
+                        id: cancelSearchButtonImage
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: Theme.paddingLarge
+                        source: searchEngine.running ? "image://theme/icon-m-clear" :
+                                                       "image://theme/icon-m-right"
                     }
                     BusyIndicator {
                         id: searchBusy
-                        anchors.centerIn: parent
+                        anchors.centerIn: cancelSearchButtonImage
                         running: searchEngine.running
                         size: BusyIndicatorSize.Small
                     }
@@ -134,7 +138,7 @@ Page {
                 anchors.leftMargin: searchField.textLeftMargin
                 anchors.top: searchField.bottom
                 anchors.topMargin: -26
-                text: "Found: "+listModel.count
+                text: listModel.count+" hits"
                 font.pixelSize: Theme.fontSizeTiny
                 color: Theme.secondaryColor
             }

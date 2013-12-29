@@ -163,7 +163,7 @@ Page {
                 }
                 Item { // used for spacing if image or video is visible
                     width: parent.width
-                    height: 20
+                    height: 24
                     visible: videoOut.visible | imagePreview.visible
                 }
                 Label {
