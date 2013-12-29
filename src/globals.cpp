@@ -86,7 +86,7 @@ QString infoToIconName(QFileInfo info)
 
 int access(QString filename, int how)
 {
-    QByteArray fab = filename.toLatin1();
+    QByteArray fab = filename.toUtf8();
     char *fn = fab.data();
     return access(fn, how);
 }
