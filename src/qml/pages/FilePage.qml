@@ -2,7 +2,6 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.file.browser.FileInfo 1.0
 import QtMultimedia 5.0
-import Sailfish.Media 1.0
 import "functions.js" as Functions
 
 Page {
@@ -100,19 +99,12 @@ Page {
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
             MenuItem {
-                text: "Play " + (isAudioFile(fileInfo) ? "Music" : "Video")
-                visible: isMediaFile(fileInfo)
+                text: "Play"
+                visible: isAudioFile(fileInfo)
                 onClicked: {
                     if (isAudioFile(fileInfo)) {
                         playMedia.source = fileInfo.file;
                         playMedia.play();
-                        videoOut.visible = false;
-                        videoOut.source = "";
-                    }
-                    if (isVideoFile(fileInfo)) {
-                        videoOut.source = fileInfo.file;
-                        videoOut.visible = true;
-                        videoOut.play();
                     }
                 }
                 MediaPlayer { // prelisten of audio
@@ -142,7 +134,7 @@ Page {
                     anchors.topMargin: 6
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "../images/large-"+fileInfo.icon+".png"
-                    visible: !videoOut.visible && !imagePreview.visible
+                    visible: !imagePreview.visible
                 }
                 Image { // preview of image, max height 400
                     id: imagePreview
@@ -155,19 +147,10 @@ Page {
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                 }
-                VideoPlayer { // preview of video
-                    id: videoOut
-                    source: ""
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: 400
-                    width: parent.width
-                    visible: false
-                }
                 Item { // used for spacing if image or video is visible
                     width: parent.width
                     height: 24
-                    visible: videoOut.visible | imagePreview.visible
+                    visible: imagePreview.visible
                 }
                 Label {
                     width: parent.width
@@ -280,11 +263,6 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.file);
-        }
-        //Pop of page detected to reset video player visibility
-        if (status == 3 ){
-            videoOut.visible = false;
-            videoOut.source = "";
         }
     }
 
