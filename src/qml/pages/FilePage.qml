@@ -91,7 +91,7 @@ Page {
                 visible: fileInfo.icon === "folder-link"
                 onClicked: Functions.goToFolder(fileInfo.symLinkTarget);
             }
-            // open menu tries to open the file and fileInfo.onProcessExited show error if it fails
+            // open menu tries to open the file and fileInfo.onProcessExited shows error if it fails
             MenuItem {
                 text: "Open"
                 visible: fileInfo.suffix !== "apk" && fileInfo.suffix !== "rpm" && !isAudioFile(fileInfo) &&
@@ -99,12 +99,16 @@ Page {
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
             MenuItem {
-                text: "Play"
+                text: playMedia.playbackState !== MediaPlayer.PlayingState ? "Play" : "Stop"
                 visible: isAudioFile(fileInfo)
                 onClicked: {
                     if (isAudioFile(fileInfo)) {
-                        playMedia.source = fileInfo.file;
-                        playMedia.play();
+                        if (playMedia.playbackState !== MediaPlayer.PlayingState) {
+                            playMedia.source = fileInfo.file;
+                            playMedia.play();
+                        } else {
+                            playMedia.stop();
+                        }
                     }
                 }
                 MediaPlayer { // prelisten of audio
