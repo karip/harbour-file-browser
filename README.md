@@ -20,7 +20,7 @@ responsibility if that happens. So, be careful.
  * Open files (if xdg-open finds a preferred application)
  * View contents of text and binary files
  * Preview JPEG, PNG and GIF files inside the app
- * Play back WAV, MP3, OGG, FLAC and MP4 inside the app
+ * Play back WAV, MP3, OGG and FLAC audio inside the app
  * Install Android APK and Sailfish RPM packages
  * Cut, copy and paste files (move/copy files) (by long pressing an 
    item in a list)
