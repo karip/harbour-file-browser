@@ -72,7 +72,7 @@ Page {
                         pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                                        { title: "Install",
                                            successText: "Install Launched",
-                                           infoText: "If the application is already installed, then this will probably do nothing.",
+                                           infoText: "If the app is already installed or package is faulty, then nothing happens.",
                                            command: "apkd-install",
                                            arguments: [ fileInfo.file ] })
                     }
