@@ -167,7 +167,7 @@ Page {
     // update cover
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.dir)+"/";
+            coverPlaceholder.text = Functions.formatPathForCover(page.dir)+"/";
 
             // go to Home on startup
             if (page.initial) {

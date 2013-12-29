@@ -266,7 +266,7 @@ Page {
     // update cover
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.file);
+            coverPlaceholder.text = Functions.formatPathForCover(page.file);
         }
     }
 

@@ -85,7 +85,7 @@ Page {
     // update cover
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            coverPlaceholder.text = "File Browser\n"+Functions.formatPathForCover(page.path);
+            coverPlaceholder.text = Functions.formatPathForCover(page.path);
             // reading file returns three texts, message, portrait and landscape texts
             var txts = engine.readFile(page.path);
             message.text = txts[0];
