@@ -104,17 +104,20 @@ Page {
                 visible: isMediaFile(fileInfo)
                 onClicked: {
                     if (isAudioFile(fileInfo)) {
+                        playMedia.source = fileInfo.file;
                         playMedia.play();
                         videoOut.visible = false;
+                        videoOut.source = "";
                     }
                     if (isVideoFile(fileInfo)) {
+                        videoOut.source = fileInfo.file;
                         videoOut.visible = true;
                         videoOut.play();
                     }
                 }
                 MediaPlayer { // prelisten of audio
                     id: playMedia
-                    source: fileInfo.file
+                    source: ""
                 }
             }
         }
@@ -144,7 +147,7 @@ Page {
                 Image { // preview of image, max height 400
                     id: imagePreview
                     visible: isImageFile(fileInfo)
-                    source: fileInfo.file
+                    source: visible ? fileInfo.file : "" // access the image only if it is visible
                     anchors.left: parent.left
                     anchors.right: parent.right
                     height: implicitHeight < 400 && implicitHeight != 0 ? implicitHeight : 400
@@ -154,7 +157,7 @@ Page {
                 }
                 VideoPlayer { // preview of video
                     id: videoOut
-                    source: fileInfo.file
+                    source: ""
                     anchors.left: parent.left
                     anchors.right: parent.right
                     height: 400
@@ -281,7 +284,7 @@ Page {
         //Pop of page detected to reset video player visibility
         if (status == 3 ){
             videoOut.visible = false;
-
+            videoOut.source = "";
         }
     }
 
