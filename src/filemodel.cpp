@@ -203,9 +203,7 @@ void FileModel::readEntries()
         m_errorMessage = tr("Directory does not exist");
         return;
     }
-    QByteArray ba = m_dir.toLatin1();
-    char *dirname = ba.data();
-    if (access(dirname, R_OK) == -1) {
+    if (access(m_dir, R_OK) == -1) {
         m_errorMessage = tr("No permission to read the directory");
         return;
     }

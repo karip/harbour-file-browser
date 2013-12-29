@@ -43,6 +43,7 @@ OTHER_FILES = \
     ../rpm/harbour-file-browser.spec \
     qml/pages/DirectoryPage.qml \
     qml/pages/FilePage.qml \
+    qml/pages/ViewPage.qml \
     qml/pages/AboutPage.qml \
     qml/main.qml \
     qml/functions.js

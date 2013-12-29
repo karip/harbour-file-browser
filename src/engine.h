@@ -38,6 +38,7 @@ public:
     Q_INVOKABLE QString errorMessage() const { return m_errorMessage; }
 
     Q_INVOKABLE bool exists(QString filename);
+    Q_INVOKABLE QStringList readFile(QString filename);
 
 signals:
     void clipboardCountChanged();
@@ -52,6 +53,9 @@ private slots:
     void setProgress(int progress, QString filename);
 
 private:
+    QString dumpHex(char *buffer, int size, int bytesPerLine);
+    QStringList stringListify(QString msg, QString str = QString());
+
     QStringList m_clipboardFiles;
     bool m_clipboardCut;
     int m_progress;

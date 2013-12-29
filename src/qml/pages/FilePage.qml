@@ -60,6 +60,12 @@ Page {
                 onClicked: Functions.goToHome(StandardPaths.documents)
             }
             MenuItem {
+                text: "View Contents"
+                visible: fileInfo.icon !== "folder-link"
+                onClicked: pageStack.push(Qt.resolvedUrl("ViewPage.qml"),
+                                          { path: page.file });
+            }
+            MenuItem {
                 text: "Install"
                 visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm"
                 onClicked: {

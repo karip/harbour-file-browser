@@ -15,4 +15,6 @@ QString datetimeToString(QDateTime datetime);
 QString infoToFileKind(QFileInfo info);
 QString infoToIconName(QFileInfo info);
 
+int access(QString filename, int how);
+
 #endif // GLOBALS_H

@@ -1,5 +1,6 @@
 #include "engine.h"
 #include <QDateTime>
+#include <QTextStream>
 #include "globals.h"
 #include "fileworker.h"
 
@@ -105,6 +106,80 @@ bool Engine::exists(QString filename)
     return QFile::exists(filename);
 }
 
+QStringList Engine::readFile(QString filename)
+{
+    int maxLines = 1000;
+    int maxSize = 10000;
+    int maxBinSize = 2048;
+
+    // check permissions
+    if (access(filename, R_OK) == -1)
+        return stringListify(tr("No permission to read the file\n%1").arg(filename));
+
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly))
+        return stringListify(tr("Error reading file\n%1").arg(filename));
+
+    // read start of file
+    char buffer[maxSize+1];
+    qint64 readSize = file.read(buffer, maxSize);
+    if (readSize < 0)
+        return stringListify(tr("Error reading file\n%1").arg(filename));
+
+    if (readSize == 0)
+        return stringListify(tr("Empty file"));
+
+    bool atEnd = file.atEnd();
+    file.close();
+
+    // detect binary or text file, it is binary if it contains zeros
+    bool isText = true;
+    for (int i = 0; i < readSize; ++i) {
+        if (buffer[i] == 0) {
+            isText = false;
+            break;
+        }
+    }
+
+    // binary output
+    if (!isText) {
+        // two different line widths
+        if (readSize > maxBinSize) {
+            readSize = maxBinSize;
+            atEnd = false;
+        }
+        QString out8 = dumpHex(buffer, readSize, 8);
+        QString out16 = dumpHex(buffer, readSize, 16);
+        QString msg = "";
+
+        if (!atEnd) {
+            msg = tr("--- Binary file preview clipped at %1 kB ---").arg(maxBinSize/1000);
+            msg = tr("--- Binary file preview clipped at %1 kB ---").arg(maxBinSize/1000);
+        }
+
+        return QStringList() << msg << out8 << out16;
+    }
+
+    // read lines to a list and join
+    QByteArray ba(buffer, readSize);
+    QTextStream in(&ba);
+    QStringList lines;
+    int lineCount = 0;
+    while (!in.atEnd() && lineCount < maxLines) {
+        QString line = in.readLine();
+        lines.append(line);
+        lineCount++;
+    }
+
+    QString msg = "";
+    if (lineCount == maxLines)
+        msg = tr("--- Text file preview clipped at %1 lines ---").arg(maxLines);
+    else if (!atEnd)
+        msg = tr("--- Text file preview clipped at %1 kB ---").arg(maxSize/1000);
+
+    return stringListify(msg, lines.join("\n"));
+}
+
 void Engine::setProgress(int progress, QString filename)
 {
     m_progress = progress;
@@ -113,3 +188,40 @@ void Engine::setProgress(int progress, QString filename)
     emit progressFilenameChanged();
 }
 
+QString Engine::dumpHex(char *buffer, int size, int bytesPerLine)
+{
+    QString out;
+    QString ascDump;
+    int i;
+    for (i = 0; i < size; ++i) {
+        if ((i % bytesPerLine) == 0) { // line change
+            out += " "+ascDump+"\n"+
+                    QString("%1").arg(QString::number(i, 16), 4, QLatin1Char('0'))+": ";
+            ascDump.clear();
+        }
+
+        out += QString("%1").arg(QString::number((unsigned char)buffer[i], 16),
+                                       2, QLatin1Char('0'))+" ";
+        if (buffer[i] >= 32 && buffer[i] <= 126)
+            ascDump += buffer[i];
+        else
+            ascDump += ".";
+    }
+    // write out remaining asc dump
+    if ((i % bytesPerLine) > 0) {
+        int emptyBytes = bytesPerLine - (i % bytesPerLine);
+        for (int j = 0; j < emptyBytes; ++j) {
+            out += "   ";
+        }
+    }
+    out += " "+ascDump;
+
+    return out;
+}
+
+QStringList Engine::stringListify(QString msg, QString str)
+{
+    QStringList list;
+    list << msg << str << str;
+    return list;
+}

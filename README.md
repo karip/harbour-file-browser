@@ -18,6 +18,7 @@ responsibility if that happens. So, be careful.
  * Browse directories and files on the phone
  * Search files
  * Open files (if xdg-open finds a preferred application)
+ * View contents of text and binary files
  * Preview JPEG, PNG and GIF files inside the app
  * Play back WAV, MP3, OGG, FLAC and MP4 inside the app
  * Install Android APK and Sailfish RPM packages
