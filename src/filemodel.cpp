@@ -1,5 +1,8 @@
 #include "filemodel.h"
 #include <QDateTime>
+#include <QSettings>
+#include <QGuiApplication>
+#include "engine.h"
 #include "globals.h"
 
 enum {
@@ -24,6 +27,10 @@ FileModel::FileModel(QObject *parent) :
     m_watcher = new QFileSystemWatcher(this);
     connect(m_watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(refresh()));
     connect(m_watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(refresh()));
+
+    // refresh model every time settings are changed
+    Engine *engine = qApp->property("engine").value<Engine *>();
+    connect(engine, SIGNAL(settingsChanged()), this, SLOT(refresh()));
 }
 
 FileModel::~FileModel()
@@ -208,12 +215,16 @@ void FileModel::readEntries()
         return;
     }
 
+    QSettings settings;
+    bool hiddenSetting = settings.value("show-hidden-files", false).toBool();
+    QDir::Filter hidden = hiddenSetting ? QDir::Hidden : (QDir::Filter)0;
+    dir.setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot | hidden);
+
+    if (settings.value("show-dirs-first", false).toBool())
+        dir.setSorting(QDir::Name | QDir::DirsFirst);
+
     QFileInfoList infoList = dir.entryInfoList();
     foreach (QFileInfo info, infoList) {
-        QString filename = info.fileName();
-        if (filename == "." || filename == "..")
-            continue;
-
         FileData data;
         data.info = info;
         m_files.append(data);

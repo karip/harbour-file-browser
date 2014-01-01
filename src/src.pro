@@ -44,6 +44,7 @@ OTHER_FILES = \
     qml/pages/DirectoryPage.qml \
     qml/pages/FilePage.qml \
     qml/pages/ViewPage.qml \
+    qml/pages/SettingsPage.qml \
     qml/pages/AboutPage.qml \
     qml/main.qml \
     qml/functions.js

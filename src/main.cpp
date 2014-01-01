@@ -12,8 +12,8 @@
 
 #include "filemodel.h"
 #include "fileinfo.h"
-#include "engine.h"
 #include "searchengine.h"
+#include "engine.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,11 +22,21 @@ int main(int argc, char *argv[])
     qmlRegisterType<SearchEngine>("harbour.file.browser.SearchEngine", 1, 0, "SearchEngine");
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+
+    // these values are used by QSettings to access the config file in
+    // /home/nemo/.local/share/harbour-file-browser/FileBrowser.conf
+    QCoreApplication::setOrganizationName("harbour-file-browser");
+    QCoreApplication::setApplicationName("FileBrowser");
+
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
-    // global engine object
+    // QML global engine object
     QScopedPointer<Engine> engine(new Engine);
     view->rootContext()->setContextProperty("engine", engine.data());
+
+    // store pointer to engine to access it in any class
+    QVariant engineVariant = qVariantFromValue(engine.data());
+    qApp->setProperty("engine", engineVariant);
 
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
     view->show();

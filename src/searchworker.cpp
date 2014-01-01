@@ -1,5 +1,6 @@
 #include "searchworker.h"
 #include <QDateTime>
+#include <QSettings>
 #include "globals.h"
 
 SearchWorker::SearchWorker(QObject *parent) :
@@ -60,22 +61,12 @@ QString SearchWorker::searchRecursively(QString directory, QString searchTerm)
     m_currentDirectory = directory;
     emit progressChanged(m_currentDirectory);
 
-    // search files
-    QStringList names = dir.entryList(QDir::Files);
-    for (int i = 0 ; i < names.count() ; ++i) {
-        // stop if cancelled
-        if (m_cancelled.loadAcquire() == Cancelled)
-            return QString();
-
-        QString filename = names.at(i);
-        QString fullpath = dir.absoluteFilePath(filename);
-
-        if (filename.toLower().indexOf(searchTerm) >= 0)
-            emit matchFound(fullpath);
-    }
+    QSettings settings;
+    bool hiddenSetting = settings.value("show-hidden-files", false).toBool();
+    QDir::Filter hidden = hiddenSetting ? QDir::Hidden : (QDir::Filter)0;
 
     // search dirs
-    names = dir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs);
+    QStringList names = dir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs | hidden);
     for (int i = 0 ; i < names.count() ; ++i) {
         // stop if cancelled
         if (m_cancelled.loadAcquire() == Cancelled)
@@ -94,6 +85,20 @@ QString SearchWorker::searchRecursively(QString directory, QString searchTerm)
         QString errmsg = searchRecursively(fullpath, searchTerm);
         if (!errmsg.isEmpty())
             return errmsg;
+    }
+
+    // search files
+    names = dir.entryList(QDir::Files | hidden);
+    for (int i = 0 ; i < names.count() ; ++i) {
+        // stop if cancelled
+        if (m_cancelled.loadAcquire() == Cancelled)
+            return QString();
+
+        QString filename = names.at(i);
+        QString fullpath = dir.absoluteFilePath(filename);
+
+        if (filename.toLower().indexOf(searchTerm) >= 0)
+            emit matchFound(fullpath);
     }
 
     return QString();

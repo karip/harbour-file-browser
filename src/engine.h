@@ -2,6 +2,7 @@
 #define ENGINE_H
 
 #include <QDir>
+#include <QVariant>
 
 class FileWorker;
 
@@ -40,6 +41,9 @@ public:
     Q_INVOKABLE bool exists(QString filename);
     Q_INVOKABLE QStringList readFile(QString filename);
 
+    Q_INVOKABLE QString readSetting(QString key, QString defaultValue = QString());
+    Q_INVOKABLE void writeSetting(QString key, QString value);
+
 signals:
     void clipboardCountChanged();
     void clipboardCutChanged();
@@ -48,6 +52,8 @@ signals:
     void workerDone();
     void workerErrorOccurred(QString message, QString filename);
     void fileDeleted(QString fullname);
+
+    void settingsChanged();
 
 private slots:
     void setProgress(int progress, QString filename);

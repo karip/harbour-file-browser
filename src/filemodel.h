@@ -48,6 +48,8 @@ public:
     Q_INVOKABLE QString appendPath(QString dirName);
     Q_INVOKABLE QString parentPath();
     Q_INVOKABLE QString fileNameAt(int fileIndex);
+
+public slots:
     Q_INVOKABLE void refresh();
 
 signals:

@@ -1,6 +1,7 @@
 #include "engine.h"
 #include <QDateTime>
 #include <QTextStream>
+#include <QSettings>
 #include "globals.h"
 #include "fileworker.h"
 
@@ -178,6 +179,25 @@ QStringList Engine::readFile(QString filename)
         msg = tr("--- Text file preview clipped at %1 kB ---").arg(maxSize/1000);
 
     return stringListify(msg, lines.join("\n"));
+}
+
+QString Engine::readSetting(QString key, QString defaultValue)
+{
+    QSettings settings;
+    return settings.value(key, defaultValue).toString();
+}
+
+void Engine::writeSetting(QString key, QString value)
+{
+    QSettings settings;
+
+    // do nothing if value didn't change
+    if (settings.value(key) == value)
+        return;
+
+    settings.setValue(key, value);
+
+    emit settingsChanged();
 }
 
 void Engine::setProgress(int progress, QString filename)
