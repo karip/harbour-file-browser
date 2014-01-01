@@ -25,6 +25,7 @@ responsibility if that happens. So, be careful.
  * Cut, copy and paste files (move/copy files) (by long pressing an 
    item in a list)
  * Delete files and directories (by long pressing an item in a list)
+ * Show hidden files (filenames starting with a dot)
 
 ### Acknowledgements
 

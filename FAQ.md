@@ -25,15 +25,15 @@ the file type or it doesn't find a preferred program to open it.
 The Sailfish OS is still at beta stage, so it doesn't have all bindings
 for all media formats.
 
-### How can I see how much space is left on storage (on phone or SD Card)?
+### How can I see how much space is left on phone or SD Card?
 
-Phone storage can be seen from Settings... information about phone. Free
-space of an SD Card, don't know how to see that.
+Free phone storage space can be seen from phone settings. 
+Free space of an SD Card, don't know how to see that.
 
 ### Does it have XXX feature?
 
 It can't rename files, change permissions, change owners, 
-sudo, show hidden files, show Android home folder, multi-select files, 
+sudo, go to Android home folder, multi-select files, 
 edit files, share files, send email, mms or sms, open ftp sites, 
 connect to samba server, simulate vi and it does not blend or make coffee.
 

@@ -1,6 +1,12 @@
 
 # File Browser Release Notes
 
+## Version 1.4
+
+ * Added Settings page
+ * Added show hidden files
+ * Added show directories first
+
 ## Version 1.3 (2013-12-29)
 
  * Added filename search
