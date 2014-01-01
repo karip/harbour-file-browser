@@ -238,12 +238,6 @@ Page {
 
     }
 
-    Label {
-        anchors.centerIn: parent
-        text: "No results"
-        visible: searchEngine.fileCount === 0
-    }
-
     // update cover
     onStatusChanged: {
         if (status === PageStatus.Activating)
