@@ -160,13 +160,14 @@ Page {
             id: fileItem
             menu: contextMenu
             width: ListView.view.width
+            contentHeight: listLabel.height+listAbsoluteDir.height + 13
 
             Image {
                 id: listIcon
                 anchors.left: parent.left
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.top: parent.top
-                anchors.topMargin: 9
+                anchors.topMargin: 11
                 source: "../images/small-"+fileIcon+".png"
             }
             Label {
@@ -176,7 +177,7 @@ Page {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.paddingLarge
                 anchors.top: parent.top
-                anchors.topMargin: 3
+                anchors.topMargin: 5
                 text: filename
                 elide: Text.ElideRight
             }

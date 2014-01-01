@@ -67,7 +67,7 @@ Page {
             id: fileItem
             menu: contextMenu
             width: ListView.view.width
-            contentHeight: listLabel.height+listSize.height + Theme.paddingMedium
+            contentHeight: listLabel.height+listSize.height + 13
 
             Image {
                 id: listIcon
