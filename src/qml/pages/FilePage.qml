@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import harbour.file.browser.FileInfo 1.0
 import QtMultimedia 5.0
 import "functions.js" as Functions
+import "../components"
 
 Page {
     id: page
@@ -138,8 +139,7 @@ Page {
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                 }
-                Item { // used for spacing if image or video is visible
-                    width: parent.width
+                LagoonSpacer { // spacing if image or video is visible
                     height: 24
                     visible: imagePreview.visible
                 }
@@ -157,10 +157,9 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Theme.fontSizeExtraSmall
                 }
-                Item { // used for spacing
-                    width: parent.width
-                    height: 40
-                }
+
+                LagoonSpacer { height: 40 }
+
                 Row {
                     width: parent.width
                     spacing: 10

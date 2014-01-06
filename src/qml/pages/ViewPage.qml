@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "functions.js" as Functions
+import "../components"
 
 Page {
     id: page
@@ -42,8 +43,7 @@ Page {
                 color: Theme.primaryColor
                 visible: page.orientation === Orientation.Landscape
             }
-            Item { // used for spacing
-                width: parent.width
+            LagoonSpacer {
                 height: 40
                 visible: message.text !== ""
             }
@@ -56,8 +56,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 visible: message.text !== ""
             }
-            Item { // used for spacing
-                width: parent.width
+            LagoonSpacer {
                 height: 40
                 visible: message.text !== ""
             }

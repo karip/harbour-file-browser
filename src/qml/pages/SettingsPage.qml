@@ -30,10 +30,9 @@ Page {
                 id: showHiddenFiles
                 text: qsTr("Show hidden files")
             }
-            Item { // used for spacing
-                width: parent.width
-                height: 40
-            }
+
+            LagoonSpacer { height: 40 }
+
             Label {
                 text: qsTr("About File Browser")
                 anchors.left: parent.left

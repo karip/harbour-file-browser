@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.file.browser.FileInfo 1.0
+import "../components"
 
 Page {
     id: page
@@ -72,7 +73,7 @@ Page {
                 color: Theme.secondaryColor
             }
 
-            Item { width: parent.width; height: 40 } // used for spacing
+            LagoonSpacer { height: 40 }
 
             // command line text
             Label {
