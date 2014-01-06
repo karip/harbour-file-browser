@@ -205,10 +205,10 @@ Page {
 
             // delete file after remorse time
             ListView.onRemove: animateRemoval(fileItem)
-            function deleteFile() {
+            function deleteFile(deleteFilename) {
                 remorseAction("Deleting", function() {
                     progressPanel.showWithText("Deleting");
-                    engine.deleteFiles([ model.fullname ]);
+                    engine.deleteFiles([ deleteFilename ]);
                 }, 5000)
             }
 
@@ -230,7 +230,7 @@ Page {
                      }
                      MenuItem {
                          text: "Delete"
-                         onClicked: deleteFile();
+                         onClicked: deleteFile(model.fullname);
                      }
                  }
              }
