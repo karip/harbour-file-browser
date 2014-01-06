@@ -46,14 +46,14 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: "View Contents"
-                visible: fileInfo.icon !== "folder-link"
+                visible: !fileInfo.isDir
                 onClicked: pageStack.push(Qt.resolvedUrl("ViewPage.qml"),
                                           { path: page.file });
             }
             // open menu tries to open the file and fileInfo.onProcessExited shows error if it fails
             MenuItem {
                 text: "Open"
-                visible: fileInfo.icon !== "folder-link"
+                visible: !fileInfo.isDir
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
 
@@ -61,7 +61,7 @@ Page {
 
             MenuItem {
                 text: "Install"
-                visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm"
+                visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
                 onClicked: {
                     if (fileInfo.suffix === "apk") {
                         pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
@@ -131,7 +131,7 @@ Page {
                 Image { // preview of image, max height 400
                     id: imagePreview
                     visible: isImageFile(fileInfo)
-                    source: visible ? fileInfo.file : "" // access the image only if it is visible
+                    source: visible ? fileInfo.file : "" // access the source only if img is visible
                     anchors.left: parent.left
                     anchors.right: parent.right
                     height: implicitHeight < 400 && implicitHeight != 0 ? implicitHeight : 400
@@ -323,12 +323,14 @@ Page {
 
     function isImageFile(fileInfo)
     {
+        if (fileInfo.isDir) return false;
         return fileInfo.suffix === "jpg" || fileInfo.suffix === "jpeg" ||
                 fileInfo.suffix === "png" || fileInfo.suffix === "gif";
     }
 
     function isAudioFile(fileInfo)
     {
+        if (fileInfo.isDir) return false;
         return fileInfo.suffix === "wav" || fileInfo.suffix === "mp3" ||
                 fileInfo.suffix === "ogg" || fileInfo.suffix === "flac" ||
                 fileInfo.suffix === "aac" || fileInfo.suffix === "m4a";
@@ -336,11 +338,13 @@ Page {
 
     function isVideoFile(fileInfo)
     {
+        if (fileInfo.isDir) return false;
         return fileInfo.suffix === "mp4" || fileInfo.suffix === "m4v";
     }
 
     function isMediaFile(fileInfo)
     {
+        if (fileInfo.isDir) return false;
         return isAudioFile(fileInfo) | isVideoFile(fileInfo);
     }
 

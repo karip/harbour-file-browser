@@ -143,6 +143,14 @@ Page {
                              deleteFile(fileModel.fileNameAt(index));
                          }
                      }
+                     MenuItem {
+                         visible: model.isDir
+                         text: "Properties"
+                         onClicked:  {
+                             pageStack.push(Qt.resolvedUrl("FilePage.qml"),
+                                            { file: fileModel.fileNameAt(index) });
+                         }
+                     }
                  }
              }
         }

@@ -24,6 +24,11 @@ void FileInfo::setFile(QString file)
     emit fileChanged();
 }
 
+bool FileInfo::isDir() const
+{
+    return m_fileInfo.isDir();
+}
+
 QString FileInfo::kind() const
 {
     if (m_fileInfo.isSymLink()) return "l";
@@ -141,6 +146,7 @@ void FileInfo::readFile()
         m_errorMessage = tr("File does not exist");
 
     emit fileChanged();
+    emit isDirChanged();
     emit kindChanged();
     emit iconChanged();
     emit permissionsChanged();

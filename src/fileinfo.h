@@ -13,6 +13,7 @@ class FileInfo : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString file READ file() WRITE setFile(QString) NOTIFY fileChanged())
+    Q_PROPERTY(bool isDir READ isDir() NOTIFY isDirChanged())
     Q_PROPERTY(QString kind READ kind() NOTIFY kindChanged())
     Q_PROPERTY(QString icon READ icon() NOTIFY iconChanged())
     Q_PROPERTY(QString permissions READ permissions() NOTIFY permissionsChanged())
@@ -34,6 +35,7 @@ public:
     QString file() const { return m_file; }
     void setFile(QString file);
 
+    bool isDir() const;
     QString kind() const;
     QString icon() const;
     QString permissions() const;
@@ -52,6 +54,7 @@ public:
 
 signals:
     void fileChanged();
+    void isDirChanged();
     void kindChanged();
     void iconChanged();
     void permissionsChanged();
