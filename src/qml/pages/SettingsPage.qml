@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "functions.js" as Functions
+import "../components"
 
 Page {
     id: page
@@ -33,10 +34,45 @@ Page {
                 width: parent.width
                 height: 40
             }
-            Button {
-                text: qsTr("About")
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+            Label {
+                text: qsTr("About File Browser")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.paddingLarge
+                horizontalAlignment: Text.AlignRight
+                color: Theme.highlightColor
+            }
+            LagoonSpacer { height: 20 }
+            Label {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.rightMargin: Theme.paddingLarge
+                text: "Version 1.3" // Version number must be changed manually!
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.primaryColor
+            }
+            LagoonSpacer { height: 20 }
+            Label {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.rightMargin: Theme.paddingLarge
+                text: "File Browser is free and unencumbered software released into the public domain."
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.primaryColor
+            }
+            LagoonSpacer { height: 20 }
+            Label {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.rightMargin: Theme.paddingLarge
+                text: "The source code is available at\nhttps://github.com/karip/harbour-file-browser"
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeTiny
+                color: Theme.secondaryColor
             }
         }
     }
