@@ -44,21 +44,6 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Go to SD Card"
-                onClicked: {
-                    var sdcard = Functions.sdcardPath();
-                    if (engine.exists(sdcard)) {
-                        Functions.goToFolder(sdcard);
-                    } else {
-                        notificationPanel.showWithText("SD Card not found", sdcard);
-                    }
-                }
-            }
-            MenuItem {
-                text: "Go to Home"
-                onClicked: Functions.goToHome(StandardPaths.documents)
-            }
-            MenuItem {
                 text: "View Contents"
                 visible: fileInfo.icon !== "folder-link"
                 onClicked: pageStack.push(Qt.resolvedUrl("ViewPage.qml"),

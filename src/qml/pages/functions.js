@@ -59,6 +59,11 @@ function sdcardPath()
     return "/run/user/100000/media/sdcard";
 }
 
+function androidSdcardPath()
+{
+    return "/data/sdcard";
+}
+
 function formatPathForTitle(path)
 {
     if (path === "/")
@@ -98,4 +103,9 @@ function formatPathForSearch(path)
 function arrow()
 {
     return "\u2192"; // unicode for arrow symbol
+}
+
+function unicodeBlackDownPointingTriangle()
+{
+    return "\u25bc"; // unicode for down pointing triangle symbol
 }

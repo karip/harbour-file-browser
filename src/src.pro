@@ -46,6 +46,7 @@ OTHER_FILES = \
     qml/pages/ViewPage.qml \
     qml/pages/SettingsPage.qml \
     qml/pages/AboutPage.qml \
+    qml/components/DirPopup.qml \
     qml/main.qml \
     qml/functions.js
 

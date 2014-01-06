@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.file.browser.FileModel 1.0
 import "functions.js" as Functions
+import "../components"
 
 Page {
     id: page
@@ -38,21 +39,6 @@ Page {
                                           { dir: page.dir });
             }
             MenuItem {
-                text: "Go to SD Card"
-                onClicked: {
-                    var sdcard = Functions.sdcardPath();
-                    if (engine.exists(sdcard)) {
-                        Functions.goToFolder(sdcard);
-                    } else {
-                        notificationPanel.showWithText("SD Card not found", sdcard);
-                    }
-                }
-            }
-            MenuItem {
-                text: "Go to Home"
-                onClicked: Functions.goToHome(StandardPaths.documents)
-            }
-            MenuItem {
                 text: "Paste" + (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
                 onClicked: {
                     progressPanel.showWithText(engine.clipboardCut ? "Moving" : "Copying")
@@ -61,7 +47,14 @@ Page {
             }
         }
 
-        header: PageHeader { title: Functions.formatPathForTitle(page.dir) }
+        header: PageHeader {
+            title: Functions.formatPathForTitle(page.dir) + " " +
+                   Functions.unicodeBlackDownPointingTriangle()
+            MouseArea {
+                anchors.fill: parent
+                onClicked: dirPopup.show();
+            }
+        }
 
         delegate: ListItem {
             id: fileItem
@@ -177,6 +170,12 @@ Page {
                 Functions.goToHome(StandardPaths.documents);
             }
         }
+    }
+
+    DirPopup {
+        id: dirPopup
+        anchors.fill: parent
+        menuTop: 100
     }
 
     Rectangle {

@@ -51,23 +51,8 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "About"
-                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
-            }
-            MenuItem {
-                text: "Go to SD Card"
-                onClicked: {
-                    var sdcard = Functions.sdcardPath();
-                    if (engine.exists(sdcard)) {
-                        Functions.goToFolder(sdcard);
-                    } else {
-                        notificationPanel.showWithText("SD Card not found", sdcard);
-                    }
-                }
-            }
-            MenuItem {
-                text: "Go to Home"
-                onClicked: Functions.goToHome(StandardPaths.documents)
+                text: "Settings"
+                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
         }
 
