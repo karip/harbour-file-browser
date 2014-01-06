@@ -86,7 +86,7 @@ Page {
                 anchors.left: listIcon.right
                 anchors.leftMargin: 10
                 anchors.top: listLabel.bottom
-                text: !(isLink && isDir) ? size : Functions.arrow()+" "+symLinkTarget
+                text: !(isLink && isDir) ? size : Functions.unicodeArrow()+" "+symLinkTarget
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
             }

@@ -19,6 +19,7 @@ function goToRoot(operationType)
     pageStack.pop(firstPage, operationType);
 }
 
+// returns true if string s1 starts with string s2
 function startsWith(s1, s2)
 {
     if (!s1 || !s2)
@@ -100,7 +101,7 @@ function formatPathForSearch(path)
     return path.substring(i+1);
 }
 
-function arrow()
+function unicodeArrow()
 {
     return "\u2192"; // unicode for arrow symbol
 }

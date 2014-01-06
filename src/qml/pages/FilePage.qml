@@ -152,7 +152,7 @@ Page {
                 Label {
                     visible: fileInfo.symLinkTarget !== ""
                     width: parent.width
-                    text: Functions.arrow()+" "+fileInfo.symLinkTarget
+                    text: Functions.unicodeArrow()+" "+fileInfo.symLinkTarget
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Theme.fontSizeExtraSmall
