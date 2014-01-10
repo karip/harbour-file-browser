@@ -14,10 +14,13 @@ Row {
         color: Theme.secondaryColor
         width: parent.width/2
         horizontalAlignment: Text.AlignRight
+        wrapMode: Text.Wrap
         font.pixelSize: pixelSize
     }
     Label {
         text: value
+        width: parent.width/2
+        wrapMode: Text.Wrap
         font.pixelSize: pixelSize
     }
 }
