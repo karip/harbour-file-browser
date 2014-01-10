@@ -1,23 +1,33 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "functions.js" as Functions
 import "../components"
 
 Dialog {
     property string path: ""
 
-    // return value
+    // return values
     property string errorMessage: ""
+    property string newPath: ""
 
     id: dialog
     allowedOrientations: Orientation.All
-    canAccept: folderName.text !== ""
+    canAccept: newName.text !== ""
 
-    onAccepted: errorMessage = engine.mkdir(path, folderName.text);
+    onAccepted: {
+        var res = engine.rename(path, newName.text);
+        newPath = res[0]
+        errorMessage = res[1]
+    }
+
+    Component.onCompleted: {
+        newName.text = Functions.formatPathForCover(path)
+    }
 
     DialogHeader {
         id: dialogHeader
-        title: qsTr("Create Folder")
-        acceptText: qsTr("Create")
+        title: qsTr("Rename")
+        acceptText: qsTr("Rename")
     }
 
     Column {
@@ -30,7 +40,7 @@ Dialog {
             anchors.right: parent.right
             anchors.leftMargin: Theme.paddingLarge
             anchors.rightMargin: Theme.paddingLarge
-            text: qsTr("Create a new folder to:\n%1").arg(path)
+            text: qsTr("Give a new name for\n%1").arg(path)
         }
 
         LagoonSpacer {
@@ -38,9 +48,9 @@ Dialog {
         }
 
         TextField {
-            id: folderName
+            id: newName
             width: parent.width
-            placeholderText: qsTr("Enter folder name")
+            placeholderText: qsTr("Enter new name")
             focus: true
 
             // return key on virtual keyboard accepts the dialog

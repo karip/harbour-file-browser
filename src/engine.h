@@ -44,6 +44,7 @@ public:
     Q_INVOKABLE bool exists(QString filename);
     Q_INVOKABLE QStringList readFile(QString filename);
     Q_INVOKABLE QString mkdir(QString path, QString name);
+    Q_INVOKABLE QStringList rename(QString fullOldFilename, QString newName);
 
     Q_INVOKABLE QString readSetting(QString key, QString defaultValue = QString());
     Q_INVOKABLE void writeSetting(QString key, QString value);

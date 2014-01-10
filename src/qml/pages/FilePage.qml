@@ -45,6 +45,20 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                text: "Rename"
+                onClicked: {
+                    var dialog = pageStack.push(Qt.resolvedUrl("RenameDialog.qml"),
+                                                { path: page.file })
+                    dialog.accepted.connect(function() {
+                        if (dialog.errorMessage === "")
+                            page.file = dialog.newPath;
+                        else
+                            notificationPanel.showWithText(dialog.errorMessage, "");
+                    })
+                }
+            }
+
+            MenuItem {
                 text: "View Contents"
                 visible: !fileInfo.isDir
                 onClicked: pageStack.push(Qt.resolvedUrl("ViewPage.qml"),

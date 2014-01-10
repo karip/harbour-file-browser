@@ -195,6 +195,22 @@ QString Engine::mkdir(QString path, QString name)
     return QString();
 }
 
+QStringList Engine::rename(QString fullOldFilename, QString newName)
+{
+    QFile file(fullOldFilename);
+    QFileInfo fileInfo(fullOldFilename);
+    QDir dir = fileInfo.absoluteDir();
+    QString fullNewFilename = dir.absoluteFilePath(newName);
+
+    QString errorMessage;
+    if (!file.rename(fullNewFilename)) {
+        QString oldName = fileInfo.fileName();
+        errorMessage = tr("Cannot rename %1\n%2").arg(oldName).arg(file.errorString());
+    }
+
+    return QStringList() << fullNewFilename << errorMessage;
+}
+
 QString Engine::readSetting(QString key, QString defaultValue)
 {
     QSettings settings;
