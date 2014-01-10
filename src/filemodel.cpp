@@ -207,11 +207,11 @@ void FileModel::readEntries()
 {
     QDir dir(m_dir);
     if (!dir.exists()) {
-        m_errorMessage = tr("Directory does not exist");
+        m_errorMessage = tr("Folder does not exist");
         return;
     }
     if (access(m_dir, R_OK) == -1) {
-        m_errorMessage = tr("No permission to read the directory");
+        m_errorMessage = tr("No permission to read the folder");
         return;
     }
 

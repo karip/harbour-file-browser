@@ -24,7 +24,7 @@ Page {
 
             TextSwitch {
                 id: showDirsFirst
-                text: qsTr("Show directories first")
+                text: qsTr("Show folders first")
             }
             TextSwitch {
                 id: showHiddenFiles

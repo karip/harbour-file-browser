@@ -108,7 +108,7 @@ QString FileWorker::deleteFile(QString filename)
         // this should be custom function to get better error reporting
         bool ok = QDir(info.absoluteFilePath()).removeRecursively();
         if (!ok)
-            return tr("Directory delete failed");
+            return tr("Folder delete failed");
 
     } else {
         QFile file(info.absoluteFilePath());
@@ -205,14 +205,14 @@ QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirecto
 {
     QDir srcDir(srcDirectory);
     if (!srcDir.exists())
-        return tr("Source directory doesn't exist");
+        return tr("Source folder doesn't exist");
 
     QDir destDir(destDirectory);
     if (!destDir.exists()) {
         QDir d(destDir);
         d.cdUp();
         if (!d.mkdir(destDir.dirName()))
-            return tr("Can't create target directory %1").arg(destDirectory);
+            return tr("Can't create target folder %1").arg(destDirectory);
     }
 
     // copy files
