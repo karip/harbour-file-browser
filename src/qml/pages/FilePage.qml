@@ -127,7 +127,14 @@ Page {
             anchors.leftMargin: Theme.paddingLarge
             anchors.rightMargin: Theme.paddingLarge
 
-            PageHeader { title: Functions.formatPathForTitle(fileInfo.absolutePath) }
+            PageHeader {
+                title: Functions.formatPathForTitle(fileInfo.absolutePath) + " " +
+                       Functions.unicodeBlackDownPointingTriangle()
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: dirPopup.show();
+                }
+            }
 
             // file info texts, visible if error is not set
             Column {
@@ -223,6 +230,11 @@ Page {
         }
     }
 
+    DirPopup {
+        id: dirPopup
+        anchors.fill: parent
+        menuTop: 100
+    }
 
     // notification panel to display messages at top of the screen
     DockedPanel {
