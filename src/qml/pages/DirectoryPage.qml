@@ -34,6 +34,17 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
             MenuItem {
+                text: "Create Folder"
+                onClicked: {
+                    var dialog = pageStack.push(Qt.resolvedUrl("CreateFolderDialog.qml"),
+                                          { path: page.dir })
+                    dialog.accepted.connect(function() {
+                        if (dialog.errorMessage !== "")
+                            notificationPanel.showWithText(dialog.errorMessage, "")
+                    })
+                }
+            }
+            MenuItem {
                 text: "Search"
                 onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"),
                                           { dir: page.dir });

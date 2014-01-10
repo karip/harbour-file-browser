@@ -34,12 +34,16 @@ public:
     Q_INVOKABLE void copyFiles(QStringList filenames);
     Q_INVOKABLE void pasteFiles(QString destDirectory);
 
+    // cancel asynch methods
     Q_INVOKABLE void cancel();
 
+    // returns error msg
     Q_INVOKABLE QString errorMessage() const { return m_errorMessage; }
 
+    // sync methods
     Q_INVOKABLE bool exists(QString filename);
     Q_INVOKABLE QStringList readFile(QString filename);
+    Q_INVOKABLE QString mkdir(QString path, QString name);
 
     Q_INVOKABLE QString readSetting(QString key, QString defaultValue = QString());
     Q_INVOKABLE void writeSetting(QString key, QString value);

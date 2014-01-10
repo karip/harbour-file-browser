@@ -45,6 +45,7 @@ OTHER_FILES = \
     qml/pages/FilePage.qml \
     qml/pages/ViewPage.qml \
     qml/pages/SettingsPage.qml \
+    qml/pages/CreateFolderDialog.qml \
     qml/components/DirPopup.qml \
     qml/components/LagoonSpacer.qml \
     qml/components/CenteredField.qml \

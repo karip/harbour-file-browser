@@ -181,6 +181,20 @@ QStringList Engine::readFile(QString filename)
     return stringListify(msg, lines.join("\n"));
 }
 
+QString Engine::mkdir(QString path, QString name)
+{
+    QDir dir(path);
+
+    if (!dir.mkdir(name)) {
+        if (access(dir.absolutePath(), W_OK) == -1)
+            return tr("Cannot create folder %1\nPermission denied").arg(name);
+
+        return tr("Cannot create folder %1").arg(name);
+    }
+
+    return QString();
+}
+
 QString Engine::readSetting(QString key, QString defaultValue)
 {
     QSettings settings;
