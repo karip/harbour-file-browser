@@ -21,7 +21,7 @@ Dialog {
     }
 
     Component.onCompleted: {
-        newName.text = Functions.formatPathForCover(path)
+        newName.text = Functions.lastPartOfPath(path)
     }
 
     DialogHeader {

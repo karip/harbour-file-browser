@@ -77,7 +77,7 @@ function formatPathForTitle(path)
     return path.substring(i+1)+"/";
 }
 
-function formatPathForCover(path)
+function lastPartOfPath(path)
 {
     if (path === "/")
         return "";
