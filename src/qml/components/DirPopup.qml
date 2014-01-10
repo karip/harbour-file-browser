@@ -59,7 +59,7 @@ Item {
                         Functions.goToFolder(androidSdcard);
                     } else {
                         // this assumes that the page has a notificationPanel
-                        notificationPanel.showWithText("Android SD Card not found", androidSdcard);
+                        notificationPanel.showWithText("Android Storage not found", androidSdcard);
                     }
 
                 } else if (_selectedMenu == 4) {
@@ -77,7 +77,7 @@ Item {
                 onClicked: _selectedMenu = 2
             }
             MenuItem {
-                text: "Android SD Card"
+                text: "Android Storage"
                 onClicked: _selectedMenu = 3
             }
             MenuItem {

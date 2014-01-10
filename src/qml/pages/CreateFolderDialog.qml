@@ -30,7 +30,8 @@ Dialog {
             anchors.right: parent.right
             anchors.leftMargin: Theme.paddingLarge
             anchors.rightMargin: Theme.paddingLarge
-            text: qsTr("Create a new folder to:\n%1").arg(path)
+            text: qsTr("Create a new folder under\n%1").arg(path)
+            wrapMode: Text.Wrap
         }
 
         LagoonSpacer {
