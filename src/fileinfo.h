@@ -17,6 +17,8 @@ class FileInfo : public QObject
     Q_PROPERTY(QString kind READ kind() NOTIFY kindChanged())
     Q_PROPERTY(QString icon READ icon() NOTIFY iconChanged())
     Q_PROPERTY(QString permissions READ permissions() NOTIFY permissionsChanged())
+    Q_PROPERTY(QString owner READ owner() NOTIFY ownerChanged())
+    Q_PROPERTY(QString group READ group() NOTIFY groupChanged())
     Q_PROPERTY(QString size READ size() NOTIFY sizeChanged())
     Q_PROPERTY(QString modified READ modified() NOTIFY modifiedChanged())
     Q_PROPERTY(QString created READ created() NOTIFY createdChanged())
@@ -39,6 +41,8 @@ public:
     QString kind() const;
     QString icon() const;
     QString permissions() const;
+    QString owner() const;
+    QString group() const;
     QString size() const;
     QString modified() const;
     QString created() const;
@@ -58,6 +62,8 @@ signals:
     void kindChanged();
     void iconChanged();
     void permissionsChanged();
+    void ownerChanged();
+    void groupChanged();
     void sizeChanged();
     void modifiedChanged();
     void createdChanged();

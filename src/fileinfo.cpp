@@ -54,6 +54,16 @@ QString FileInfo::permissions() const
     return permissionsToString(m_fileInfo.permissions());
 }
 
+QString FileInfo::owner() const
+{
+    return m_fileInfo.owner();
+}
+
+QString FileInfo::group() const
+{
+    return m_fileInfo.group();
+}
+
 QString FileInfo::size() const
 {
     if (m_fileInfo.isDir()) return "-";
@@ -150,6 +160,8 @@ void FileInfo::readFile()
     emit kindChanged();
     emit iconChanged();
     emit permissionsChanged();
+    emit ownerChanged();
+    emit groupChanged();
     emit sizeChanged();
     emit modifiedChanged();
     emit createdChanged();

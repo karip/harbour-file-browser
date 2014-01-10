@@ -47,6 +47,7 @@ OTHER_FILES = \
     qml/pages/SettingsPage.qml \
     qml/components/DirPopup.qml \
     qml/components/LagoonSpacer.qml \
+    qml/components/CenteredField.qml \
     qml/main.qml \
     qml/functions.js
 

@@ -160,80 +160,33 @@ Page {
 
                 LagoonSpacer { height: 40 }
 
-                Row {
-                    width: parent.width
-                    spacing: 10
-                    Label {
-                        id: firstLabel
-                        text: "Location"
-                        color: Theme.secondaryColor
-                        width: parent.width/2
-                        horizontalAlignment: Text.AlignRight
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
-                    Label {
-                        text: fileInfo.absolutePath
-                        wrapMode: Text.Wrap
-                        width: parent.width/2
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
+                CenteredField {
+                    label: "Location"
+                    value: fileInfo.absolutePath
                 }
-                Row {
-                    width: parent.width
-                    spacing: 10
-                    Label {
-                        text: "Size"
-                        color: Theme.secondaryColor
-                        width: parent.width/2
-                        horizontalAlignment: Text.AlignRight
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
-                    Label {
-                        text: fileInfo.size
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
+                CenteredField {
+                    label: "Size"
+                    value: fileInfo.size
                 }
-                Row {
-                    spacing: 10
-                    Label {
-                        text: "Permissions"
-                        color: Theme.secondaryColor
-                        width: firstLabel.width
-                        horizontalAlignment: Text.AlignRight
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
-                    Label {
-                        text: fileInfo.permissions
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
+                CenteredField {
+                    label: "Permissions"
+                    value: fileInfo.permissions
                 }
-                Row {
-                    spacing: 10
-                    Label {
-                        text: "Last modified"
-                        color: Theme.secondaryColor
-                        width: firstLabel.width
-                        horizontalAlignment: Text.AlignRight
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
-                    Label {
-                        text: fileInfo.modified
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
+                CenteredField {
+                    label: "Owner"
+                    value: fileInfo.owner
                 }
-                Row {
-                    spacing: 10
-                    Label {
-                        text: "Created"
-                        color: Theme.secondaryColor
-                        width: firstLabel.width
-                        horizontalAlignment: Text.AlignRight
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
-                    Label {
-                        text: fileInfo.created
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
+                CenteredField {
+                    label: "Group"
+                    value: fileInfo.group
+                }
+                CenteredField {
+                    label: "Last modified"
+                    value: fileInfo.modified
+                }
+                CenteredField {
+                    label: "Created"
+                    value: fileInfo.created
                 }
             }
 
