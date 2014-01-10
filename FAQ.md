@@ -25,10 +25,24 @@ the file type or it doesn't find a preferred program to open it.
 The Sailfish OS is still at beta stage, so it doesn't have all bindings
 for all media formats.
 
+### Why accessing SD Card gives error 'SD Card not found'?
+
+Perhaps your SD Card is not properly inserted to the phone.
+Perhaps it has a file system which is not recognized by the phone.
+You can also try to access the SD Card with another file manager, 
+such as Cargo Dock.
+
 ### How can I see how much space is left on phone or SD Card?
 
 Free phone storage space can be seen from phone settings. 
 Free space of an SD Card, don't know how to see that.
+
+### Are there any alternative apps?
+
+There is the wonderful Cargo Dock file manager in the Jolla store.
+You can also try the Jolla's own file manager called Files,
+which can be installed with 'pkcon install jolla-fileman' 
+in Terminal (requires Developer Mode).
 
 ### Does it have XXX feature?
 

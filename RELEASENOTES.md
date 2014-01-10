@@ -6,6 +6,8 @@
  * Added Settings page
  * Added show hidden files
  * Added show directories first
+ * Added rename files and folders
+ * Added create folders
 
 ## Version 1.3 (2013-12-29)
 

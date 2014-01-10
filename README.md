@@ -15,7 +15,7 @@ responsibility if that happens. So, be careful.
 
 ### Features
 
- * Browse directories and files on the phone
+ * Browse files and folders on the phone
  * Search files
  * Open files (if xdg-open finds a preferred application)
  * View contents of text and binary files
@@ -24,7 +24,9 @@ responsibility if that happens. So, be careful.
  * Install Android APK and Sailfish RPM packages
  * Cut, copy and paste files (move/copy files) (by long pressing an 
    item in a list)
- * Delete files and directories (by long pressing an item in a list)
+ * Rename files and folders
+ * Create new folders
+ * Delete files and folders (by long pressing an item in a list)
  * Show hidden files (filenames starting with a dot)
 
 ### Acknowledgements
@@ -34,6 +36,9 @@ File Browser is based on the excellent
 template.
 
 ### Other file managers
+
+There is a very handy two-paned file manager called Cargo Dock
+in the Jolla Store. Give it a try if you are moving a lot of files.
 
 The Jolla phone also ships with its own file manager called Files.
 It is not installed by default. You can install it by typing the 
