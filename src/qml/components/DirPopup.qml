@@ -50,7 +50,7 @@ Item {
                         Functions.goToFolder(sdcard);
                     } else {
                         // this assumes that the page has a notificationPanel
-                        notificationPanel.showWithText("SD Card not found", sdcard);
+                        notificationPanel.showWithText(qsTr("SD Card not found"), sdcard);
                     }
 
                 } else if (_selectedMenu == 3) {
@@ -59,7 +59,7 @@ Item {
                         Functions.goToFolder(androidSdcard);
                     } else {
                         // this assumes that the page has a notificationPanel
-                        notificationPanel.showWithText("Android Storage not found", androidSdcard);
+                        notificationPanel.showWithText(qsTr("Android Storage not found"), androidSdcard);
                     }
 
                 } else if (_selectedMenu == 4) {
@@ -69,19 +69,19 @@ Item {
             }
 
             MenuItem {
-                text: "Home"
+                text: qsTr("Home")
                 onClicked: _selectedMenu = 1
             }
             MenuItem {
-                text: "SD Card"
+                text: qsTr("SD Card") + " " + engine.diskSpace(Functions.sdcardPath())
                 onClicked: _selectedMenu = 2
             }
             MenuItem {
-                text: "Android Storage"
+                text: qsTr("Android Storage")
                 onClicked: _selectedMenu = 3
             }
             MenuItem {
-                text: "Root"
+                text: qsTr("Root") + " " + engine.diskSpace("/")
                 onClicked: _selectedMenu = 4
             }
         }

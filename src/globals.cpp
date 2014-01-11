@@ -1,5 +1,6 @@
 #include "globals.h"
 #include <QLocale>
+#include <QProcess>
 
 QString suffixToIconName(QString suffix)
 {
@@ -89,4 +90,20 @@ int access(QString filename, int how)
     QByteArray fab = filename.toUtf8();
     char *fn = fab.data();
     return access(fn, how);
+}
+
+QString execute(QString command, QStringList arguments, bool mergeErrorStream)
+{
+    QProcess process;
+    process.setReadChannel(QProcess::StandardOutput);
+    if (mergeErrorStream)
+        process.setProcessChannelMode(QProcess::MergedChannels);
+    process.start(command, arguments);
+    if (!process.waitForStarted())
+        return QString();
+    if (!process.waitForFinished())
+        return QString();
+
+    QByteArray result = process.readAll();
+    return QString::fromUtf8(result);
 }

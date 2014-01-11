@@ -17,4 +17,6 @@ QString infoToIconName(QFileInfo info);
 
 int access(QString filename, int how);
 
+QString execute(QString command, QStringList arguments, bool mergeErrorStream);
+
 #endif // GLOBALS_H

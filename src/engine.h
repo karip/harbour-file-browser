@@ -42,6 +42,7 @@ public:
 
     // sync methods
     Q_INVOKABLE bool exists(QString filename);
+    Q_INVOKABLE QString diskSpace(QString path);
     Q_INVOKABLE QStringList readFile(QString filename);
     Q_INVOKABLE QString mkdir(QString path, QString name);
     Q_INVOKABLE QStringList rename(QString fullOldFilename, QString newName);
