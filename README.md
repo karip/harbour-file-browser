@@ -15,12 +15,11 @@ responsibility if that happens. So, be careful.
 
 ### Features
 
- * Browse files and folders on the phone
- * Search files
+ * Browse and search files and folders on the phone
  * Open files (if xdg-open finds a preferred application)
  * View contents of text and binary files
- * Preview JPEG, PNG and GIF files inside the app
- * Play back WAV, MP3, OGG and FLAC audio inside the app
+ * Preview JPEG, PNG and GIF files
+ * Play back WAV, MP3, OGG and FLAC audio
  * Install Android APK and Sailfish RPM packages
  * Cut, copy and paste files (move/copy files) (by long pressing an 
    item in a list)
@@ -28,6 +27,7 @@ responsibility if that happens. So, be careful.
  * Create new folders
  * Delete files and folders (by long pressing an item in a list)
  * Show hidden files (filenames starting with a dot)
+ * Change permissions
 
 ### Acknowledgements
 

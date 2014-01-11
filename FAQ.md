@@ -37,17 +37,21 @@ such as Cargo Dock.
 Free phone storage space can be seen from phone settings. 
 Free space of an SD Card, don't know how to see that.
 
+### How to copy multiple files?
+
+It is not possible. Try the Cargo Dock file manager app in 
+the Jolla store, it can manage multiple files.
+
+### Does it have XXX feature?
+
+It can't change owners, sudo, multi-select files, create links,
+edit files, share files, send email, mms or sms, open ftp sites, 
+connect to samba server, simulate vi and it does not blend or make coffee.
+
 ### Are there any alternative apps?
 
 There is the wonderful Cargo Dock file manager in the Jolla store.
 You can also try the Jolla's own file manager called Files,
 which can be installed with 'pkcon install jolla-fileman' 
 in Terminal (requires Developer Mode).
-
-### Does it have XXX feature?
-
-It can't rename files, change permissions, change owners, 
-sudo, go to Android home folder, multi-select files, 
-edit files, share files, send email, mms or sms, open ftp sites, 
-connect to samba server, simulate vi and it does not blend or make coffee.
 

@@ -8,6 +8,8 @@
  * Added show directories first
  * Added rename files and folders
  * Added create folders
+ * Added change permissions
+ * Fixed two deletes to work simultaneously
 
 ## Version 1.3 (2013-12-29)
 
