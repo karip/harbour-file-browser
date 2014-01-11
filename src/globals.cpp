@@ -25,9 +25,9 @@ QString suffixToIconName(QString suffix)
 QString permissionsToString(QFile::Permissions permissions)
 {
     char str[] = "---------";
-    if (permissions & 0x0400) str[0] = 'r';
-    if (permissions & 0x0200) str[1] = 'w';
-    if (permissions & 0x0100) str[2] = 'x';
+    if (permissions & 0x4000) str[0] = 'r';
+    if (permissions & 0x2000) str[1] = 'w';
+    if (permissions & 0x1000) str[2] = 'x';
     if (permissions & 0x0040) str[3] = 'r';
     if (permissions & 0x0020) str[4] = 'w';
     if (permissions & 0x0010) str[5] = 'x';
