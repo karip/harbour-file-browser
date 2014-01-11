@@ -53,12 +53,8 @@ Dialog {
             width: parent.width
             placeholderText: qsTr("Enter new name")
             focus: true
-
-            // return key on virtual keyboard accepts the dialog
-            Keys.onPressed: {
-                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
-                    dialog.accept();
-            }
+            EnterKey.enabled: newName.text !== ""
+            EnterKey.onClicked: dialog.accept()
         }
     }
 }

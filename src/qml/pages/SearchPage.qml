@@ -71,13 +71,12 @@ Page {
                 Component.onCompleted: forceActiveFocus()
 
                 // return key on virtual keyboard starts or restarts search
-                Keys.onPressed: {
+                EnterKey.enabled: true
+                EnterKey.onClicked: {
                     notificationPanel.hide();
-                    if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                        listModel.update(searchField.text);
-                        foundText.visible = true;
-                        searchField.focus = false;
-                    }
+                    listModel.update(searchField.text);
+                    foundText.visible = true;
+                    searchField.focus = false;
                 }
             }
             // our own "IconButton" to make the mouse area large and easier to tap
