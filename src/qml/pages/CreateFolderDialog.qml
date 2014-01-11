@@ -14,39 +14,46 @@ Dialog {
 
     onAccepted: errorMessage = engine.mkdir(path, folderName.text);
 
-    DialogHeader {
-        id: dialogHeader
-        title: qsTr("Create Folder")
-        acceptText: qsTr("Create")
-    }
+    SilicaFlickable {
+        id: flickable
+        anchors.fill: parent
+        contentHeight: column.height
+        VerticalScrollDecorator { flickable: flickable }
 
-    Column {
-        anchors.top: dialogHeader.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        Label {
+        Column {
+            id: column
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            text: qsTr("Create a new folder under\n%1").arg(path)
-            wrapMode: Text.Wrap
-        }
 
-        LagoonSpacer {
-            height: 20
-        }
+            DialogHeader {
+                id: dialogHeader
+                title: qsTr("Create Folder")
+                acceptText: qsTr("Create")
+            }
 
-        TextField {
-            id: folderName
-            width: parent.width
-            placeholderText: qsTr("Enter folder name")
-            focus: true
+            Label {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.rightMargin: Theme.paddingLarge
+                text: qsTr("Create a new folder under\n%1").arg(path)
+                wrapMode: Text.Wrap
+            }
 
-            // return key on virtual keyboard accepts the dialog
-            EnterKey.enabled: folderName.text !== ""
-            EnterKey.onClicked: dialog.accept()
+            LagoonSpacer {
+                height: 20
+            }
+
+            TextField {
+                id: folderName
+                width: parent.width
+                placeholderText: qsTr("Enter folder name")
+                focus: true
+
+                // return key on virtual keyboard accepts the dialog
+                EnterKey.enabled: folderName.text !== ""
+                EnterKey.onClicked: dialog.accept()
+            }
         }
     }
 }

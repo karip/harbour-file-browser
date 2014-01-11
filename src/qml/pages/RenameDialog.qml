@@ -24,37 +24,44 @@ Dialog {
         newName.text = Functions.lastPartOfPath(path)
     }
 
-    DialogHeader {
-        id: dialogHeader
-        title: qsTr("Rename")
-        acceptText: qsTr("Rename")
-    }
+    SilicaFlickable {
+        id: flickable
+        anchors.fill: parent
+        contentHeight: column.height
+        VerticalScrollDecorator { flickable: flickable }
 
-    Column {
-        anchors.top: dialogHeader.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        Label {
+        Column {
+            id: column
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            text: qsTr("Give a new name for\n%1").arg(path)
-            wrapMode: Text.Wrap
-        }
 
-        LagoonSpacer {
-            height: 20
-        }
+            DialogHeader {
+                id: dialogHeader
+                title: qsTr("Rename")
+                acceptText: qsTr("Rename")
+            }
 
-        TextField {
-            id: newName
-            width: parent.width
-            placeholderText: qsTr("Enter new name")
-            focus: true
-            EnterKey.enabled: newName.text !== ""
-            EnterKey.onClicked: dialog.accept()
+            Label {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.rightMargin: Theme.paddingLarge
+                text: qsTr("Give a new name for\n%1").arg(path)
+                wrapMode: Text.Wrap
+            }
+
+            LagoonSpacer {
+                height: 20
+            }
+
+            TextField {
+                id: newName
+                width: parent.width
+                placeholderText: qsTr("Enter new name")
+                focus: true
+                EnterKey.enabled: newName.text !== ""
+                EnterKey.onClicked: dialog.accept()
+            }
         }
     }
 }

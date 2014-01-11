@@ -40,154 +40,161 @@ Dialog {
         if (permissions.charAt(8) !== '-') othersExecute.checked = true;
     }
 
-    DialogHeader {
-        id: dialogHeader
-        title: qsTr("Change Permissions")
-        acceptText: qsTr("Change")
-    }
+    SilicaFlickable {
+        id: flickable
+        anchors.fill: parent
+        contentHeight: column.height
+        VerticalScrollDecorator { flickable: flickable }
 
-    Column {
-        anchors.top: dialogHeader.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        Label {
+        Column {
+            id: column
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            text: qsTr("Change permissions for\n%1").arg(path)
-            wrapMode: Text.Wrap
-        }
 
-        LagoonSpacer {
-            height: 40
-        }
-
-        // read, write, execute small labels
-        Row {
-            width: parent.width
-            Label {
-                width: parent.width/2
-                text: " "
+            DialogHeader {
+                id: dialogHeader
+                title: qsTr("Change Permissions")
+                acceptText: qsTr("Change")
             }
 
             Label {
-                id: readLabel
-                width: executeLabel.width
-                text: qsTr("Read")
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryColor
-                horizontalAlignment: Text.AlignHCenter
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.rightMargin: Theme.paddingLarge
+                text: qsTr("Change permissions for\n%1").arg(path)
+                wrapMode: Text.Wrap
             }
-            Label {
-                id: writeLabel
-                width: executeLabel.width
-                text: qsTr("Write")
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryColor
-                horizontalAlignment: Text.AlignHCenter
-            }
-            Label {
-                id: executeLabel
-                text: qsTr("Execute")
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryColor
-                horizontalAlignment: Text.AlignHCenter
-            }
-        }
 
-        // owner
-        Row {
-            width: parent.width
-            Column {
-                width: parent.width/2
+            LagoonSpacer {
+                height: 40
+            }
+
+            // read, write, execute small labels
+            Row {
+                width: parent.width
                 Label {
-                    id: ownerName
-                    width: parent.width-20
-                    text: ""
-                    horizontalAlignment: Text.AlignRight
+                    width: parent.width/2
+                    text: " "
                 }
+
                 Label {
-                    width: parent.width-20
-                    text: qsTr("Owner")
+                    id: readLabel
+                    width: executeLabel.width
+                    text: qsTr("Read")
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.secondaryColor
-                    horizontalAlignment: Text.AlignRight
-                }
-            }
-            TextSwitch {
-                id: ownerRead
-                width: _executeWidth
-            }
-            TextSwitch {
-                id: ownerWrite
-                width: _executeWidth
-            }
-            TextSwitch {
-                id: ownerExecute
-                width: _executeWidth
-            }
-        }
-
-        // group
-        Row {
-            width: parent.width
-            Column {
-                width: parent.width/2
-                Label {
-                    id: groupName
-                    width: parent.width-20
-                    text: ""
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: Text.AlignHCenter
                 }
                 Label {
-                    width: parent.width-20
-                    text: qsTr("Group")
+                    id: writeLabel
+                    width: executeLabel.width
+                    text: qsTr("Write")
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.secondaryColor
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: Text.AlignHCenter
                 }
-            }
-            TextSwitch {
-                id: groupRead
-                width: _executeWidth
-            }
-            TextSwitch {
-                id: groupWrite
-                width: _executeWidth
-            }
-            TextSwitch {
-                id: groupExecute
-                width: _executeWidth
-            }
-        }
-
-        // others
-        Row {
-            width: parent.width
-            Item {
-                width: parent.width/2
-                height: othersRead.height
                 Label {
-                    width: parent.width-20
-                    height: parent.height
-                    text: qsTr("Others")
-                    horizontalAlignment: Text.AlignRight
-                    verticalAlignment: Text.AlignVCenter
+                    id: executeLabel
+                    text: qsTr("Execute")
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: Theme.secondaryColor
+                    horizontalAlignment: Text.AlignHCenter
                 }
             }
-            TextSwitch {
-                id: othersRead
-                width: _executeWidth
+
+            // owner
+            Row {
+                width: parent.width
+                Column {
+                    width: parent.width/2
+                    Label {
+                        id: ownerName
+                        width: parent.width-20
+                        text: ""
+                        horizontalAlignment: Text.AlignRight
+                    }
+                    Label {
+                        width: parent.width-20
+                        text: qsTr("Owner")
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: Theme.secondaryColor
+                        horizontalAlignment: Text.AlignRight
+                    }
+                }
+                TextSwitch {
+                    id: ownerRead
+                    width: _executeWidth
+                }
+                TextSwitch {
+                    id: ownerWrite
+                    width: _executeWidth
+                }
+                TextSwitch {
+                    id: ownerExecute
+                    width: _executeWidth
+                }
             }
-            TextSwitch {
-                id: othersWrite
-                width: _executeWidth
+
+            // group
+            Row {
+                width: parent.width
+                Column {
+                    width: parent.width/2
+                    Label {
+                        id: groupName
+                        width: parent.width-20
+                        text: ""
+                        horizontalAlignment: Text.AlignRight
+                    }
+                    Label {
+                        width: parent.width-20
+                        text: qsTr("Group")
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: Theme.secondaryColor
+                        horizontalAlignment: Text.AlignRight
+                    }
+                }
+                TextSwitch {
+                    id: groupRead
+                    width: _executeWidth
+                }
+                TextSwitch {
+                    id: groupWrite
+                    width: _executeWidth
+                }
+                TextSwitch {
+                    id: groupExecute
+                    width: _executeWidth
+                }
             }
-            TextSwitch {
-                id: othersExecute
-                width: _executeWidth
+
+            // others
+            Row {
+                width: parent.width
+                Item {
+                    width: parent.width/2
+                    height: othersRead.height
+                    Label {
+                        width: parent.width-20
+                        height: parent.height
+                        text: qsTr("Others")
+                        horizontalAlignment: Text.AlignRight
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
+                TextSwitch {
+                    id: othersRead
+                    width: _executeWidth
+                }
+                TextSwitch {
+                    id: othersWrite
+                    width: _executeWidth
+                }
+                TextSwitch {
+                    id: othersExecute
+                    width: _executeWidth
+                }
             }
         }
     }
