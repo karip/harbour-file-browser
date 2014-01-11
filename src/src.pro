@@ -52,6 +52,7 @@ OTHER_FILES = \
     qml/components/LagoonSpacer.qml \
     qml/components/CenteredField.qml \
     qml/components/LetterSwitch.qml \
+    qml/components/DoubleMenuItem.qml \
     qml/main.qml \
     qml/functions.js
 

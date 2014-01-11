@@ -115,6 +115,7 @@ QString Engine::diskSpace(QString path)
     if (result.isEmpty())
         return "";
 
+    // parse result
     QStringList lines = result.split(QRegExp("[\n\r]"));
     if (lines.count() < 2)
         return "";
@@ -126,10 +127,11 @@ QString Engine::diskSpace(QString path)
 
     QString totalString = columns.at(1);
     QString usedString = columns.at(2);
+    QString percentageString = columns.at(4);
     qint64 total = totalString.toLongLong() * 1024LL;
     qint64 used = usedString.toLongLong() * 1024LL;
 
-    return "("+filesizeToString(used)+"/"+filesizeToString(total)+")";
+    return percentageString+" - "+filesizeToString(used)+"/"+filesizeToString(total);
 }
 
 QStringList Engine::readFile(QString filename)

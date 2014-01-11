@@ -15,6 +15,11 @@ Item {
         if (!_contextMenu)
             _contextMenu = contextMenuComponent.createObject(rect);
         _selectedMenu = 0;
+
+        // update spaces
+        _contextMenu.rootSpace = engine.diskSpace("/");
+        _contextMenu.sdCardSpace = engine.diskSpace(Functions.sdcardPath());
+
         _contextMenu.show(rect);
     }
 
@@ -38,6 +43,9 @@ Item {
     Component {
         id: contextMenuComponent
         ContextMenu {
+
+            property string sdCardSpace: ""
+            property string rootSpace: ""
 
             // delayed action so that menu has already closed when page transition happens
             onClosed: {
@@ -72,16 +80,18 @@ Item {
                 text: qsTr("Home")
                 onClicked: _selectedMenu = 1
             }
-            MenuItem {
-                text: qsTr("SD Card") + " " + engine.diskSpace(Functions.sdcardPath())
+            DoubleMenuItem {
+                text: qsTr("SD Card")
+                subtext: sdCardSpace
                 onClicked: _selectedMenu = 2
             }
             MenuItem {
                 text: qsTr("Android Storage")
                 onClicked: _selectedMenu = 3
             }
-            MenuItem {
-                text: qsTr("Root") + " " + engine.diskSpace("/")
+            DoubleMenuItem {
+                text: qsTr("Root")
+                subtext: rootSpace
                 onClicked: _selectedMenu = 4
             }
         }
