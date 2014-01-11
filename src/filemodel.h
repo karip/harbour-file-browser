@@ -9,6 +9,10 @@
 struct FileData
 {
     QFileInfo info;
+
+    bool operator==(const FileData &other) const {
+        return other.info == info;
+    }
 };
 
 /**
@@ -50,7 +54,10 @@ public:
     Q_INVOKABLE QString fileNameAt(int fileIndex);
 
 public slots:
+    // reads the directory and inserts/removes model items as needed
     Q_INVOKABLE void refresh();
+    // reads the directory and sets all model items
+    Q_INVOKABLE void refreshFull();
 
 signals:
     void dirChanged();
@@ -63,6 +70,7 @@ private slots:
 
 private:
     void readEntries();
+    void refreshEntries();
 
     QString m_dir;
     QList<FileData> m_files;

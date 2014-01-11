@@ -30,7 +30,7 @@ FileModel::FileModel(QObject *parent) :
 
     // refresh model every time settings are changed
     Engine *engine = qApp->property("engine").value<Engine *>();
-    connect(engine, SIGNAL(settingsChanged()), this, SLOT(refresh()));
+    connect(engine, SIGNAL(settingsChanged()), this, SLOT(refreshFull()));
 }
 
 FileModel::~FileModel()
@@ -183,6 +183,17 @@ void FileModel::refresh()
         return;
     }
 
+    refreshEntries();
+    m_dirty = false;
+}
+
+void FileModel::refreshFull()
+{
+    if (!m_active) {
+        m_dirty = true;
+        return;
+    }
+
     readDirectory();
     m_dirty = false;
 }
@@ -229,4 +240,74 @@ void FileModel::readEntries()
         data.info = info;
         m_files.append(data);
     }
+}
+
+void FileModel::refreshEntries()
+{
+    m_errorMessage = "";
+
+    // empty dir name
+    if (m_dir.isEmpty()) {
+        beginResetModel();
+        m_files.clear();
+        endResetModel();
+        emit fileCountChanged();
+        emit errorMessageChanged();
+        return;
+    }
+
+    QDir dir(m_dir);
+    if (!dir.exists()) {
+        m_errorMessage = tr("Folder does not exist");
+        emit errorMessageChanged();
+        return;
+    }
+    if (access(m_dir, R_OK) == -1) {
+        m_errorMessage = tr("No permission to read the folder");
+        emit errorMessageChanged();
+        return;
+    }
+
+    QSettings settings;
+    bool hiddenSetting = settings.value("show-hidden-files", false).toBool();
+    QDir::Filter hidden = hiddenSetting ? QDir::Hidden : (QDir::Filter)0;
+    dir.setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot | hidden);
+
+    if (settings.value("show-dirs-first", false).toBool())
+        dir.setSorting(QDir::Name | QDir::DirsFirst);
+
+    // read all files
+    QList<FileData> newFiles;
+    QFileInfoList infoList = dir.entryInfoList();
+    foreach (QFileInfo info, infoList) {
+        FileData data;
+        data.info = info;
+        newFiles.append(data);
+    }
+
+    int oldFileCount = m_files.count();
+
+    // compare old and new files and do removes if needed
+    for (int i = m_files.count()-1; i >= 0; --i) {
+        FileData data = m_files.at(i);
+        if (!newFiles.contains(data)) {
+            beginRemoveRows(QModelIndex(), i, i);
+            m_files.removeAt(i);
+            endRemoveRows();
+        }
+    }
+    // compare old and new files and do inserts if needed
+    for (int i = 0; i < newFiles.count(); ++i) {
+        FileData data = newFiles.at(i);
+        if (!m_files.contains(data)) {
+            beginInsertRows(QModelIndex(), i, i);
+            m_files.insert(i, data);
+            endInsertRows();
+        }
+    }
+
+    if (m_files.count() != oldFileCount)
+        emit fileCountChanged();
+
+    emit errorMessageChanged();
 }
