@@ -55,12 +55,18 @@ QString FileInfo::permissions() const
 
 QString FileInfo::owner() const
 {
-    return m_fileInfo.owner();
+    QString owner = m_fileInfo.owner();
+    if (owner.isEmpty())
+        owner = QString::number(m_fileInfo.ownerId());
+    return owner;
 }
 
 QString FileInfo::group() const
 {
-    return m_fileInfo.group();
+    QString group = m_fileInfo.group();
+    if (group.isEmpty())
+        group = QString::number(m_fileInfo.groupId());
+    return group;
 }
 
 QString FileInfo::size() const
