@@ -51,6 +51,7 @@ OTHER_FILES = \
     qml/components/DirPopup.qml \
     qml/components/LagoonSpacer.qml \
     qml/components/CenteredField.qml \
+    qml/components/LetterSwitch.qml \
     qml/main.qml \
     qml/functions.js
 

@@ -122,22 +122,26 @@ Dialog {
                         horizontalAlignment: Text.AlignRight
                     }
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: ownerRead
                     width: _executeWidth
+                    letter: 'r'
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: ownerWrite
                     width: _executeWidth
+                    letter: 'w'
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: ownerExecute
                     width: _executeWidth
+                    letter: 'x'
                 }
             }
 
             // group
             Row {
+                id: groupRow
                 width: parent.width
                 Column {
                     width: parent.width/2
@@ -155,26 +159,30 @@ Dialog {
                         horizontalAlignment: Text.AlignRight
                     }
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: groupRead
                     width: _executeWidth
+                    letter: 'r'
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: groupWrite
                     width: _executeWidth
+                    letter: 'w'
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: groupExecute
                     width: _executeWidth
+                    letter: 'x'
                 }
             }
 
             // others
             Row {
                 width: parent.width
+                height: groupRow.height
                 Item {
                     width: parent.width/2
-                    height: othersRead.height
+                    height: parent.height
                     Label {
                         width: parent.width-20
                         height: parent.height
@@ -183,17 +191,20 @@ Dialog {
                         verticalAlignment: Text.AlignVCenter
                     }
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: othersRead
                     width: _executeWidth
+                    letter: 'r'
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: othersWrite
                     width: _executeWidth
+                    letter: 'w'
                 }
-                TextSwitch {
+                LetterSwitch {
                     id: othersExecute
                     width: _executeWidth
+                    letter: 'x'
                 }
             }
         }
