@@ -21,7 +21,6 @@ void FileInfo::setFile(QString file)
 
     m_file = file;
     readFile();
-    emit fileChanged();
 }
 
 bool FileInfo::isDir() const
@@ -123,6 +122,11 @@ void FileInfo::executeCommand(QString command, QStringList arguments)
     connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(handleProcessFinish(int, QProcess::ExitStatus)));
     connect(m_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(handleProcessError(QProcess::ProcessError)));
     m_process->start(command, arguments);
+}
+
+void FileInfo::refresh()
+{
+    readFile();
 }
 
 void FileInfo::readProcessChannels()

@@ -55,6 +55,7 @@ public:
 
     // methods accessible from QML
     Q_INVOKABLE void executeCommand(QString command, QStringList arguments);
+    Q_INVOKABLE void refresh();
 
 signals:
     void fileChanged();

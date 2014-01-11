@@ -45,6 +45,19 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                text: "Change Permissions"
+                onClicked: {
+                    var dialog = pageStack.push(Qt.resolvedUrl("PermissionsDialog.qml"),
+                                                { path: page.file })
+                    dialog.accepted.connect(function() {
+                        if (dialog.errorMessage === "")
+                            fileInfo.refresh();
+                        else
+                            notificationPanel.showWithText(dialog.errorMessage, "");
+                    })
+                }
+            }
+            MenuItem {
                 text: "Rename"
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("RenameDialog.qml"),

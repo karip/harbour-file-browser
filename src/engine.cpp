@@ -211,6 +211,28 @@ QStringList Engine::rename(QString fullOldFilename, QString newName)
     return QStringList() << fullNewFilename << errorMessage;
 }
 
+QString Engine::chmod(QString path,
+                      bool ownerRead, bool ownerWrite, bool ownerExecute,
+                      bool groupRead, bool groupWrite, bool groupExecute,
+                      bool othersRead, bool othersWrite, bool othersExecute)
+{
+    QFile file(path);
+    QFileDevice::Permissions p;
+    if (ownerRead) p |= QFileDevice::ReadOwner;
+    if (ownerWrite) p |= QFileDevice::WriteOwner;
+    if (ownerExecute) p |= QFileDevice::ExeOwner;
+    if (groupRead) p |= QFileDevice::ReadGroup;
+    if (groupWrite) p |= QFileDevice::WriteGroup;
+    if (groupExecute) p |= QFileDevice::ExeGroup;
+    if (othersRead) p |= QFileDevice::ReadOther;
+    if (othersWrite) p |= QFileDevice::WriteOther;
+    if (othersExecute) p |= QFileDevice::ExeOther;
+    if (!file.setPermissions(p))
+        return tr("Cannot change permissions\n%1").arg(file.errorString());
+
+    return QString();
+}
+
 QString Engine::readSetting(QString key, QString defaultValue)
 {
     QSettings settings;
