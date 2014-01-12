@@ -13,9 +13,9 @@ Your storage (phone or sd card) is most likely full.
 
 ### What does error 'Unknown error' mean?
 
-If you tried to move a directory from SD Card to phone or
-from phone to SD Card, then you get this error message. Instead of 
-moving (cut-paste), you should copy the directory.
+One reason for this error message can be that you tried to move
+a folder between the phone and the SD Card. Instead of 
+moving (cut-paste), you should copy the folder.
 
 ### Why opening a file does not work, but gives error "No application to open the file"?
 
@@ -32,10 +32,11 @@ Perhaps it has a file system which is not recognized by the phone.
 You can also try to access the SD Card with another file manager, 
 such as Cargo Dock.
 
-### How can I see how much space is left on phone or SD Card?
+### How to copy files to Android Storage?
 
-Free phone storage space can be seen from phone settings. 
-Free space of an SD Card, don't know how to see that.
+File Browser can't copy files to Android Storage, because of its permissions.
+Try an Android file manager, such as ES File Explorer (available in 
+Yandex store), it can access Android and Jolla native file system.
 
 ### How to copy multiple files?
 
@@ -54,4 +55,7 @@ There is the wonderful Cargo Dock file manager in the Jolla store.
 You can also try the Jolla's own file manager called Files,
 which can be installed with 'pkcon install jolla-fileman' 
 in Terminal (requires Developer Mode).
+
+For best access to Android storage, try ES File Explorer in Yandex store.
+It can access Android storage and Jolla file system.
 

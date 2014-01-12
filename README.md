@@ -46,7 +46,8 @@ following command in Terminal (requires Developer Mode).
 
     pkcon install jolla-fileman
 
-Android stores also have file managers, such as ES File Explorer.
+Android app stores also have file managers, such as ES File Explorer,
+which are good when accessing Android storage.
 
 ## Building
 
