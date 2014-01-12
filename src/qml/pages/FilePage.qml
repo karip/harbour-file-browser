@@ -17,22 +17,28 @@ Page {
         // called when open command exits
         onProcessExited: {
             if (exitCode === 0) {
-                notificationPanel.showWithText("Open successful",
-                                               "Sometimes the application is left into background");
+                notificationPanel.showWithText(qsTr("Open successful"),
+                                               qsTr("Sometimes the application stays in the background"));
             } else if (exitCode === 1) {
-                notificationPanel.showWithText("Internal error",
+                notificationPanel.showWithText(qsTr("Internal error"),
                                                "xdg-open exit code 1");
             } else if (exitCode === 2) {
-                notificationPanel.showWithText("File not found",
+                notificationPanel.showWithText(qsTr("File not found"),
                                                page.file);
             } else if (exitCode === 3) {
-                notificationPanel.showWithText("No application to open the file",
-                                               "xdg-open found no preferred application (3)");
+                notificationPanel.showWithText(qsTr("No application to open the file"),
+                                               qsTr("xdg-open found no preferred application (3)"));
             } else if (exitCode === 4) {
-                notificationPanel.showWithText("Action failed",
+                notificationPanel.showWithText(qsTr("Action failed"),
                                                "xdg-open exit code 4");
             } else if (exitCode === -88888) {
-                notificationPanel.showWithText("xdg-open not found");
+                notificationPanel.showWithText(qsTr("xdg-open not found"), "");
+
+            } else if (exitCode === -99999) {
+                notificationPanel.showWithText(qsTr("xdg-open crash?"), "");
+
+            } else {
+                notificationPanel.showWithText(qsTr("xdg-open error"), "exit code: "+exitCode);
             }
         }
     }
@@ -94,7 +100,7 @@ Page {
                         pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                                        { title: "Install",
                                            successText: "Install Launched",
-                                           infoText: "If the app is already installed or package is faulty, then nothing happens.",
+                                           infoText: "If the app is already installed or the package is faulty, then nothing happens.",
                                            command: "apkd-install",
                                            arguments: [ fileInfo.file ] })
                     }
@@ -259,7 +265,6 @@ Page {
         dock: Dock.Top
         open: false
         onOpenChanged: {
-            interactionBlocker.visible = open; // disable row selection and menus
             page.backNavigation = !open; // disable back navigation
         }
 
