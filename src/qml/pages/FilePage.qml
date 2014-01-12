@@ -200,6 +200,20 @@ Page {
 
                 LagoonSpacer { height: 40 }
 
+                Label {
+                    visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
+                    width: parent.width
+                    text: qsTr("Apps and packages may contain malware.")
+                    color: "red"
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                }
+                LagoonSpacer {
+                    visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
+                    height: 40
+                }
+
                 CenteredField {
                     label: "Location"
                     value: fileInfo.absolutePath
