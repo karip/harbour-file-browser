@@ -9,6 +9,7 @@
  * Added rename files and folders
  * Added create folders
  * Added change permissions
+ * Added disk space indicators
  * Fixed two deletes to work simultaneously
 
 ## Version 1.3 (2013-12-29)

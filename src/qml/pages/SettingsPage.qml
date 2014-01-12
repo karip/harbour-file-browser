@@ -47,7 +47,7 @@ Page {
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
-                text: "Version 1.3" // Version number must be changed manually!
+                text: "Version 1.4.0" // Version number must be changed manually!
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.primaryColor
             }
