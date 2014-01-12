@@ -107,23 +107,23 @@ bool Engine::exists(QString filename)
     return QFile::exists(filename);
 }
 
-QString Engine::diskSpace(QString path)
+QStringList Engine::diskSpace(QString path)
 {
     // run df to get disk space
     QString blockSize = "--block-size=1024";
     QString result = execute("/bin/df", QStringList() << blockSize << path, false);
     if (result.isEmpty())
-        return "";
+        return QStringList();
 
     // parse result
     QStringList lines = result.split(QRegExp("[\n\r]"));
     if (lines.count() < 2)
-        return "";
+        return QStringList();
 
     QString line = lines.at(1);
     QStringList columns = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
     if (columns.count() < 5)
-        return "";
+        return QStringList();
 
     QString totalString = columns.at(1);
     QString usedString = columns.at(2);
@@ -131,7 +131,7 @@ QString Engine::diskSpace(QString path)
     qint64 total = totalString.toLongLong() * 1024LL;
     qint64 used = usedString.toLongLong() * 1024LL;
 
-    return percentageString+" - "+filesizeToString(used)+"/"+filesizeToString(total);
+    return QStringList() << percentageString << filesizeToString(used)+"/"+filesizeToString(total);
 }
 
 QStringList Engine::readFile(QString filename)

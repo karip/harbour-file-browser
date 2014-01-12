@@ -17,8 +17,23 @@ Item {
         _selectedMenu = 0;
 
         // update spaces
-        _contextMenu.rootSpace = engine.diskSpace("/");
-        _contextMenu.sdCardSpace = engine.diskSpace(Functions.sdcardPath());
+        var rootSpace = engine.diskSpace("/");
+        if (rootSpace.length > 0) {
+            _contextMenu.rootSpaceText = qsTr("Root (%1)").arg(rootSpace[0]);
+            _contextMenu.rootSpaceSubtext = rootSpace[1];
+        } else {
+            _contextMenu.rootSpaceText = qsTr("Root");
+            _contextMenu.rootSpaceSubtext = "";
+        }
+
+        var sdCardSpace = engine.diskSpace(Functions.sdcardPath());
+        if (sdCardSpace.length > 0) {
+            _contextMenu.sdCardSpaceText = qsTr("SD Card (%1)").arg(sdCardSpace[0]);
+            _contextMenu.sdCardSpaceSubtext = sdCardSpace[1];
+        } else {
+            _contextMenu.sdCardSpaceText = qsTr("SD Card");
+            _contextMenu.sdCardSpaceSubtext = "";
+        }
 
         _contextMenu.show(rect);
     }
@@ -44,8 +59,10 @@ Item {
         id: contextMenuComponent
         ContextMenu {
 
-            property string sdCardSpace: ""
-            property string rootSpace: ""
+            property string sdCardSpaceText: ""
+            property string sdCardSpaceSubtext: ""
+            property string rootSpaceText: ""
+            property string rootSpaceSubtext: ""
 
             // delayed action so that menu has already closed when page transition happens
             onClosed: {
@@ -81,8 +98,8 @@ Item {
                 onClicked: _selectedMenu = 1
             }
             DoubleMenuItem {
-                text: qsTr("SD Card")
-                subtext: sdCardSpace
+                text: sdCardSpaceText
+                subtext: sdCardSpaceSubtext
                 onClicked: _selectedMenu = 2
             }
             MenuItem {
@@ -90,8 +107,8 @@ Item {
                 onClicked: _selectedMenu = 3
             }
             DoubleMenuItem {
-                text: qsTr("Root")
-                subtext: rootSpace
+                text: rootSpaceText
+                subtext: rootSpaceSubtext
                 onClicked: _selectedMenu = 4
             }
         }
