@@ -48,6 +48,7 @@ OTHER_FILES = \
     qml/pages/CreateFolderDialog.qml \
     qml/pages/RenameDialog.qml \
     qml/pages/PermissionsDialog.qml \
+    qml/pages/AboutPage.qml \
     qml/components/DirPopup.qml \
     qml/components/LagoonSpacer.qml \
     qml/components/CenteredField.qml \

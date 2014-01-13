@@ -203,7 +203,7 @@ Page {
                 Label {
                     visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
                     width: parent.width
-                    text: qsTr("Apps and packages may contain malware.")
+                    text: qsTr("Installable packages may contain malware.")
                     color: "red"
                     font.pixelSize: Theme.fontSizeExtraSmall
                     horizontalAlignment: Text.AlignHCenter

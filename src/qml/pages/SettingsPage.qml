@@ -47,7 +47,7 @@ Page {
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
-                text: "Version 1.4.0" // Version number must be changed manually!
+                text: qsTr("Version 1.4.0") // Version number must be changed manually!
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.primaryColor
             }
@@ -57,18 +57,25 @@ Page {
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
-                text: "File Browser is free and unencumbered software released into the public domain."
+                text: "File Browser is free and unencumbered software released "+
+                      "into the public domain.\nRead full text >>"
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.primaryColor
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+                }
             }
+
             LagoonSpacer { height: 20 }
             Label {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
-                text: "The source code is available at\nhttps://github.com/karip/harbour-file-browser"
+                text: qsTr("The source code is available at\nhttps://github.com/karip/harbour-file-browser")
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeTiny
                 color: Theme.secondaryColor
