@@ -51,7 +51,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Change Permissions"
+                text: qsTr("Change Permissions")
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("PermissionsDialog.qml"),
                                                 { path: page.file })
@@ -64,7 +64,7 @@ Page {
                 }
             }
             MenuItem {
-                text: "Rename"
+                text: qsTr("Rename")
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("RenameDialog.qml"),
                                                 { path: page.file })
@@ -78,14 +78,14 @@ Page {
             }
 
             MenuItem {
-                text: "View Contents"
+                text: qsTr("View Contents")
                 visible: !fileInfo.isDir
                 onClicked: pageStack.push(Qt.resolvedUrl("ViewPage.qml"),
                                           { path: page.file });
             }
             // open menu tries to open the file and fileInfo.onProcessExited shows error if it fails
             MenuItem {
-                text: "Open"
+                text: qsTr("Open")
                 visible: !fileInfo.isDir
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
@@ -93,21 +93,21 @@ Page {
             // file type specific menu items
 
             MenuItem {
-                text: "Install"
+                text: qsTr("Install")
                 visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
                 onClicked: {
                     if (fileInfo.suffix === "apk") {
                         pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                                       { title: "Install",
-                                           successText: "Install Launched",
-                                           infoText: "If the app is already installed or the package is faulty, then nothing happens.",
+                                       { title: qsTr("Install"),
+                                           successText: qsTr("Install Launched"),
+                                           infoText: qsTr("If the app is already installed or the package is faulty, then nothing happens."),
                                            command: "apkd-install",
                                            arguments: [ fileInfo.file ] })
                     }
                     if (fileInfo.suffix === "rpm") {
                         pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                                       { title: "Install",
-                                           successText: "Install Finished",
+                                       { title: qsTr("Install"),
+                                           successText: qsTr("Install Finished"),
                                            command: "pkcon",
                                            arguments: [ "-y", "-p", "install-local",
                                                         fileInfo.file ] })
@@ -115,12 +115,12 @@ Page {
                 }
             }
             MenuItem {
-                text: "Go to Target"
+                text: qsTr("Go to Target")
                 visible: fileInfo.icon === "folder-link"
                 onClicked: Functions.goToFolder(fileInfo.symLinkTarget);
             }
             MenuItem {
-                text: playMedia.playbackState !== MediaPlayer.PlayingState ? "Play" : "Stop"
+                text: playMedia.playbackState !== MediaPlayer.PlayingState ? qsTr("Play") : qsTr("Stop")
                 visible: isAudioFile(fileInfo)
                 onClicked: {
                     if (isAudioFile(fileInfo)) {
@@ -215,31 +215,31 @@ Page {
                 }
 
                 CenteredField {
-                    label: "Location"
+                    label: qsTr("Location")
                     value: fileInfo.absolutePath
                 }
                 CenteredField {
-                    label: "Size"
+                    label: qsTr("Size")
                     value: fileInfo.size
                 }
                 CenteredField {
-                    label: "Permissions"
+                    label: qsTr("Permissions")
                     value: fileInfo.permissions
                 }
                 CenteredField {
-                    label: "Owner"
+                    label: qsTr("Owner")
                     value: fileInfo.owner
                 }
                 CenteredField {
-                    label: "Group"
+                    label: qsTr("Group")
                     value: fileInfo.group
                 }
                 CenteredField {
-                    label: "Last modified"
+                    label: qsTr("Last modified")
                     value: fileInfo.modified
                 }
                 CenteredField {
-                    label: "Created"
+                    label: qsTr("Created")
                     value: fileInfo.created
                 }
             }

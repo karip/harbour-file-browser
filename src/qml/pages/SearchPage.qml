@@ -41,7 +41,7 @@ Page {
                 clear();
                 if (txt !== "") {
                     searchEngine.search(txt);
-                    coverPlaceholder.text = "Searching\n"+txt;
+                    coverPlaceholder.text = qsTr("Searching")+"\n"+txt;
                 }
             }
 
@@ -52,7 +52,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Settings"
+                text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
         }
@@ -65,7 +65,7 @@ Page {
                 id: searchField
                 anchors.left: parent.left
                 anchors.right: cancelSearchButton.left
-                placeholderText: "Search "+Functions.formatPathForSearch(page.dir)
+                placeholderText: qsTr("Search %1").arg(Functions.formatPathForSearch(page.dir))
                 inputMethodHints: Qt.ImhNoAutoUppercase
 
                 // get focus when page is shown for the first time
@@ -123,7 +123,7 @@ Page {
                 anchors.leftMargin: searchField.textLeftMargin
                 anchors.top: searchField.bottom
                 anchors.topMargin: -26
-                text: listModel.count+" hits"
+                text: qsTr("%1 hits").arg(listModel.count)
                 font.pixelSize: Theme.fontSizeTiny
                 color: Theme.secondaryColor
             }
@@ -191,8 +191,8 @@ Page {
             // delete file after remorse time
             ListView.onRemove: animateRemoval(fileItem)
             function deleteFile(deleteFilename) {
-                remorseAction("Deleting", function() {
-                    progressPanel.showText("Deleting");
+                remorseAction(qsTr("Deleting"), function() {
+                    progressPanel.showText(qsTr("Deleting"));
                     engine.deleteFiles([ deleteFilename ]);
                 }, 5000)
             }
@@ -202,19 +202,19 @@ Page {
                  id: contextMenu
                  ContextMenu {
                      MenuItem {
-                         text: "Go to containing folder"
+                         text: qsTr("Go to containing folder")
                          onClicked: Functions.goToFolder(model.absoluteDir)
                      }
                      MenuItem {
-                         text: "Cut"
+                         text: qsTr("Cut")
                          onClicked: engine.cutFiles([ model.fullname ]);
                      }
                      MenuItem {
-                         text: "Copy"
+                         text: qsTr("Copy")
                          onClicked: engine.copyFiles([ model.fullname ]);
                      }
                      MenuItem {
-                         text: "Delete"
+                         text: qsTr("Delete")
                          onClicked: deleteFile(model.fullname);
                      }
                  }
@@ -266,7 +266,7 @@ Page {
     }
 
     function clearCover() {
-        coverPlaceholder.text = "Search";
+        coverPlaceholder.text = qsTr("Search");
     }
 }
 

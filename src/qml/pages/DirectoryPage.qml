@@ -27,11 +27,11 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Settings"
+                text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
             MenuItem {
-                text: "Create Folder"
+                text: qsTr("Create Folder")
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("CreateFolderDialog.qml"),
                                           { path: page.dir })
@@ -42,14 +42,16 @@ Page {
                 }
             }
             MenuItem {
-                text: "Search"
+                text: qsTr("Search")
                 onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"),
                                           { dir: page.dir });
             }
             MenuItem {
-                text: "Paste" + (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
+                text: qsTr("Paste") +
+                      (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
                 onClicked: {
-                    progressPanel.showText(engine.clipboardContainsCopy ? "Copying" : "Moving")
+                    progressPanel.showText(engine.clipboardContainsCopy ?
+                                               qsTr("Copying") : qsTr("Moving"))
                     engine.pasteFiles(page.dir);
                 }
             }
@@ -127,8 +129,8 @@ Page {
             // delete file after remorse time
             ListView.onRemove: animateRemoval(fileItem)
             function deleteFile(deleteFilename) {
-                remorseAction("Deleting", function() {
-                    progressPanel.showText("Deleting");
+                remorseAction(qsTr("Deleting"), function() {
+                    progressPanel.showText(qsTr("Deleting"));
                     engine.deleteFiles([ deleteFilename ]);
                 }, 5000)
             }
@@ -138,22 +140,22 @@ Page {
                  id: contextMenu
                  ContextMenu {
                      MenuItem {
-                         text: "Cut"
+                         text: qsTr("Cut")
                          onClicked: engine.cutFiles([ fileModel.fileNameAt(index) ]);
                      }
                      MenuItem {
-                         text: "Copy"
+                         text: qsTr("Copy")
                          onClicked: engine.copyFiles([ fileModel.fileNameAt(index) ]);
                      }
                      MenuItem {
-                         text: "Delete"
+                         text: qsTr("Delete")
                          onClicked:  {
                              deleteFile(fileModel.fileNameAt(index));
                          }
                      }
                      MenuItem {
                          visible: model.isDir
-                         text: "Properties"
+                         text: qsTr("Properties")
                          onClicked:  {
                              pageStack.push(Qt.resolvedUrl("FilePage.qml"),
                                             { file: fileModel.fileNameAt(index) });
@@ -207,9 +209,9 @@ Page {
             if (progressPanel.open) {
                 progressPanel.hide();
                 if (message === "Unknown error")
-                    filename = "Trying to move between phone and SD Card? It doesn't work, try copying.";
+                    filename = qsTr("Trying to move between phone and SD Card? It doesn't work, try copying.");
                 else if (message === "Failure to write block")
-                    filename = "Perhaps the storage is full?";
+                    filename = qsTr("Perhaps the storage is full?");
 
                 notificationPanel.showText(message, filename);
             }

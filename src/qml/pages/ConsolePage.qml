@@ -8,9 +8,9 @@ Page {
     allowedOrientations: Orientation.All
     property string title: ""
     property string command: ""
-    property variant arguments // this should be set to a string list, e.g. [ "arg1", "arg2" ]
-    property string initialText: "Installing..."
-    property string successText: "Successful"
+    property variant arguments // this must be set to a string list, e.g. [ "arg1", "arg2" ]
+    property string initialText: qsTr("Installing...")
+    property string successText: qsTr("Successful")
     property string infoText: ""
     property color consoleColor: Theme.secondaryColor
 
@@ -31,7 +31,7 @@ Page {
                 statusLabel.text = page.successText;
                 infoLabel.text = page.infoText;
             } else {
-                statusLabel.text = "Failed! Error code: "+exitCode;
+                statusLabel.text = qsTr("Failed! Error code: %1").arg(exitCode);
             }
         }
     }
