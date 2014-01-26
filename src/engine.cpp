@@ -2,6 +2,7 @@
 #include <QDateTime>
 #include <QTextStream>
 #include <QSettings>
+#include <QStandardPaths>
 #include "globals.h"
 #include "fileworker.h"
 
@@ -100,6 +101,11 @@ void Engine::pasteFiles(QString destDirectory)
 void Engine::cancel()
 {
     m_fileWorker->cancel();
+}
+
+QString Engine::homeFolder() const
+{
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 }
 
 bool Engine::exists(QString filename)

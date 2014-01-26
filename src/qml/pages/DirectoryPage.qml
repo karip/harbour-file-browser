@@ -186,7 +186,7 @@ Page {
             // go to Home on startup
             if (page.initial) {
                 page.initial = false;
-                Functions.goToHome(StandardPaths.documents);
+                Functions.goToHome();
             }
         }
     }

@@ -44,15 +44,10 @@ function goToFolder(folder)
     }
 }
 
-// Goes to Home folder - requires document path from StandardPaths to resolve Home
-function goToHome(documentPath)
+// Goes to Home folder
+function goToHome()
 {
-    var lastPos = documentPath.lastIndexOf("/");
-    if (lastPos < 0)
-        return;
-
-    var homePath = documentPath.substring(0, lastPos);
-    goToFolder(homePath);
+    goToFolder(engine.homeFolder());
 }
 
 function sdcardPath()

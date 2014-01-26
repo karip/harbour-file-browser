@@ -67,7 +67,7 @@ Item {
             // delayed action so that menu has already closed when page transition happens
             onClosed: {
                 if (_selectedMenu == 1) {
-                    Functions.goToHome(StandardPaths.documents);
+                    Functions.goToHome();
 
                 } else if (_selectedMenu == 2) {
                     var sdcard = Functions.sdcardPath();

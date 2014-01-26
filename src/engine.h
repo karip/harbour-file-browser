@@ -41,6 +41,7 @@ public:
     Q_INVOKABLE QString errorMessage() const { return m_errorMessage; }
 
     // sync methods
+    Q_INVOKABLE QString homeFolder() const;
     Q_INVOKABLE bool exists(QString filename);
     Q_INVOKABLE QStringList diskSpace(QString path);
     Q_INVOKABLE QStringList readFile(QString filename);
