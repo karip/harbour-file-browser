@@ -50,10 +50,13 @@ OTHER_FILES = \
     qml/pages/PermissionsDialog.qml \
     qml/pages/AboutPage.qml \
     qml/components/DirPopup.qml \
-    qml/components/LagoonSpacer.qml \
+    qml/components/Spacer.qml \
     qml/components/CenteredField.qml \
     qml/components/LetterSwitch.qml \
     qml/components/DoubleMenuItem.qml \
+    qml/components/InteractionBlocker.qml \
+    qml/components/NotificationPanel.qml \
+    qml/components/ProgressPanel.qml \
     qml/main.qml \
     qml/functions.js
 

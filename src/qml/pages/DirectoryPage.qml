@@ -19,10 +19,7 @@ Page {
 
     SilicaListView {
         id: fileList
-        anchors {
-            fill: parent
-            bottomMargin: notificationPanel.margin
-        }
+        anchors.fill: parent
 
         model: fileModel
 
@@ -40,7 +37,7 @@ Page {
                                           { path: page.dir })
                     dialog.accepted.connect(function() {
                         if (dialog.errorMessage !== "")
-                            notificationPanel.showWithText(dialog.errorMessage, "")
+                            notificationPanel.showText(dialog.errorMessage, "")
                     })
                 }
             }
@@ -52,7 +49,7 @@ Page {
             MenuItem {
                 text: "Paste" + (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
                 onClicked: {
-                    progressPanel.showWithText(engine.clipboardCut ? "Moving" : "Copying")
+                    progressPanel.showText(engine.clipboardCut ? "Moving" : "Copying")
                     engine.pasteFiles(page.dir);
                 }
             }
@@ -131,7 +128,7 @@ Page {
             ListView.onRemove: animateRemoval(fileItem)
             function deleteFile(deleteFilename) {
                 remorseAction("Deleting", function() {
-                    progressPanel.showWithText("Deleting");
+                    progressPanel.showText("Deleting");
                     engine.deleteFiles([ deleteFilename ]);
                 }, 5000)
             }
@@ -167,11 +164,14 @@ Page {
         }
 
     }
+
+    // no files text
     Label {
         anchors.centerIn: parent
         text: "No files"
         visible: fileModel.fileCount === 0 && fileModel.errorMessage === ""
     }
+    // error text
     Label {
         anchors.centerIn: parent
         text: fileModel.errorMessage
@@ -197,198 +197,36 @@ Page {
         menuTop: 100
     }
 
-    Rectangle {
-        id: interactionBlocker
+    // connect signals from engine to panels
+    Connections {
+        target: engine
+        onProgressChanged: progressPanel.text = engine.progressFilename
+        onWorkerDone: progressPanel.hide()
+        onWorkerErrorOccurred: {
+            // the error signal goes to all pages in pagestack, show it only in the active one
+            if (progressPanel.open) {
+                progressPanel.hide();
+                if (message === "Unknown error")
+                    filename = "Trying to move between phone and SD Card? It doesn't work, try copying.";
+                else if (message === "Failure to write block")
+                    filename = "Perhaps the storage is full?";
 
-        anchors.fill: parent
-        visible: false
-        color: "#000000"
-        opacity: 0.4
-
-        MouseArea {
-            anchors.fill: parent
-            enabled: true
-            // if blocker is clicked and notification panel is open, then close it
-            // otherwise, this only blocks all clicks to underlying items
-            onClicked: {
-                if (notificationPanel.open)
-                    notificationPanel.hide();
-            }
-        }
-        // use a timer to delay the visibility of interaction blocker by adjusting opacity
-        // this is done to prevent flashing if the file operation is fast
-        onVisibleChanged: {
-            if (visible === true) {
-                interactionBlocker.opacity = 0;
-                blockerTimer.start();
-            } else {
-                blockerTimer.stop();
-            }
-        }
-        Timer {
-            id: blockerTimer
-            interval: 300
-            onTriggered: {
-                interactionBlocker.opacity = 0.3;
-                stop();
+                notificationPanel.showText(message, filename);
             }
         }
     }
 
-    // notification panel to display messages at top of the screen
-    DockedPanel {
+    NotificationPanel {
         id: notificationPanel
-
-        width: parent.width
-        height: Theme.itemSizeExtraLarge + Theme.paddingLarge
-
-        dock: Dock.Top
-        open: false
-        onOpenChanged: {
-            interactionBlocker.visible = open; // disable row selection and menus
-            page.backNavigation = !open; // disable back navigation
-        }
-
-        function showWithText(header, txt) {
-            notificationHeader.text = header;
-            notificationText.text = txt;
-            notificationPanel.show();
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.7
-        }
-        MouseArea {
-            anchors.fill: parent
-            enabled: true
-            onClicked: notificationPanel.hide()
-        }
-        Label {
-            id: notificationHeader
-            visible: notificationPanel.open
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            anchors.topMargin: 40
-            horizontalAlignment: Text.AlignHCenter
-            text: ""
-            wrapMode: Text.Wrap
-            color: Theme.primaryColor
-        }
-        Label {
-            id: notificationText
-            visible: notificationPanel.open
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: notificationHeader.bottom
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            horizontalAlignment: Text.AlignHCenter
-            text: ""
-            wrapMode: Text.Wrap
-            font.pixelSize: Theme.fontSizeTiny
-            color: Theme.primaryColor
-        }
+        page: page
     }
 
-    // progress panel to display progress
-    DockedPanel {
+    ProgressPanel {
         id: progressPanel
-
-        width: parent.width
-        height: Theme.itemSizeExtraLarge + Theme.paddingLarge
-
-        dock: Dock.Top
-        open: false
-        onOpenChanged: {
-            interactionBlocker.visible = open; // disable row selection and menus
-            page.backNavigation = !open; // disable back navigation
-        }
-
-        Connections {
-            target: engine
-            onProgressChanged: progressText.text = engine.progressFilename
-            onWorkerDone: progressPanel.hide()
-            onWorkerErrorOccurred: {
-                // the error signal goes to all pages in pagestack, show it only in the active one
-                if (progressPanel.open) {
-                    progressPanel.hide();
-                    if (message === "Unknown error")
-                        filename = "Trying to move between phone and SD Card? It doesn't work, try copying.";
-                    else if (message === "Failure to write block")
-                        filename = "Perhaps the storage is full?";
-
-                    notificationPanel.showWithText(message, filename);
-                }
-            }
-        }
-
-        function showWithText(txt) {
-            progressHeader.text = txt;
-            progressPanel.show();
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.7
-        }
-        BusyIndicator {
-            id: progressBusy
-            anchors.right: progressHeader.left
-            anchors.rightMargin: Theme.paddingLarge
-            anchors.verticalCenter: parent.verticalCenter
-            running: true
-            size: BusyIndicatorSize.Small
-        }
-        Rectangle {
-            id: cancelButton
-            anchors.right: parent.right
-            width: 100
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            color: cancelMouseArea.pressed ? Theme.secondaryHighlightColor : "transparent"
-            MouseArea {
-                id: cancelMouseArea
-                anchors.fill: parent
-                onClicked: engine.cancel()
-                enabled: true
-                Text {
-                    anchors.centerIn: parent
-                    color: Theme.primaryColor
-                    text: "X"
-                }
-            }
-        }
-        Label {
-            id: progressHeader
-            visible: progressPanel.open
-            anchors.left: parent.left
-            anchors.right: cancelButton.left
-            anchors.top: parent.top
-            anchors.topMargin: 40
-            anchors.leftMargin: progressBusy.width + Theme.paddingLarge*4
-            anchors.rightMargin: Theme.paddingLarge
-            text: ""
-            color: Theme.primaryColor
-        }
-        Label {
-            id: progressText
-            visible: progressPanel.open
-            anchors.left: progressHeader.left
-            anchors.right: cancelButton.left
-            anchors.rightMargin: Theme.paddingLarge
-            anchors.top: progressHeader.bottom
-            text: ""
-            wrapMode: Text.Wrap
-            font.pixelSize: Theme.fontSizeTiny
-            color: Theme.primaryColor
-        }
+        page: page
+        onCancelled: engine.cancel()
     }
+
 }
 
 

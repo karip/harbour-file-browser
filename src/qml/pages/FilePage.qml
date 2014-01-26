@@ -17,28 +17,28 @@ Page {
         // called when open command exits
         onProcessExited: {
             if (exitCode === 0) {
-                notificationPanel.showWithText(qsTr("Open successful"),
+                notificationPanel.showTextWithTimer(qsTr("Open successful"),
                                                qsTr("Sometimes the application stays in the background"));
             } else if (exitCode === 1) {
-                notificationPanel.showWithText(qsTr("Internal error"),
+                notificationPanel.showTextWithTimer(qsTr("Internal error"),
                                                "xdg-open exit code 1");
             } else if (exitCode === 2) {
-                notificationPanel.showWithText(qsTr("File not found"),
+                notificationPanel.showTextWithTimer(qsTr("File not found"),
                                                page.file);
             } else if (exitCode === 3) {
-                notificationPanel.showWithText(qsTr("No application to open the file"),
+                notificationPanel.showTextWithTimer(qsTr("No application to open the file"),
                                                qsTr("xdg-open found no preferred application (3)"));
             } else if (exitCode === 4) {
-                notificationPanel.showWithText(qsTr("Action failed"),
+                notificationPanel.showTextWithTimer(qsTr("Action failed"),
                                                "xdg-open exit code 4");
             } else if (exitCode === -88888) {
-                notificationPanel.showWithText(qsTr("xdg-open not found"), "");
+                notificationPanel.showTextWithTimer(qsTr("xdg-open not found"), "");
 
             } else if (exitCode === -99999) {
-                notificationPanel.showWithText(qsTr("xdg-open crash?"), "");
+                notificationPanel.showTextWithTimer(qsTr("xdg-open crash?"), "");
 
             } else {
-                notificationPanel.showWithText(qsTr("xdg-open error"), "exit code: "+exitCode);
+                notificationPanel.showTextWithTimer(qsTr("xdg-open error"), "exit code: "+exitCode);
             }
         }
     }
@@ -59,7 +59,7 @@ Page {
                         if (dialog.errorMessage === "")
                             fileInfo.refresh();
                         else
-                            notificationPanel.showWithText(dialog.errorMessage, "");
+                            notificationPanel.showTextWithTimer(dialog.errorMessage, "");
                     })
                 }
             }
@@ -72,7 +72,7 @@ Page {
                         if (dialog.errorMessage === "")
                             page.file = dialog.newPath;
                         else
-                            notificationPanel.showWithText(dialog.errorMessage, "");
+                            notificationPanel.showTextWithTimer(dialog.errorMessage, "");
                     })
                 }
             }
@@ -269,67 +269,9 @@ Page {
         menuTop: 100
     }
 
-    // notification panel to display messages at top of the screen
-    DockedPanel {
+    NotificationPanel {
         id: notificationPanel
-
-        width: parent.width
-        height: Theme.itemSizeExtraLarge + Theme.paddingLarge
-
-        dock: Dock.Top
-        open: false
-        onOpenChanged: {
-            page.backNavigation = !open; // disable back navigation
-        }
-
-        function showWithText(header, txt) {
-            notificationHeader.text = header;
-            notificationText.text = txt;
-            notificationPanel.show();
-            notificationTimer.start();
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.7
-        }
-        Label {
-            id: notificationHeader
-            visible: notificationPanel.open
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            anchors.topMargin: 40
-            horizontalAlignment: Text.AlignHCenter
-            text: ""
-            wrapMode: Text.Wrap
-            color: Theme.primaryColor
-        }
-        Label {
-            id: notificationText
-            visible: notificationPanel.open
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: notificationHeader.bottom
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            horizontalAlignment: Text.AlignHCenter
-            text: ""
-            wrapMode: Text.Wrap
-            font.pixelSize: Theme.fontSizeTiny
-            color: Theme.primaryColor
-        }
-        Timer {
-            id: notificationTimer
-            interval: 5000
-            onTriggered: {
-                notificationPanel.hide();
-                stop();
-            }
-        }
+        page: page
     }
 
     function isImageFile(fileInfo)

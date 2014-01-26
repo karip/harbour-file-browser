@@ -75,7 +75,7 @@ Item {
                         Functions.goToFolder(sdcard);
                     } else {
                         // this assumes that the page has a notificationPanel
-                        notificationPanel.showWithText(qsTr("SD Card not found"), sdcard);
+                        notificationPanel.showText(qsTr("SD Card not found"), sdcard);
                     }
 
                 } else if (_selectedMenu == 3) {
@@ -84,7 +84,7 @@ Item {
                         Functions.goToFolder(androidSdcard);
                     } else {
                         // this assumes that the page has a notificationPanel
-                        notificationPanel.showWithText(qsTr("Android Storage not found"), androidSdcard);
+                        notificationPanel.showText(qsTr("Android Storage not found"), androidSdcard);
                     }
 
                 } else if (_selectedMenu == 4) {
