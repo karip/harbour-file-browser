@@ -73,7 +73,7 @@ Page {
                 color: Theme.secondaryColor
             }
 
-            LagoonSpacer { height: 40 }
+            Spacer { height: 40 }
 
             // command line text
             Label {

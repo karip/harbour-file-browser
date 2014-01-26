@@ -179,7 +179,7 @@ Page {
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                 }
-                LagoonSpacer { // spacing if image or video is visible
+                Spacer { // spacing if image or video is visible
                     height: 24
                     visible: imagePreview.visible
                 }
@@ -198,7 +198,7 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraSmall
                 }
 
-                LagoonSpacer { height: 40 }
+                Spacer { height: 40 }
 
                 Label {
                     visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
@@ -209,7 +209,7 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
                 }
-                LagoonSpacer {
+                Spacer {
                     visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
                     height: 40
                 }

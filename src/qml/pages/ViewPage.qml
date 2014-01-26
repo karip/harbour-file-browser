@@ -43,7 +43,7 @@ Page {
                 color: Theme.primaryColor
                 visible: page.orientation === Orientation.Landscape
             }
-            LagoonSpacer {
+            Spacer {
                 height: 40
                 visible: message.text !== ""
             }
@@ -56,7 +56,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 visible: message.text !== ""
             }
-            LagoonSpacer {
+            Spacer {
                 height: 40
                 visible: message.text !== ""
             }

@@ -31,7 +31,7 @@ Page {
                 text: qsTr("Show hidden files")
             }
 
-            LagoonSpacer { height: 40 }
+            Spacer { height: 40 }
 
             Label {
                 text: qsTr("About File Browser")
@@ -41,7 +41,7 @@ Page {
                 horizontalAlignment: Text.AlignRight
                 color: Theme.highlightColor
             }
-            LagoonSpacer { height: 20 }
+            Spacer { height: 20 }
             Label {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -51,7 +51,7 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.primaryColor
             }
-            LagoonSpacer { height: 20 }
+            Spacer { height: 20 }
             Label {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -69,7 +69,7 @@ Page {
                 }
             }
 
-            LagoonSpacer { height: 20 }
+            Spacer { height: 20 }
             Label {
                 anchors.left: parent.left
                 anchors.right: parent.right

@@ -40,7 +40,7 @@ Dialog {
                 wrapMode: Text.Wrap
             }
 
-            LagoonSpacer {
+            Spacer {
                 height: 20
             }
 
