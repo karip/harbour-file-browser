@@ -49,7 +49,7 @@ Page {
             MenuItem {
                 text: "Paste" + (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
                 onClicked: {
-                    progressPanel.showText(engine.clipboardCut ? "Moving" : "Copying")
+                    progressPanel.showText(engine.clipboardContainsCopy ? "Copying" : "Moving")
                     engine.pasteFiles(page.dir);
                 }
             }

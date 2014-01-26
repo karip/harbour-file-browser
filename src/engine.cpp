@@ -8,7 +8,7 @@
 
 Engine::Engine(QObject *parent) :
     QObject(parent),
-    m_clipboardCut(true),
+    m_clipboardContainsCopy(false),
     m_progress(0)
 {
     m_fileWorker = new FileWorker;
@@ -41,17 +41,17 @@ void Engine::deleteFiles(QStringList filenames)
 void Engine::cutFiles(QStringList filenames)
 {
     m_clipboardFiles = filenames;
-    m_clipboardCut = true;
+    m_clipboardContainsCopy = false;
     emit clipboardCountChanged();
-    emit clipboardCutChanged();
+    emit clipboardContainsCopyChanged();
 }
 
 void Engine::copyFiles(QStringList filenames)
 {
     m_clipboardFiles = filenames;
-    m_clipboardCut = false;
+    m_clipboardContainsCopy = true;
     emit clipboardCountChanged();
-    emit clipboardCutChanged();
+    emit clipboardContainsCopyChanged();
 }
 
 void Engine::pasteFiles(QString destDirectory)
@@ -90,12 +90,12 @@ void Engine::pasteFiles(QString destDirectory)
     m_clipboardFiles.clear();
     emit clipboardCountChanged();
 
-    if (m_clipboardCut) {
-        m_fileWorker->startMoveFiles(files, destDirectory);
+    if (m_clipboardContainsCopy) {
+        m_fileWorker->startCopyFiles(files, destDirectory);
         return;
     }
 
-    m_fileWorker->startCopyFiles(files, destDirectory);
+    m_fileWorker->startMoveFiles(files, destDirectory);
 }
 
 void Engine::cancel()
@@ -148,20 +148,20 @@ QStringList Engine::readFile(QString filename)
 
     // check permissions
     if (access(filename, R_OK) == -1)
-        return stringListify(tr("No permission to read the file\n%1").arg(filename));
+        return makeStringList(tr("No permission to read the file\n%1").arg(filename));
 
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly))
-        return stringListify(tr("Error reading file\n%1").arg(filename));
+        return makeStringList(tr("Error reading file\n%1").arg(filename));
 
     // read start of file
     char buffer[maxSize+1];
     qint64 readSize = file.read(buffer, maxSize);
     if (readSize < 0)
-        return stringListify(tr("Error reading file\n%1").arg(filename));
+        return makeStringList(tr("Error reading file\n%1").arg(filename));
 
     if (readSize == 0)
-        return stringListify(tr("Empty file"));
+        return makeStringList(tr("Empty file"));
 
     bool atEnd = file.atEnd();
     file.close();
@@ -182,8 +182,8 @@ QStringList Engine::readFile(QString filename)
             readSize = maxBinSize;
             atEnd = false;
         }
-        QString out8 = dumpHex(buffer, readSize, 8);
-        QString out16 = dumpHex(buffer, readSize, 16);
+        QString out8 = createHexDump(buffer, readSize, 8);
+        QString out16 = createHexDump(buffer, readSize, 16);
         QString msg = "";
 
         if (!atEnd) {
@@ -211,7 +211,7 @@ QStringList Engine::readFile(QString filename)
     else if (!atEnd)
         msg = tr("--- Text file preview clipped at %1 kB ---").arg(maxSize/1000);
 
-    return stringListify(msg, lines.join("\n"));
+    return makeStringList(msg, lines.join("\n"));
 }
 
 QString Engine::mkdir(QString path, QString name)
@@ -293,7 +293,7 @@ void Engine::setProgress(int progress, QString filename)
     emit progressFilenameChanged();
 }
 
-QString Engine::dumpHex(char *buffer, int size, int bytesPerLine)
+QString Engine::createHexDump(char *buffer, int size, int bytesPerLine)
 {
     QString out;
     QString ascDump;
@@ -324,7 +324,7 @@ QString Engine::dumpHex(char *buffer, int size, int bytesPerLine)
     return out;
 }
 
-QStringList Engine::stringListify(QString msg, QString str)
+QStringList Engine::makeStringList(QString msg, QString str)
 {
     QStringList list;
     list << msg << str << str;

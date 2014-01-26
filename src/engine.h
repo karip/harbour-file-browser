@@ -13,7 +13,7 @@ class Engine : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int clipboardCount READ clipboardCount() NOTIFY clipboardCountChanged())
-    Q_PROPERTY(int clipboardCut READ clipboardCut() NOTIFY clipboardCutChanged())
+    Q_PROPERTY(int clipboardContainsCopy READ clipboardContainsCopy() NOTIFY clipboardContainsCopyChanged())
     Q_PROPERTY(int progress READ progress() NOTIFY progressChanged())
     Q_PROPERTY(QString progressFilename READ progressFilename() NOTIFY progressFilenameChanged())
 
@@ -22,7 +22,7 @@ public:
     ~Engine();
 
     int clipboardCount() const { return m_clipboardFiles.count(); }
-    bool clipboardCut() const { return m_clipboardCut; }
+    bool clipboardContainsCopy() const { return m_clipboardContainsCopy; }
     int progress() const { return m_progress; }
     QString progressFilename() const { return m_progressFilename; }
 
@@ -57,7 +57,7 @@ public:
 
 signals:
     void clipboardCountChanged();
-    void clipboardCutChanged();
+    void clipboardContainsCopyChanged();
     void progressChanged();
     void progressFilenameChanged();
     void workerDone();
@@ -70,11 +70,11 @@ private slots:
     void setProgress(int progress, QString filename);
 
 private:
-    QString dumpHex(char *buffer, int size, int bytesPerLine);
-    QStringList stringListify(QString msg, QString str = QString());
+    QString createHexDump(char *buffer, int size, int bytesPerLine);
+    QStringList makeStringList(QString msg, QString str = QString());
 
     QStringList m_clipboardFiles;
-    bool m_clipboardCut;
+    bool m_clipboardContainsCopy;
     int m_progress;
     QString m_progressFilename;
     QString m_errorMessage;
