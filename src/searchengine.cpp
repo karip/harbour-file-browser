@@ -8,7 +8,7 @@ SearchEngine::SearchEngine(QObject *parent) :
 {
     m_dir = "";
     m_searchWorker = new SearchWorker;
-    connect(m_searchWorker, SIGNAL(matchFound(QString)), this, SLOT(addFile(QString)));
+    connect(m_searchWorker, SIGNAL(matchFound(QString)), this, SLOT(emitMatchFound(QString)));
 
     // pass worker end signals to QML
     connect(m_searchWorker, SIGNAL(progressChanged(QString)),
@@ -59,7 +59,7 @@ void SearchEngine::cancel()
     m_searchWorker->cancel();
 }
 
-void SearchEngine::addFile(QString fullpath)
+void SearchEngine::emitMatchFound(QString fullpath)
 {
     QFileInfo info(fullpath);
     emit matchFound(fullpath, info.fileName(), info.absoluteDir().absolutePath(),

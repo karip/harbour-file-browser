@@ -194,7 +194,7 @@ QStringList Engine::readFile(QString filename)
         return QStringList() << msg << out8 << out16;
     }
 
-    // read lines to a list and join
+    // read lines to a string list and join
     QByteArray ba(buffer, readSize);
     QTextStream in(&ba);
     QStringList lines;

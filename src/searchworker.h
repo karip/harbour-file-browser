@@ -34,7 +34,7 @@ protected:
 
 private:
     enum CancelStatus {
-        Cancelled = 0, KeepRunning = 1
+        Cancelled = 0, NotCancelled = 1
     };
 
     QString searchRecursively(QString directory, QString searchTerm);

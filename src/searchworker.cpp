@@ -5,7 +5,7 @@
 
 SearchWorker::SearchWorker(QObject *parent) :
     QThread(parent),
-    m_cancelled(KeepRunning)
+    m_cancelled(NotCancelled)
 {
 }
 
@@ -27,7 +27,7 @@ void SearchWorker::startSearch(QString directory, QString searchTerm)
     m_directory = directory;
     m_searchTerm = searchTerm;
     m_currentDirectory = directory;
-    m_cancelled.storeRelease(KeepRunning);
+    m_cancelled.storeRelease(NotCancelled);
     start();
 }
 

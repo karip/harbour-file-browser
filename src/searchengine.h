@@ -40,7 +40,7 @@ signals:
     void workerErrorOccurred(QString message, QString filename);
 
 private slots:
-    void addFile(QString fullpath);
+    void emitMatchFound(QString fullpath);
 
 private:
     QString m_dir;

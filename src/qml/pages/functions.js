@@ -73,6 +73,7 @@ function formatPathForTitle(path)
     return path.substring(i+1)+"/";
 }
 
+// returns the text after the last / in a path
 function lastPartOfPath(path)
 {
     if (path === "/")

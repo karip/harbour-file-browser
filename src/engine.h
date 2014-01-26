@@ -52,6 +52,7 @@ public:
                               bool groupRead, bool groupWrite, bool groupExecute,
                               bool othersRead, bool othersWrite, bool othersExecute);
 
+    // access settings
     Q_INVOKABLE QString readSetting(QString key, QString defaultValue = QString());
     Q_INVOKABLE void writeSetting(QString key, QString value);
 
