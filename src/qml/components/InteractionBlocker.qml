@@ -1,10 +1,11 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// This component blocks all interaction under its components and displays a dark background
+// This component blocks all components under it and displays a dark background
 Rectangle {
     id: interactionBlocker
 
+    // clicked signal is emitted when the component is clicked
     signal clicked
 
     visible: false

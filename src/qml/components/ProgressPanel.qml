@@ -71,6 +71,7 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             color: cancelMouseArea.pressed ? Theme.secondaryHighlightColor : "transparent"
+
             MouseArea {
                 id: cancelMouseArea
                 anchors.fill: parent

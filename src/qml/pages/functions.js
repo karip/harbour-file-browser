@@ -31,6 +31,7 @@ function startsWith(s1, s2)
 
 function goToFolder(folder)
 {
+    // first, go to root so that the page stack has only one page
     goToRoot(PageStackAction.Immediate);
 
     // open the folders one by one

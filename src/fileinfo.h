@@ -7,7 +7,7 @@
 #include <QVariantList>
 
 /**
- * @brief The FileInfo class provides access to information of one file.
+ * @brief The FileInfo class provides access to one file.
  */
 class FileInfo : public QObject
 {

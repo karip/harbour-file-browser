@@ -7,7 +7,7 @@
 class FileWorker;
 
 /**
- * @brief Engine to handle cut, copy and paste.
+ * @brief Engine to handle file operations, settings and other generic functionality.
  */
 class Engine : public QObject
 {

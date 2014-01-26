@@ -5,7 +5,7 @@
 #include <QDir>
 
 /**
- * @brief FileWorker does all file related work in the background.
+ * @brief FileWorker does delete, copy and move files in the background.
  */
 class FileWorker : public QThread
 {
