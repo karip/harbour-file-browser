@@ -1,33 +1,7 @@
 TEMPLATE=app
 TARGET = harbour-file-browser
 
-# In the bright future this config line will do a lot of stuff to you
-#CONFIG += sailfishapp
-
-# Start of temporary fix for the icon for the Nov 2013 harbour requirements, basically reimplements
-# what CONFIG += sailfishapp is supposed to do manually (with small corrections)
-# QML files and folders
-QT += quick qml
-CONFIG += link_pkgconfig
-PKGCONFIG += sailfishapp
-
-INCLUDEPATH += /usr/include/sailfishapp
-
-TARGETPATH = /usr/bin
-target.path = $$TARGETPATH
-
-DEPLOYMENT_PATH = /usr/share/$$TARGET
-qml.files = qml
-qml.path = $$DEPLOYMENT_PATH
-
-desktop.files = harbour-file-browser.desktop
-desktop.path = /usr/share/applications
-
-icon.files = harbour-file-browser.png
-icon.path = /usr/share/icons/hicolor/86x86/apps
-
-INSTALLS += target icon desktop  qml
-# End of Nov 2013 fix
+CONFIG += sailfishapp
 
 SOURCES += main.cpp filemodel.cpp fileinfo.cpp engine.cpp fileworker.cpp searchengine.cpp \
            searchworker.cpp globals.cpp
