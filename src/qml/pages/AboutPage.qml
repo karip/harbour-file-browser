@@ -24,7 +24,7 @@ Page {
                 width: parent.width
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeSmall
-                color: Theme.primaryColor
+                color: Theme.highlightColor
                 text: "This is free and unencumbered software released into the public domain."+
                       "\n\n"+
                       "Anyone is free to copy, modify, publish, use, compile, sell, or "+

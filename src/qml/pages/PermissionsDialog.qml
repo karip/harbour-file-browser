@@ -63,6 +63,7 @@ Dialog {
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
                 text: qsTr("Change permissions for\n%1").arg(path)
+                color: Theme.secondaryColor
                 wrapMode: Text.Wrap
             }
 
@@ -112,6 +113,7 @@ Dialog {
                         id: ownerName
                         width: parent.width-20
                         text: ""
+                        color: Theme.highlightColor
                         horizontalAlignment: Text.AlignRight
                     }
                     Label {
@@ -149,6 +151,7 @@ Dialog {
                         id: groupName
                         width: parent.width-20
                         text: ""
+                        color: Theme.highlightColor
                         horizontalAlignment: Text.AlignRight
                     }
                     Label {
@@ -187,6 +190,7 @@ Dialog {
                         width: parent.width-20
                         height: parent.height
                         text: qsTr("Others")
+                        color: Theme.highlightColor
                         horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignVCenter
                     }

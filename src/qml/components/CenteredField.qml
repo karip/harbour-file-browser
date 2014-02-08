@@ -25,6 +25,7 @@ Row {
     }
     Label {
         text: value
+        color: Theme.highlightColor
         width: parent.width/2
         wrapMode: Text.Wrap
         font.pixelSize: pixelSize

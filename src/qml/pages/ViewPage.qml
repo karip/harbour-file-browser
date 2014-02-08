@@ -30,7 +30,7 @@ Page {
                 wrapMode: Text.WrapAnywhere
                 font.pixelSize: Theme.fontSizeTiny
                 font.family: "Monospace"
-                color: Theme.primaryColor
+                color: Theme.highlightColor
                 visible: page.orientation === Orientation.Portrait
             }
             Label {

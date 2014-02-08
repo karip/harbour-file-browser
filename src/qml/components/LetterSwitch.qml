@@ -16,7 +16,7 @@ MouseArea {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         text: checked ? letter : "-"
-        color: Theme.highlightColor
+        color: Theme.primaryColor
     }
 
     onClicked: checked = !checked

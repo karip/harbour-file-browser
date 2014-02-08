@@ -58,6 +58,7 @@ Page {
                 id: statusLabel
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: page.initialText
+                color: Theme.highlightColor
             }
             Label {
                 id: infoLabel

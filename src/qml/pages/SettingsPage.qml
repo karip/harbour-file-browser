@@ -42,14 +42,22 @@ Page {
                 color: Theme.highlightColor
             }
             Spacer { height: 20 }
-            Label {
+            Row {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
-                text: qsTr("Version 1.4.1") // Version number must be changed manually!
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.primaryColor
+                Label {
+                    id: version
+                    text: qsTr("Version")+" "
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: Theme.secondaryColor
+                }
+                Label {
+                    text: "1.4.1" // Version number must be changed manually!
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: Theme.highlightColor
+                }
             }
             Spacer { height: 20 }
             Label {

@@ -37,6 +37,7 @@ Dialog {
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
                 text: qsTr("Create a new folder under\n%1").arg(path)
+                color: Theme.secondaryColor
                 wrapMode: Text.Wrap
             }
 

@@ -172,12 +172,14 @@ Page {
         anchors.centerIn: parent
         text: "No files"
         visible: fileModel.fileCount === 0 && fileModel.errorMessage === ""
+        color: Theme.highlightColor
     }
     // error text
     Label {
         anchors.centerIn: parent
         text: fileModel.errorMessage
         visible: fileModel.errorMessage !== ""
+        color: Theme.highlightColor
     }
 
     // update cover

@@ -251,6 +251,7 @@ Page {
                 anchors.right: parent.right
                 horizontalAlignment: Text.AlignHCenter
                 text: fileInfo.errorMessage
+                color: Theme.highlightColor
                 wrapMode: Text.Wrap
             }
         }

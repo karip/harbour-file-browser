@@ -47,6 +47,7 @@ Dialog {
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
                 text: qsTr("Give a new name for\n%1").arg(path)
+                color: Theme.secondaryColor
                 wrapMode: Text.Wrap
             }
 
