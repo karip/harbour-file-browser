@@ -40,7 +40,7 @@ Page {
                 wrapMode: Text.WrapAnywhere
                 font.pixelSize: Theme.fontSizeTiny
                 font.family: "Monospace"
-                color: Theme.primaryColor
+                color: Theme.highlightColor
                 visible: page.orientation === Orientation.Landscape
             }
             Spacer {
@@ -51,8 +51,10 @@ Page {
                 id: message
                 width: parent.width
                 wrapMode: Text.Wrap
+                // show medium size if there is no portrait (or landscape text)
+                // in that case, this message becomes main message
                 font.pixelSize: portraitText.text === "" ? Theme.fontSizeMedium : Theme.fontSizeTiny
-                color: Theme.highlightColor
+                color: portraitText.text === "" ? Theme.highlightColor : Theme.secondaryColor
                 horizontalAlignment: Text.AlignHCenter
                 visible: message.text !== ""
             }
