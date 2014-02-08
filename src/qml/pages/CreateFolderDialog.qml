@@ -53,7 +53,8 @@ Dialog {
                 focus: true
 
                 // return key on virtual keyboard accepts the dialog
-                EnterKey.enabled: folderName.text !== ""
+                EnterKey.enabled: folderName.text.length > 0
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                 EnterKey.onClicked: dialog.accept()
             }
         }

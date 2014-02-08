@@ -61,7 +61,10 @@ Dialog {
                 placeholderText: qsTr("New name")
                 label: qsTr("New name")
                 focus: true
-                EnterKey.enabled: newName.text !== ""
+
+                // return key on virtual keyboard accepts the dialog
+                EnterKey.enabled: newName.text.length > 0
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                 EnterKey.onClicked: dialog.accept()
             }
         }
