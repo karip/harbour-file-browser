@@ -165,21 +165,10 @@ Page {
              }
         }
 
-    }
-
-    // no files text
-    Label {
-        anchors.centerIn: parent
-        text: "No files"
-        visible: fileModel.fileCount === 0 && fileModel.errorMessage === ""
-        color: Theme.highlightColor
-    }
-    // error text
-    Label {
-        anchors.centerIn: parent
-        text: fileModel.errorMessage
-        visible: fileModel.errorMessage !== ""
-        color: Theme.highlightColor
+        ViewPlaceholder {
+            enabled: fileModel.fileCount === 0 || fileModel.errorMessage !== ""
+            text: fileModel.errorMessage !== "" ? fileModel.errorMessage : qsTr("No files")
+        }
     }
 
     // update cover
