@@ -157,13 +157,13 @@ Page {
                 IconButton {
                     id: playButton
                     visible: isAudioFile(fileInfo)
-                    icon.source: playMedia.playbackState !== MediaPlayer.PlayingState ?
+                    icon.source: audioPlayer.playbackState !== MediaPlayer.PlayingState ?
                                      "image://theme/icon-l-play" :
                                      "image://theme/icon-l-pause"
                     anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: playAudio();
                     MediaPlayer { // prelisten of audio
-                        id: playMedia
+                        id: audioPlayer
                         source: ""
                     }
                 }
@@ -340,11 +340,11 @@ Page {
 
     function playAudio()
     {
-        if (playMedia.playbackState !== MediaPlayer.PlayingState) {
-            playMedia.source = fileInfo.file;
-            playMedia.play();
+        if (audioPlayer.playbackState !== MediaPlayer.PlayingState) {
+            audioPlayer.source = fileInfo.file;
+            audioPlayer.play();
         } else {
-            playMedia.stop();
+            audioPlayer.stop();
         }
     }
 
