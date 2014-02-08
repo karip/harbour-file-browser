@@ -48,7 +48,8 @@ Dialog {
             TextField {
                 id: folderName
                 width: parent.width
-                placeholderText: qsTr("Enter folder name")
+                placeholderText: qsTr("Folder name")
+                label: qsTr("Folder name")
                 focus: true
 
                 // return key on virtual keyboard accepts the dialog

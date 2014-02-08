@@ -58,7 +58,8 @@ Dialog {
             TextField {
                 id: newName
                 width: parent.width
-                placeholderText: qsTr("Enter new name")
+                placeholderText: qsTr("New name")
+                label: qsTr("New name")
                 focus: true
                 EnterKey.enabled: newName.text !== ""
                 EnterKey.onClicked: dialog.accept()
