@@ -52,7 +52,7 @@ Page {
                 width: parent.width
                 wrapMode: Text.Wrap
                 font.pixelSize: portraitText.text === "" ? Theme.fontSizeMedium : Theme.fontSizeTiny
-                color: Theme.primaryColor
+                color: Theme.highlightColor
                 horizontalAlignment: Text.AlignHCenter
                 visible: message.text !== ""
             }
