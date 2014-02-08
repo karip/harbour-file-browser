@@ -143,13 +143,6 @@ Page {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Image {
-                    id: icon
-                    anchors.topMargin: 6
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    source: "../images/large-"+fileInfo.icon+".png"
-                    visible: !imagePreview.visible && !playButton.visible
-                }
                 Image { // preview of image, max height 400
                     id: imagePreview
                     visible: isImageFile(fileInfo)
@@ -168,40 +161,60 @@ Page {
                                      "image://theme/icon-l-play" :
                                      "image://theme/icon-l-pause"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    onClicked: {
-                        if (playMedia.playbackState !== MediaPlayer.PlayingState) {
-                            playMedia.source = fileInfo.file;
-                            playMedia.play();
-                        } else {
-                            playMedia.stop();
-                        }
-                    }
+                    onClicked: playAudio();
                     MediaPlayer { // prelisten of audio
                         id: playMedia
                         source: ""
                     }
                 }
-
-                Spacer { // spacing if image or play button is visible
-                    height: 24
-                    visible: imagePreview.visible || playButton.visible
-                }
-                Label {
+                Spacer { height: 10; visible: playButton.visible } // fix to playButton height
+                // clickable icon and filename
+                MouseArea {
+                    id: openButton
                     width: parent.width
-                    text: fileInfo.name
-                    wrapMode: Text.Wrap
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Label {
-                    visible: fileInfo.symLinkTarget !== ""
-                    width: parent.width
-                    text: Functions.unicodeArrow()+" "+fileInfo.symLinkTarget
-                    wrapMode: Text.Wrap
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                }
+                    height: openArea.height
+                    onClicked: openFile()
 
-                Spacer { height: 40 }
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Theme.highlightColor
+                        opacity: 0.2
+                        visible: openButton.pressed
+                    }
+                    Column {
+                        id: openArea
+                        width: parent.width
+                        Image {
+                            id: icon
+                            anchors.topMargin: 6
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            source: "../images/large-"+fileInfo.icon+".png"
+                            visible: !imagePreview.visible && !playButton.visible
+                        }
+                        Spacer { // spacing if image or play button is visible
+                            id: spacer
+                            height: 24
+                            visible: imagePreview.visible || playButton.visible
+                        }
+                        Label {
+                            id: filename
+                            width: parent.width
+                            text: fileInfo.name
+                            wrapMode: Text.Wrap
+                            horizontalAlignment: Text.AlignHCenter
+                        }
+                        Label {
+                            visible: fileInfo.symLinkTarget !== ""
+                            width: parent.width
+                            text: Functions.unicodeArrow()+" "+fileInfo.symLinkTarget
+                            wrapMode: Text.Wrap
+                            horizontalAlignment: Text.AlignHCenter
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                        }
+                        Spacer { height: 20 }
+                    }
+                }
+                Spacer { height: 20 }
 
                 Label {
                     visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
@@ -303,6 +316,36 @@ Page {
     {
         if (fileInfo.isDir) return false;
         return isAudioFile(fileInfo) | isVideoFile(fileInfo);
+    }
+
+    function openFile()
+    {
+        // perform action depending on file type
+        if (fileInfo.icon === "folder-link") {
+            Functions.goToFolder(fileInfo.symLinkTarget);
+
+        } else if (fileInfo.isDir) {
+            Functions.goToFolder(fileInfo.file);
+
+        } else if (isAudioFile(fileInfo)) {
+            playAudio();
+
+        } else if (isImageFile(fileInfo) || isVideoFile(fileInfo)) {
+            fileInfo.executeCommand("xdg-open", [ page.file ])
+
+        } else {
+            pageStack.push(Qt.resolvedUrl("ViewPage.qml"), { path: page.file });
+        }
+    }
+
+    function playAudio()
+    {
+        if (playMedia.playbackState !== MediaPlayer.PlayingState) {
+            playMedia.source = fileInfo.file;
+            playMedia.play();
+        } else {
+            playMedia.stop();
+        }
     }
 
 }
