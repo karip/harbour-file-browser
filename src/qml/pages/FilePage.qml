@@ -119,24 +119,6 @@ Page {
                 visible: fileInfo.icon === "folder-link"
                 onClicked: Functions.goToFolder(fileInfo.symLinkTarget);
             }
-            MenuItem {
-                text: playMedia.playbackState !== MediaPlayer.PlayingState ? qsTr("Play") : qsTr("Stop")
-                visible: isAudioFile(fileInfo)
-                onClicked: {
-                    if (isAudioFile(fileInfo)) {
-                        if (playMedia.playbackState !== MediaPlayer.PlayingState) {
-                            playMedia.source = fileInfo.file;
-                            playMedia.play();
-                        } else {
-                            playMedia.stop();
-                        }
-                    }
-                }
-                MediaPlayer { // prelisten of audio
-                    id: playMedia
-                    source: ""
-                }
-            }
         }
 
         Column {
@@ -166,7 +148,7 @@ Page {
                     anchors.topMargin: 6
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "../images/large-"+fileInfo.icon+".png"
-                    visible: !imagePreview.visible
+                    visible: !imagePreview.visible && !playButton.visible
                 }
                 Image { // preview of image, max height 400
                     id: imagePreview
@@ -179,9 +161,30 @@ Page {
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                 }
-                Spacer { // spacing if image or video is visible
+                IconButton {
+                    id: playButton
+                    visible: isAudioFile(fileInfo)
+                    icon.source: playMedia.playbackState !== MediaPlayer.PlayingState ?
+                                     "image://theme/icon-l-play" :
+                                     "image://theme/icon-l-pause"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: {
+                        if (playMedia.playbackState !== MediaPlayer.PlayingState) {
+                            playMedia.source = fileInfo.file;
+                            playMedia.play();
+                        } else {
+                            playMedia.stop();
+                        }
+                    }
+                    MediaPlayer { // prelisten of audio
+                        id: playMedia
+                        source: ""
+                    }
+                }
+
+                Spacer { // spacing if image or play button is visible
                     height: 24
-                    visible: imagePreview.visible
+                    visible: imagePreview.visible || playButton.visible
                 }
                 Label {
                     width: parent.width
