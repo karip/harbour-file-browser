@@ -17,7 +17,8 @@ Page {
         // called when open command exits
         onProcessExited: {
             if (exitCode === 0) {
-                notificationPanel.showTextWithTimer(qsTr("Open successful"),
+                if (fileInfo.suffix !== "rpm")
+                    notificationPanel.showTextWithTimer(qsTr("Open successful"),
                                                qsTr("Sometimes the application stays in the background"));
             } else if (exitCode === 1) {
                 notificationPanel.showTextWithTimer(qsTr("Internal error"),
@@ -83,37 +84,29 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("ViewPage.qml"),
                                           { path: page.file });
             }
-            // open menu tries to open the file and fileInfo.onProcessExited shows error if it fails
+            // open/install tries to open the file and fileInfo.onProcessExited shows error
+            // if it fails
             MenuItem {
-                text: qsTr("Open")
-                visible: !fileInfo.isDir
+                text: fileInfo.suffix === "rpm" ? qsTr("Install") : qsTr("Open")
+                visible: !fileInfo.isDir && fileInfo.suffix !== "apk"
                 onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
             }
 
             // file type specific menu items
-
             MenuItem {
                 text: qsTr("Install")
-                visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
+                visible: fileInfo.suffix === "apk" && !fileInfo.isDir
                 onClicked: {
-                    if (fileInfo.suffix === "apk") {
-                        pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                                       { title: qsTr("Install"),
-                                           successText: qsTr("Install Launched"),
-                                           infoText: qsTr("If the app is already installed or the package is faulty, then nothing happens."),
-                                           command: "apkd-install",
-                                           arguments: [ fileInfo.file ] })
-                    }
-                    if (fileInfo.suffix === "rpm") {
-                        pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                                       { title: qsTr("Install"),
-                                           successText: qsTr("Install Finished"),
-                                           command: "pkcon",
-                                           arguments: [ "-y", "-p", "install-local",
-                                                        fileInfo.file ] })
-                    }
+                    pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                                   { title: qsTr("Install"),
+                                       successText: qsTr("Install Launched"),
+                                       infoText: qsTr("If the app is already installed or "+
+                                                      "the package is faulty, then nothing happens."),
+                                       command: "apkd-install",
+                                       arguments: [ fileInfo.file ] })
                 }
             }
+
             MenuItem {
                 text: qsTr("Go to Target")
                 visible: fileInfo.icon === "folder-link"
