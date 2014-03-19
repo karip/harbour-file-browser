@@ -7,14 +7,14 @@ Item {
     id: item
     property int menuTop: 100
 
-    property int _selectedMenu: 0
+    property string _selectedMenu: ""
     property Item _contextMenu
 
     function show()
     {
         if (!_contextMenu)
             _contextMenu = contextMenuComponent.createObject(rect);
-        _selectedMenu = 0;
+        _selectedMenu = "";
 
         // update spaces
         var rootSpace = engine.diskSpace("/");
@@ -26,7 +26,8 @@ Item {
             _contextMenu.rootSpaceSubtext = "";
         }
 
-        var sdCardSpace = engine.diskSpace(engine.sdcardPath());
+        var sdCardPath = engine.sdcardPath();
+        var sdCardSpace = engine.diskSpace(sdCardPath);
         if (sdCardSpace.length > 0) {
             _contextMenu.sdCardSpaceText = qsTr("SD Card (%1)").arg(sdCardSpace[0]);
             _contextMenu.sdCardSpaceSubtext = sdCardSpace[1];
@@ -34,6 +35,7 @@ Item {
             _contextMenu.sdCardSpaceText = qsTr("SD Card");
             _contextMenu.sdCardSpaceSubtext = "";
         }
+        _contextMenu.sdCardVisible = (sdCardPath !== "");
 
         _contextMenu.show(rect);
     }
@@ -61,24 +63,16 @@ Item {
 
             property string sdCardSpaceText: ""
             property string sdCardSpaceSubtext: ""
+            property bool sdCardVisible: false
             property string rootSpaceText: ""
             property string rootSpaceSubtext: ""
 
             // delayed action so that menu has already closed when page transition happens
             onClosed: {
-                if (_selectedMenu == 1) {
+                if (_selectedMenu === "home") {
                     Functions.goToHome();
 
-                } else if (_selectedMenu == 2) {
-                    var sdcard = engine.sdcardPath();
-                    if (engine.exists(sdcard)) {
-                        Functions.goToFolder(sdcard);
-                    } else {
-                        // this assumes that the page has a notificationPanel
-                        notificationPanel.showText(qsTr("SD Card not found"), sdcard);
-                    }
-
-                } else if (_selectedMenu == 3) {
+                } else if (_selectedMenu === "android-storage") {
                     var androidSdcard = engine.androidSdcardPath();
                     if (engine.exists(androidSdcard)) {
                         Functions.goToFolder(androidSdcard);
@@ -87,29 +81,39 @@ Item {
                         notificationPanel.showText(qsTr("Android Storage not found"), androidSdcard);
                     }
 
-                } else if (_selectedMenu == 4) {
+                } else if (_selectedMenu === "root") {
                     Functions.goToRoot();
+
+                } else if (_selectedMenu === "sdcard") {
+                    var sdcard = engine.sdcardPath();
+                    if (engine.exists(sdcard)) {
+                        Functions.goToFolder(sdcard);
+                    } else {
+                        // this assumes that the page has a notificationPanel
+                        notificationPanel.showText(qsTr("SD Card not found"), sdcard);
+                    }
                 }
-                _selectedMenu = 0;
+                _selectedMenu = "";
             }
 
             MenuItem {
                 text: qsTr("Home")
-                onClicked: _selectedMenu = 1
-            }
-            DoubleMenuItem {
-                text: sdCardSpaceText
-                subtext: sdCardSpaceSubtext
-                onClicked: _selectedMenu = 2
+                onClicked: _selectedMenu = "home"
             }
             MenuItem {
                 text: qsTr("Android Storage")
-                onClicked: _selectedMenu = 3
+                onClicked: _selectedMenu = "android-storage"
             }
             DoubleMenuItem {
                 text: rootSpaceText
                 subtext: rootSpaceSubtext
-                onClicked: _selectedMenu = 4
+                onClicked: _selectedMenu = "root"
+            }
+            DoubleMenuItem {
+                text: sdCardSpaceText
+                subtext: sdCardSpaceSubtext
+                onClicked: _selectedMenu = "sdcard"
+                visible: sdCardVisible
             }
         }
     }
