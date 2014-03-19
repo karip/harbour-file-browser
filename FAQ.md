@@ -29,6 +29,12 @@ Perhaps it has a file system which is not recognized by the phone.
 You can also try to access the SD Card with another file manager, 
 such as Cargo Dock.
 
+### Why installing rpm packages gives error 'Installing untrusted software disabled'?
+
+You need to enable installation of untrusted software in the phone. 
+Go to Settings -> System -> Untrusted software, and enable 
+"Allow untrusted software".
+
 ### How to copy files to Android Storage?
 
 File Browser can't copy files to Android Storage, because of its permissions.
