@@ -350,7 +350,7 @@ Page {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                          { title: Functions.lastPartOfPath(fileInfo.file),
                            command: "unzip",
-                           arguments: [ "-l", fileInfo.file ] })
+                           arguments: [ "-Z", "-2t", fileInfo.file ] })
 
         } else if (isRpmFile(fileInfo)) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
