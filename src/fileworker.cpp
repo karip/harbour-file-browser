@@ -104,7 +104,14 @@ QString FileWorker::deleteFile(QString filename)
     if (!info.exists())
         return tr("File not found");
 
-    if (info.isDir()) {
+    if (info.isDir() && info.isSymLink()) {
+        // only delete the link and do not remove recursively subfolders
+        QFile file(info.absoluteFilePath());
+        bool ok = file.remove();
+        if (!ok)
+            return file.errorString();
+
+    } else if (info.isDir()) {
         // this should be custom function to get better error reporting
         bool ok = QDir(info.absoluteFilePath()).removeRecursively();
         if (!ok)
