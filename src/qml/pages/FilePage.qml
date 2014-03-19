@@ -322,7 +322,11 @@ Page {
     {
         if (fileInfo.isDir) return false;
         return fileInfo.suffix === "zip" || fileInfo.suffix === "apk" ||
-                fileInfo.suffix === "docx";
+                fileInfo.suffix === "jar" ||
+                fileInfo.suffix === "odt" || fileInfo.suffix === "ods" ||
+                fileInfo.suffix === "odp" ||
+                fileInfo.suffix === "docx" || fileInfo.suffix === "xlsx" ||
+                fileInfo.suffix === "pptx" ;
     }
 
     function isRpmFile(fileInfo)
