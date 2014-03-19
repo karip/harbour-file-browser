@@ -169,18 +169,12 @@ Page {
                 }
                 Spacer { height: 10; visible: playButton.visible } // fix to playButton height
                 // clickable icon and filename
-                MouseArea {
+                BackgroundItem {
                     id: openButton
                     width: parent.width
                     height: openArea.height
                     onClicked: openFile()
 
-                    Rectangle {
-                        anchors.fill: parent
-                        color: Theme.highlightColor
-                        opacity: 0.2
-                        visible: openButton.pressed
-                    }
                     Column {
                         id: openArea
                         width: parent.width
