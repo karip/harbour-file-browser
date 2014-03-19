@@ -6,6 +6,7 @@
  * Added full public domain license text
  * Fixed path to sd card
  * Fixed deleting symlinks to directories
+ * Added view contents to show rpm, apk and zip files
 
 ## Version 1.4.1 (2014-01-26)
 
