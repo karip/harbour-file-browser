@@ -1,7 +1,6 @@
 #include "fileinfo.h"
 #include <QDir>
 #include <QDateTime>
-#include <QProcess>
 #include "globals.h"
 
 FileInfo::FileInfo(QObject *parent) :
@@ -110,51 +109,9 @@ QString FileInfo::errorMessage() const
     return m_errorMessage;
 }
 
-QString FileInfo::processOutput() const
-{
-    return m_processOutput;
-}
-
 void FileInfo::refresh()
 {
     readFile();
-}
-
-void FileInfo::executeCommand(QString command, QStringList arguments)
-{
-    m_processOutput.clear();
-    emit processOutputChanged();
-
-    // process is killed when Page is closed - should run this in bg thread to allow command finish(?)
-    m_process = new QProcess(this);
-    m_process->setReadChannel(QProcess::StandardOutput);
-    m_process->setProcessChannelMode(QProcess::MergedChannels); // merged stderr channel with stdout channel
-    connect(m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readProcessChannels()));
-    connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(handleProcessFinish(int, QProcess::ExitStatus)));
-    connect(m_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(handleProcessError(QProcess::ProcessError)));
-    m_process->start(command, arguments);
-}
-
-void FileInfo::readProcessChannels()
-{
-    while (m_process->canReadLine()) {
-        QString line = m_process->readLine();
-        m_processOutput += line;
-    }
-    emit processOutputChanged();
-}
-
-void FileInfo::handleProcessFinish(int exitCode, QProcess::ExitStatus status)
-{
-    if (status == QProcess::CrashExit) // if it crashed, then use some error exit code
-        exitCode = -99999;
-    emit processExited(exitCode);
-}
-
-void FileInfo::handleProcessError(QProcess::ProcessError error)
-{
-    Q_UNUSED(error);
-    emit processExited(-88888); // if error, then use some error exit code
 }
 
 void FileInfo::readFile()

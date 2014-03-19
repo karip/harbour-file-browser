@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QDir>
-#include <QProcess>
 #include <QVariantList>
 
 /**
@@ -27,7 +26,6 @@ class FileInfo : public QObject
     Q_PROPERTY(QString suffix READ suffix() NOTIFY suffixChanged())
     Q_PROPERTY(QString symLinkTarget READ symLinkTarget() NOTIFY symLinkTargetChanged())
     Q_PROPERTY(QString errorMessage READ errorMessage() NOTIFY errorMessageChanged())
-    Q_PROPERTY(QString processOutput READ processOutput() NOTIFY processOutputChanged())
 
 public:
     explicit FileInfo(QObject *parent = 0);
@@ -51,11 +49,9 @@ public:
     QString suffix() const;
     QString symLinkTarget() const;
     QString errorMessage() const;
-    QString processOutput() const;
 
     // methods accessible from QML
     Q_INVOKABLE void refresh();
-    Q_INVOKABLE void executeCommand(QString command, QStringList arguments);
 
 signals:
     void fileChanged();
@@ -74,22 +70,12 @@ signals:
     void symLinkTargetChanged();
     void errorMessageChanged();
 
-    void processOutputChanged();
-    void processExited(int exitCode);
-
-private slots:
-    void readProcessChannels();
-    void handleProcessFinish(int exitCode, QProcess::ExitStatus status);
-    void handleProcessError(QProcess::ProcessError error);
-
 private:
     void readFile();
 
     QString m_file;
     QFileInfo m_fileInfo;
     QString m_errorMessage;
-    QProcess *m_process;
-    QString m_processOutput;
 };
 
 #endif // FILEINFO_H

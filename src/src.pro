@@ -4,8 +4,9 @@ TARGET = harbour-file-browser
 CONFIG += sailfishapp
 
 SOURCES += main.cpp filemodel.cpp fileinfo.cpp engine.cpp fileworker.cpp searchengine.cpp \
-           searchworker.cpp globals.cpp
-HEADERS += filemodel.h fileinfo.h engine.h fileworker.h searchengine.h searchworker.h globals.h
+           searchworker.cpp consolemodel.cpp globals.cpp
+HEADERS += filemodel.h fileinfo.h engine.h fileworker.h searchengine.h searchworker.h \
+           consolemodel.h globals.h
 
 OTHER_FILES = \
 # You DO NOT want .yaml be listed here as Qt Creator's editor is completely not ready for multi package .yaml's
@@ -24,6 +25,7 @@ OTHER_FILES = \
     qml/pages/CreateFolderDialog.qml \
     qml/pages/RenameDialog.qml \
     qml/pages/PermissionsDialog.qml \
+    qml/pages/ApkPage.qml \
     qml/pages/AboutPage.qml \
     qml/components/DirPopup.qml \
     qml/components/Spacer.qml \

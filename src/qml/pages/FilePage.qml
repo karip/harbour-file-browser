@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.file.browser.FileInfo 1.0
+import harbour.file.browser.ConsoleModel 1.0
 import QtMultimedia 5.0
 import "functions.js" as Functions
 import "../components"
@@ -13,6 +14,10 @@ Page {
     FileInfo {
         id: fileInfo
         file: page.file
+    }
+
+    ConsoleModel {
+        id: consoleModel
 
         // called when open command exits
         onProcessExited: {
@@ -81,15 +86,21 @@ Page {
             MenuItem {
                 text: qsTr("View Contents")
                 visible: !fileInfo.isDir
-                onClicked: pageStack.push(Qt.resolvedUrl("ViewPage.qml"),
-                                          { path: page.file });
+                onClicked: {
+                    if (isZipFile(fileInfo) || isRpmFile(fileInfo)) {
+                        openFile();
+
+                    } else {
+                        pageStack.push(Qt.resolvedUrl("ViewPage.qml"), { path: page.file });
+                    }
+                }
             }
             // open/install tries to open the file and fileInfo.onProcessExited shows error
             // if it fails
             MenuItem {
                 text: fileInfo.suffix === "rpm" ? qsTr("Install") : qsTr("Open")
                 visible: !fileInfo.isDir && fileInfo.suffix !== "apk"
-                onClicked: fileInfo.executeCommand("xdg-open", [ page.file ])
+                onClicked: consoleModel.executeCommand("xdg-open", [ page.file ])
             }
 
             // file type specific menu items
@@ -97,13 +108,9 @@ Page {
                 text: qsTr("Install")
                 visible: fileInfo.suffix === "apk" && !fileInfo.isDir
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                                   { title: qsTr("Install"),
-                                       successText: qsTr("Install Launched"),
-                                       infoText: qsTr("If the app is already installed or "+
-                                                      "the package is faulty, then nothing happens."),
-                                       command: "apkd-install",
-                                       arguments: [ fileInfo.file ] })
+                    pageStack.push(Qt.resolvedUrl("ApkPage.qml"),
+                                   { command: "apkd-install",
+                                     arguments: [ fileInfo.file ] })
                 }
             }
 
@@ -311,6 +318,19 @@ Page {
         return isAudioFile(fileInfo) | isVideoFile(fileInfo);
     }
 
+    function isZipFile(fileInfo)
+    {
+        if (fileInfo.isDir) return false;
+        return fileInfo.suffix === "zip" || fileInfo.suffix === "apk" ||
+                fileInfo.suffix === "docx";
+    }
+
+    function isRpmFile(fileInfo)
+    {
+        if (fileInfo.isDir) return false;
+        return fileInfo.suffix === "rpm";
+    }
+
     function openFile()
     {
         // perform action depending on file type
@@ -324,7 +344,19 @@ Page {
             playAudio();
 
         } else if (isImageFile(fileInfo) || isVideoFile(fileInfo)) {
-            fileInfo.executeCommand("xdg-open", [ page.file ])
+            consoleModel.executeCommand("xdg-open", [ page.file ])
+
+        } else if (isZipFile(fileInfo)) {
+            pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                         { title: Functions.lastPartOfPath(fileInfo.file),
+                           command: "unzip",
+                           arguments: [ "-l", fileInfo.file ] })
+
+        } else if (isRpmFile(fileInfo)) {
+            pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                         { title: Functions.lastPartOfPath(fileInfo.file),
+                           command: "rpm",
+                           arguments: [ "-qlp", fileInfo.file ] })
 
         } else {
             pageStack.push(Qt.resolvedUrl("ViewPage.qml"), { path: page.file });

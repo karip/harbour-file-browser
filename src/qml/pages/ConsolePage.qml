@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.file.browser.FileInfo 1.0
+import harbour.file.browser.ConsoleModel 1.0
 import "../components"
 
 Page {
@@ -9,91 +9,48 @@ Page {
     property string title: ""
     property string command: ""
     property variant arguments // this must be set to a string list, e.g. [ "arg1", "arg2" ]
-    property string initialText: qsTr("Installing...")
-    property string successText: qsTr("Successful")
-    property string infoText: ""
     property color consoleColor: Theme.secondaryColor
 
     // execute command when page activates
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            fileInfo.executeCommand(page.command, page.arguments);
+            consoleModel.executeCommand(page.command, page.arguments);
         }
     }
 
-    FileInfo {
-        id: fileInfo
-
-        // called when command exits
-        onProcessExited: {
-            busyIndicator.running = false;
-            if (exitCode == 0) {
-                statusLabel.text = page.successText;
-                infoLabel.text = page.infoText;
-            } else {
-                statusLabel.text = qsTr("Failed! Error code: %1").arg(exitCode);
-            }
-        }
+    ConsoleModel {
+        id: consoleModel
     }
 
-    SilicaFlickable {
-        id: flickable
+    SilicaListView {
+        id: itemList
         anchors.fill: parent
-        contentHeight: column.height
-        VerticalScrollDecorator { flickable: flickable }
 
-        Column {
-            id: column
-            width: parent.width
+        model: consoleModel
 
-            PageHeader { title: page.title }
+        VerticalScrollDecorator { flickable: itemList }
 
-            BusyIndicator {
-                id: busyIndicator
-                anchors.horizontalCenter: parent.horizontalCenter
-                running: true
-                size: BusyIndicatorSize.Small
-            }
-            Label {
-                id: statusLabel
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: page.initialText
-                color: Theme.highlightColor
-            }
-            Label {
-                id: infoLabel
-                visible: text !== ""
-                text: ""
+        header: PageHeader { title: page.title }
+
+        delegate: Item {
+            id: listItem
+            width: ListView.view.width
+            height: listLabel.height-24
+
+            Text {
+                id: listLabel
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeTiny
-                horizontalAlignment: Text.AlignHCenter
-                color: Theme.secondaryColor
-            }
-
-            Spacer { height: 40 }
-
-            // command line text
-            Label {
-                width: parent.width
-                text: "$ "+page.command+" "+page.arguments.join(" ")
-                wrapMode: Text.WrapAnywhere
-                font.pixelSize: Theme.fontSizeTiny
-                font.family: "Monospace"
-                color: Theme.secondaryColor
-            }
-
-            // command output
-            Label {
-                width: parent.width
-                text: fileInfo.processOutput
-                wrapMode: Text.WrapAnywhere
-                font.pixelSize: Theme.fontSizeTiny
-                font.family: "Monospace"
+                anchors.top: parent.top
+                anchors.topMargin: 2
+                text: modelData
                 color: page.consoleColor
+                wrapMode: Text.NoWrap
+                elide: Text.ElideRight
+                font.pixelSize: Theme.fontSizeTiny
+                font.family: "Monospace"
             }
         }
     }
