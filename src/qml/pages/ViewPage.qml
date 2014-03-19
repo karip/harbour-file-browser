@@ -30,7 +30,7 @@ Page {
                 wrapMode: Text.WrapAnywhere
                 font.pixelSize: Theme.fontSizeTiny
                 font.family: "Monospace"
-                color: Theme.highlightColor
+                color: Theme.secondaryColor
                 visible: page.orientation === Orientation.Portrait
             }
             Label {
@@ -40,7 +40,7 @@ Page {
                 wrapMode: Text.WrapAnywhere
                 font.pixelSize: Theme.fontSizeTiny
                 font.family: "Monospace"
-                color: Theme.highlightColor
+                color: Theme.secondaryColor
                 visible: page.orientation === Orientation.Landscape
             }
             Spacer {
