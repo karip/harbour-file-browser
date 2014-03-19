@@ -22,10 +22,7 @@ moving (cut-paste), you should copy the folder.
 It means that the xdg-open command used to open files does not recognize
 the file type or it doesn't find a preferred program to open it.
 
-The Sailfish OS is still at beta stage, so it doesn't have all bindings
-for all media formats.
-
-### Why accessing SD Card gives error 'SD Card not found'?
+### Why I can't see SD Card option or it gives an error 'SD Card not found'?
 
 Perhaps your SD Card is not properly inserted to the phone.
 Perhaps it has a file system which is not recognized by the phone.
@@ -48,6 +45,7 @@ the Jolla store, it can manage multiple files.
 It can't change owners, sudo, multi-select files, create links,
 edit files, share files, send email, mms or sms, open ftp sites, 
 connect to samba server, simulate vi and it does not blend or make coffee.
+Sorry.
 
 ### Are there any alternative apps?
 

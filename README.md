@@ -4,8 +4,8 @@ A minimal file browser tool to view files on
 [Sailfish OS](https://sailfishos.org/) and 
 [Jolla phones](http://jolla.com/).
 
-FAQ is available at 
-https://github.com/karip/harbour-file-browser/blob/master/FAQ.md
+There is a [FAQ](https://github.com/karip/harbour-file-browser/blob/master/FAQ.md)
+about most common questions.
 
 ### Warning
 

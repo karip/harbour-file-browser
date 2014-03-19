@@ -16,7 +16,7 @@ Item {
             _contextMenu = contextMenuComponent.createObject(rect);
         _selectedMenu = "";
 
-        // update spaces
+        // update available disk space strings
         var rootSpace = engine.diskSpace("/");
         if (rootSpace.length > 0) {
             _contextMenu.rootSpaceText = qsTr("Root (%1)").arg(rootSpace[0]);
