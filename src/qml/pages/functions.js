@@ -51,16 +51,6 @@ function goToHome()
     goToFolder(engine.homeFolder());
 }
 
-function sdcardPath()
-{
-    return "/run/user/100000/media/sdcard";
-}
-
-function androidSdcardPath()
-{
-    return "/data/sdcard";
-}
-
 function formatPathForTitle(path)
 {
     if (path === "/")

@@ -108,24 +108,73 @@ QString Engine::homeFolder() const
     return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 }
 
+QString Engine::sdcardPath() const
+{
+    // get sdcard dir candidates
+    QDir dir("/media/sdcard");
+    if (!dir.exists())
+        return QString();
+    dir.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
+    QStringList sdcards = dir.entryList();
+    if (sdcards.isEmpty())
+        return QString();
+
+    // remove all directories which are not mount points
+    QStringList mps = mountPoints();
+    QMutableStringListIterator i(sdcards);
+    while (i.hasNext()) {
+        QString dirname = i.next();
+        QString abspath = dir.absoluteFilePath(dirname);
+        if (!mps.contains(abspath))
+            i.remove();
+    }
+
+    // none found, return empty string
+    if (sdcards.isEmpty())
+        return QString();
+
+    // if only one directory, then return it
+    if (sdcards.count() == 1)
+        return dir.absoluteFilePath(sdcards.first());
+
+    // if multiple directories, then return "/media/sdcard", which is the parent for them
+    return "/media/sdcard";
+}
+
+QString Engine::androidSdcardPath() const
+{
+    return "/data/sdcard";
+}
+
 bool Engine::exists(QString filename)
 {
+    if (filename.isEmpty())
+        return false;
+
     return QFile::exists(filename);
 }
 
 QStringList Engine::diskSpace(QString path)
 {
-    // run df to get disk space
+    if (path.isEmpty())
+        return QStringList();
+
+    // return no disk space for sdcard parent directory
+    if (path == "/media/sdcard")
+        return QStringList();
+
+    // run df for the given path to get disk space
     QString blockSize = "--block-size=1024";
     QString result = execute("/bin/df", QStringList() << blockSize << path, false);
     if (result.isEmpty())
         return QStringList();
 
-    // parse result
+    // split result to lines
     QStringList lines = result.split(QRegExp("[\n\r]"));
     if (lines.count() < 2)
         return QStringList();
 
+    // get first line and its columns
     QString line = lines.at(1);
     QStringList columns = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
     if (columns.count() < 5)
@@ -291,6 +340,33 @@ void Engine::setProgress(int progress, QString filename)
     m_progressFilename = filename;
     emit progressChanged();
     emit progressFilenameChanged();
+}
+
+QStringList Engine::mountPoints() const
+{
+    // read /proc/mounts and return all mount points for the filesystem
+    QFile file("/proc/mounts");
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+        return QStringList();
+
+    QTextStream in(&file);
+    QString result = in.readAll();
+
+    // split result to lines
+    QStringList lines = result.split(QRegExp("[\n\r]"));
+
+    // get columns
+    QStringList dirs;
+    foreach (QString line, lines) {
+        QStringList columns = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+        if (columns.count() < 6) // sanity check
+            continue;
+
+        QString dir = columns.at(1);
+        dirs.append(dir);
+    }
+
+    return dirs;
 }
 
 QString Engine::createHexDump(char *buffer, int size, int bytesPerLine)

@@ -40,8 +40,12 @@ public:
     // returns error msg
     Q_INVOKABLE QString errorMessage() const { return m_errorMessage; }
 
-    // sync methods
+    // file paths
     Q_INVOKABLE QString homeFolder() const;
+    Q_INVOKABLE QString sdcardPath() const;
+    Q_INVOKABLE QString androidSdcardPath() const;
+
+    // synchronous methods
     Q_INVOKABLE bool exists(QString filename);
     Q_INVOKABLE QStringList diskSpace(QString path);
     Q_INVOKABLE QStringList readFile(QString filename);
@@ -71,6 +75,7 @@ private slots:
     void setProgress(int progress, QString filename);
 
 private:
+    QStringList mountPoints() const;
     QString createHexDump(char *buffer, int size, int bytesPerLine);
     QStringList makeStringList(QString msg, QString str = QString());
 

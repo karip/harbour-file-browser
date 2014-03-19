@@ -26,7 +26,7 @@ Item {
             _contextMenu.rootSpaceSubtext = "";
         }
 
-        var sdCardSpace = engine.diskSpace(Functions.sdcardPath());
+        var sdCardSpace = engine.diskSpace(engine.sdcardPath());
         if (sdCardSpace.length > 0) {
             _contextMenu.sdCardSpaceText = qsTr("SD Card (%1)").arg(sdCardSpace[0]);
             _contextMenu.sdCardSpaceSubtext = sdCardSpace[1];
@@ -70,7 +70,7 @@ Item {
                     Functions.goToHome();
 
                 } else if (_selectedMenu == 2) {
-                    var sdcard = Functions.sdcardPath();
+                    var sdcard = engine.sdcardPath();
                     if (engine.exists(sdcard)) {
                         Functions.goToFolder(sdcard);
                     } else {
@@ -79,7 +79,7 @@ Item {
                     }
 
                 } else if (_selectedMenu == 3) {
-                    var androidSdcard = Functions.androidSdcardPath();
+                    var androidSdcard = engine.androidSdcardPath();
                     if (engine.exists(androidSdcard)) {
                         Functions.goToFolder(androidSdcard);
                     } else {
