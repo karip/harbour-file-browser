@@ -59,6 +59,7 @@ Page {
             }
             Spacer { height: 20 }
             BackgroundItem {
+                id: pdItem
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: pdLabel.height
@@ -74,7 +75,7 @@ Page {
                           "into the public domain.\nRead full text >>"
                     wrapMode: Text.Wrap
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    color: Theme.primaryColor
+                    color: pdItem.highlighted ? Theme.highlightColor : Theme.primaryColor
                 }
             }
 

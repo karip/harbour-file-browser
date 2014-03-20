@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 // This component is a toggle switch, which displays a letter or a dash '-'
 BackgroundItem {
+    id: bgItem
+
     // checked status of the switch
     property bool checked: false
 
@@ -16,7 +18,7 @@ BackgroundItem {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         text: checked ? letter : "-"
-        color: Theme.primaryColor
+        color: bgItem.highlighted ? Theme.highlightColor : Theme.primaryColor
     }
 
     onClicked: checked = !checked

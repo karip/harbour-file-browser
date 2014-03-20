@@ -22,6 +22,7 @@ Page {
         id: consoleModel
     }
 
+    // display console text as a list, it is much faster compared to a Text item
     SilicaListView {
         id: itemList
         anchors.fill: parent
@@ -44,7 +45,6 @@ Page {
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
                 anchors.top: parent.top
-                anchors.topMargin: 2
                 text: modelData
                 color: page.consoleColor
                 wrapMode: Text.NoWrap
