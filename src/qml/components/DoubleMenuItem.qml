@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// This component creates a menu item with two lines
+// This component is a menu item with two lines
 MenuItem {
     property string subtext: ""
 
@@ -11,6 +11,6 @@ MenuItem {
         anchors.bottom: parent.bottom
         text: subtext
         color: Theme.secondaryColor
-        font.pixelSize: Theme.fontSizeExtraSmall
+        font.pixelSize: Theme.fontSizeTiny
     }
 }
