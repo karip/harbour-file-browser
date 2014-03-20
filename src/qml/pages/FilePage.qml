@@ -86,14 +86,7 @@ Page {
             MenuItem {
                 text: qsTr("View Contents")
                 visible: !fileInfo.isDir
-                onClicked: {
-                    if (isZipFile(fileInfo) || isRpmFile(fileInfo)) {
-                        openFile();
-
-                    } else {
-                        pageStack.push(Qt.resolvedUrl("ViewPage.qml"), { path: page.file });
-                    }
-                }
+                onClicked: viewContents()
             }
             // open/install tries to open the file and fileInfo.onProcessExited shows error
             // if it fails
@@ -143,17 +136,6 @@ Page {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Image { // preview of image, max height 400
-                    id: imagePreview
-                    visible: isImageFile(fileInfo)
-                    source: visible ? fileInfo.file : "" // access the source only if img is visible
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: implicitHeight < 400 && implicitHeight != 0 ? implicitHeight : 400
-                    width: parent.width
-                    fillMode: Image.PreserveAspectFit
-                    asynchronous: true
-                }
                 IconButton {
                     id: playButton
                     visible: isAudioFile(fileInfo)
@@ -173,11 +155,23 @@ Page {
                     id: openButton
                     width: parent.width
                     height: openArea.height
-                    onClicked: openFile()
+                    onClicked: quickView()
 
                     Column {
                         id: openArea
                         width: parent.width
+
+                        Image { // preview of image, max height 400
+                            id: imagePreview
+                            visible: isImageFile(fileInfo)
+                            source: visible ? fileInfo.file : "" // access the source only if img is visible
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            height: implicitHeight < 400 && implicitHeight != 0 ? implicitHeight : 400
+                            width: parent.width
+                            fillMode: Image.PreserveAspectFit
+                            asynchronous: true
+                        }
                         Image {
                             id: icon
                             anchors.topMargin: 6
@@ -329,20 +323,34 @@ Page {
         return fileInfo.suffix === "rpm";
     }
 
-    function openFile()
+    function quickView()
     {
-        // perform action depending on file type
+        // dirs are special cases
         if (fileInfo.icon === "folder-link") {
             Functions.goToFolder(fileInfo.symLinkTarget);
 
         } else if (fileInfo.isDir) {
             Functions.goToFolder(fileInfo.file);
 
-        } else if (isAudioFile(fileInfo)) {
-            playAudio();
+        } else {
+            viewContents();
+        }
+    }
 
-        } else if (isImageFile(fileInfo) || isVideoFile(fileInfo)) {
-            consoleModel.executeCommand("xdg-open", [ page.file ])
+    function viewContents()
+    {
+        // view depending on file type
+        if (fileInfo.suffix === "jpg") {
+            pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                         { title: Functions.lastPartOfPath(fileInfo.file),
+                           command: "rdjpgcom",
+                           arguments: [ "-verbose", fileInfo.file ] })
+
+        } else if (isImageFile(fileInfo) || isVideoFile(fileInfo) || isAudioFile(fileInfo)) {
+            pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                         { title: Functions.lastPartOfPath(fileInfo.file),
+                           command: "file",
+                           arguments: [ "-b", fileInfo.file ] })
 
         } else if (isZipFile(fileInfo)) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
