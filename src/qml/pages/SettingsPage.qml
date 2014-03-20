@@ -17,8 +17,6 @@ Page {
             id: column
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
 
             PageHeader { title: qsTr("Settings") }
 
@@ -60,20 +58,23 @@ Page {
                 }
             }
             Spacer { height: 20 }
-            Label {
+            BackgroundItem {
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
-                text: "File Browser is free and unencumbered software released "+
-                      "into the public domain.\nRead full text >>"
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.primaryColor
+                height: pdLabel.height
+                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+                Label {
+                    id: pdLabel
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.leftMargin: Theme.paddingLarge
+                    anchors.rightMargin: Theme.paddingLarge
+                    text: "File Browser is free and unencumbered software released "+
+                          "into the public domain.\nRead full text >>"
+                    wrapMode: Text.Wrap
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: Theme.primaryColor
                 }
             }
 
