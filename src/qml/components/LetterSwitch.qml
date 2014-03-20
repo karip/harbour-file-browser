@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 // This component is a toggle switch, which displays a letter or a dash '-'
-MouseArea {
+BackgroundItem {
     // checked status of the switch
     property bool checked: false
 
