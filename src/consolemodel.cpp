@@ -1,6 +1,5 @@
 #include "consolemodel.h"
 #include "globals.h"
-#include <QDebug>
 
 enum {
     ModelDataRole = Qt::UserRole + 1
