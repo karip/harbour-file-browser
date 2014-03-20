@@ -17,11 +17,11 @@ responsibility if that happens. So, be careful.
 
  * Browse and search files and folders on the phone
  * Open files (if xdg-open finds a preferred application)
- * View contents of text and binary files
  * Preview JPEG, PNG and GIF files
  * Play back WAV, MP3, OGG and FLAC audio
  * Install Android APK and Sailfish RPM packages
  * View contents of APK, RPM and ZIP packages
+ * View contents of text and binary files
  * Cut, copy and paste files (move/copy files) (by long pressing an 
    item in a list)
  * Rename files and folders
