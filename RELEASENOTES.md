@@ -1,7 +1,14 @@
 
 # File Browser Release Notes
 
-## Version 1.4.2
+## Version 1.5
+
+ * Displays broken symbolic links
+ * Move and copy symbolic links
+
+## Version 1.4.2 (2014-03-20)
+
+Published in Jolla store on 2014-03-21.
 
  * Added full public domain license text
  * Fixed path to sd card

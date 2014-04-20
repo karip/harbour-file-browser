@@ -173,18 +173,30 @@ void FileWorker::copyOrMoveFiles()
             return;
         }
 
-        // check destination does not exists, otherwise copy/move fails
         QFileInfo fileInfo(filename);
         QString newname = dest.absoluteFilePath(fileInfo.fileName());
 
         // move or copy and stop if errors
         QFile file(filename);
         if (m_mode == MoveMode) {
-            if (!file.rename(newname)) {
+            if (fileInfo.isSymLink()) {
+                // move symlink by creating a new link and deleting the old one
+                QFile targetFile(fileInfo.symLinkTarget());
+                if (!targetFile.link(newname)) {
+                    emit errorOccurred(targetFile.errorString(), filename);
+                    return;
+                }
+                if (!file.remove()) {
+                    emit errorOccurred(targetFile.errorString(), filename);
+                    return;
+                }
+
+            } else if (!file.rename(newname)) {
                 emit errorOccurred(file.errorString(), filename);
                 return;
             }
-        } else {
+
+        } else { // CopyMode
             if (fileInfo.isDir()) {
                 QString errmsg = copyDirRecursively(filename, newname);
                 if (!errmsg.isEmpty()) {
@@ -259,12 +271,24 @@ QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirecto
 
 QString FileWorker::copyOverwrite(QString src, QString dest)
 {
+    // delete destination if it exists
     QFile dfile(dest);
     if (dfile.exists()) {
         if (!dfile.remove())
             return dfile.errorString();
     }
 
+    QFileInfo fileInfo(src);
+    if (fileInfo.isSymLink()) {
+        // copy symlink by creating a new link
+        QFile targetFile(fileInfo.symLinkTarget());
+        if (!targetFile.link(dest))
+            return targetFile.errorString();
+
+        return QString();
+    }
+
+    // normal file copy
     QFile sfile(src);
     if (!sfile.copy(dest))
         return sfile.errorString();

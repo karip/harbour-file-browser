@@ -40,15 +40,6 @@ void Engine::deleteFiles(QStringList filenames)
 
 void Engine::cutFiles(QStringList filenames)
 {
-    // don't cut symlinks
-    QMutableStringListIterator i(filenames);
-    while (i.hasNext()) {
-        QString filename = i.next();
-        QFileInfo info(filename);
-        if (info.isSymLink())
-            i.remove();
-    }
-
     m_clipboardFiles = filenames;
     m_clipboardContainsCopy = false;
     emit clipboardCountChanged();
