@@ -28,6 +28,11 @@ bool FileInfo::isDir() const
     return m_fileInfo.isDir();
 }
 
+bool FileInfo::isSymLink() const
+{
+    return m_fileInfo.isSymLink();
+}
+
 QString FileInfo::kind() const
 {
     if (m_fileInfo.isSymLink()) return "l";
@@ -153,6 +158,7 @@ void FileInfo::readInfo()
 
     emit fileChanged();
     emit isDirChanged();
+    emit isSymLinkChanged();
     emit kindChanged();
     emit iconChanged();
     emit permissionsChanged();

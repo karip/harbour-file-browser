@@ -109,7 +109,7 @@ Page {
 
             MenuItem {
                 text: qsTr("Go to Target")
-                visible: fileInfo.icon === "folder-link"
+                visible: fileInfo.isSymLink && fileInfo.isDir
                 onClicked: Functions.goToFolder(fileInfo.symLinkTarget);
             }
         }
@@ -192,7 +192,7 @@ Page {
                             horizontalAlignment: Text.AlignHCenter
                         }
                         Label {
-                            visible: fileInfo.symLinkTarget !== ""
+                            visible: fileInfo.isSymLink
                             width: parent.width
                             text: Functions.unicodeArrow()+" "+fileInfo.symLinkTarget
                             wrapMode: Text.Wrap
@@ -225,7 +225,8 @@ Page {
                 }
                 CenteredField {
                     label: qsTr("Type")
-                    value: fileInfo.type
+                    value: fileInfo.isSymLink ? qsTr("Link to %1").arg(fileInfo.type) :
+                                                fileInfo.type
                 }
                 CenteredField {
                     label: "" // blank label
