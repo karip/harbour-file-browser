@@ -292,52 +292,41 @@ Page {
 
     function isImageFile(fileInfo)
     {
-        if (fileInfo.isDir) return false;
-        return fileInfo.suffix === "jpg" || fileInfo.suffix === "jpeg" ||
-                fileInfo.suffix === "png" || fileInfo.suffix === "gif";
+        return fileInfo.mimeType === "image/jpeg" || fileInfo.mimeType === "image/png" ||
+                fileInfo.mimeType === "image/gif";
     }
 
     function isAudioFile(fileInfo)
     {
-        if (fileInfo.isDir) return false;
-        return fileInfo.suffix === "wav" || fileInfo.suffix === "mp3" ||
-                fileInfo.suffix === "ogg" || fileInfo.suffix === "flac" ||
-                fileInfo.suffix === "aac" || fileInfo.suffix === "m4a";
+        return fileInfo.mimeType === "audio/x-wav" || fileInfo.mimeType === "audio/mpeg" ||
+                fileInfo.mimeType === "audio/x-vorbis+ogg" || fileInfo.mimeType === "audio/flac" ||
+                fileInfo.mimeType === "audio/mp4";
     }
 
     function isVideoFile(fileInfo)
     {
-        if (fileInfo.isDir) return false;
-        return fileInfo.suffix === "mp4" || fileInfo.suffix === "m4v";
+        return fileInfo.mimeType === "video/quicktime" || fileInfo.mimeType === "video/mp4";
     }
 
     function isMediaFile(fileInfo)
     {
-        if (fileInfo.isDir) return false;
         return isAudioFile(fileInfo) | isVideoFile(fileInfo);
     }
 
     function isZipFile(fileInfo)
     {
-        if (fileInfo.isDir) return false;
-        return fileInfo.suffix === "zip" || fileInfo.suffix === "apk" ||
-                fileInfo.suffix === "jar" ||
-                fileInfo.suffix === "odt" || fileInfo.suffix === "ods" ||
-                fileInfo.suffix === "odp" ||
-                fileInfo.suffix === "docx" || fileInfo.suffix === "xlsx" ||
-                fileInfo.suffix === "pptx" ;
+        return fileInfo.mimeTypeInherits("application/zip");
     }
 
     function isRpmFile(fileInfo)
     {
-        if (fileInfo.isDir) return false;
-        return fileInfo.suffix === "rpm";
+        return fileInfo.mimeType === "application/x-rpm";
     }
 
     function quickView()
     {
-        // dirs are special cases
-        if (fileInfo.icon === "folder-link") {
+        // dirs are special cases - there's no way to display their contents, so go to them
+        if (fileInfo.isDir && fileInfo.isSymLink) {
             Functions.goToFolder(fileInfo.symLinkTarget);
 
         } else if (fileInfo.isDir) {

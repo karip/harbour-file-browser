@@ -144,6 +144,11 @@ void FileInfo::refresh()
     readInfo();
 }
 
+bool FileInfo::mimeTypeInherits(QString parentMimeType)
+{
+    return m_mimeType.inherits(parentMimeType);
+}
+
 void FileInfo::readInfo()
 {
     m_errorMessage = "";
@@ -154,7 +159,7 @@ void FileInfo::readInfo()
         m_errorMessage = tr("File does not exist");
 
     QMimeDatabase db;
-    m_mimeType = db.mimeTypeForFile(m_fileInfo, QMimeDatabase::MatchContent);
+    m_mimeType = db.mimeTypeForFile(m_fileInfo);
 
     emit fileChanged();
     emit isDirChanged();
