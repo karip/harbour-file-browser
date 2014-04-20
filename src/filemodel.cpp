@@ -248,21 +248,20 @@ void FileModel::refreshEntries()
 
     // empty dir name
     if (m_dir.isEmpty()) {
-        beginResetModel();
-        m_files.clear();
-        endResetModel();
-        emit fileCountChanged();
+        clearModel();
         emit errorMessageChanged();
         return;
     }
 
     QDir dir(m_dir);
     if (!dir.exists()) {
+        clearModel();
         m_errorMessage = tr("Folder does not exist");
         emit errorMessageChanged();
         return;
     }
     if (access(m_dir, R_OK) == -1) {
+        clearModel();
         m_errorMessage = tr("No permission to read the folder");
         emit errorMessageChanged();
         return;
@@ -290,7 +289,7 @@ void FileModel::refreshEntries()
     // compare old and new files and do removes if needed
     for (int i = m_files.count()-1; i >= 0; --i) {
         FileData data = m_files.at(i);
-        if (!newFiles.contains(data)) {
+        if (!filesContains(newFiles, data)) {
             beginRemoveRows(QModelIndex(), i, i);
             m_files.removeAt(i);
             endRemoveRows();
@@ -310,6 +309,14 @@ void FileModel::refreshEntries()
         emit fileCountChanged();
 
     emit errorMessageChanged();
+}
+
+void FileModel::clearModel()
+{
+    beginResetModel();
+    m_files.clear();
+    endResetModel();
+    emit fileCountChanged();
 }
 
 bool FileModel::filesContains(const QList<FileData> &files, const FileData &fileData) const
