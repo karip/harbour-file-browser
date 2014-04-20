@@ -22,7 +22,12 @@ Page {
         // called when open command exits
         onProcessExited: {
             if (exitCode === 0) {
-                if (fileInfo.suffix !== "rpm")
+                if (isApkFile()) {
+                    notificationPanel.showTextWithTimer(qsTr("Install launched"),
+                                               qsTr("If nothing happens, then the package is probably faulty."));
+                    return;
+                }
+                if (!isRpmFile())
                     notificationPanel.showTextWithTimer(qsTr("Open successful"),
                                                qsTr("Sometimes the application stays in the background"));
             } else if (exitCode === 1) {
@@ -91,20 +96,9 @@ Page {
             // open/install tries to open the file and fileInfo.onProcessExited shows error
             // if it fails
             MenuItem {
-                text: fileInfo.suffix === "rpm" ? qsTr("Install") : qsTr("Open")
-                visible: !fileInfo.isDir && fileInfo.suffix !== "apk"
+                text: isRpmFile() || isApkFile() ? qsTr("Install") : qsTr("Open")
+                visible: !fileInfo.isDir
                 onClicked: consoleModel.executeCommand("xdg-open", [ page.file ])
-            }
-
-            // file type specific menu items
-            MenuItem {
-                text: qsTr("Install")
-                visible: fileInfo.suffix === "apk" && !fileInfo.isDir
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("ApkPage.qml"),
-                                   { command: "apkd-install",
-                                     arguments: [ fileInfo.file ] })
-                }
             }
 
             MenuItem {
@@ -138,7 +132,7 @@ Page {
 
                 IconButton {
                     id: playButton
-                    visible: isAudioFile(fileInfo)
+                    visible: isAudioFile()
                     icon.source: audioPlayer.playbackState !== MediaPlayer.PlayingState ?
                                      "image://theme/icon-l-play" :
                                      "image://theme/icon-l-pause"
@@ -163,7 +157,7 @@ Page {
 
                         Image { // preview of image, max height 400
                             id: imagePreview
-                            visible: isImageFile(fileInfo)
+                            visible: isImageFile()
                             source: visible ? fileInfo.file : "" // access the source only if img is visible
                             anchors.left: parent.left
                             anchors.right: parent.right
@@ -290,37 +284,42 @@ Page {
         page: page
     }
 
-    function isImageFile(fileInfo)
+    function isImageFile()
     {
         return fileInfo.mimeType === "image/jpeg" || fileInfo.mimeType === "image/png" ||
                 fileInfo.mimeType === "image/gif";
     }
 
-    function isAudioFile(fileInfo)
+    function isAudioFile()
     {
         return fileInfo.mimeType === "audio/x-wav" || fileInfo.mimeType === "audio/mpeg" ||
                 fileInfo.mimeType === "audio/x-vorbis+ogg" || fileInfo.mimeType === "audio/flac" ||
                 fileInfo.mimeType === "audio/mp4";
     }
 
-    function isVideoFile(fileInfo)
+    function isVideoFile()
     {
         return fileInfo.mimeType === "video/quicktime" || fileInfo.mimeType === "video/mp4";
     }
 
-    function isMediaFile(fileInfo)
+    function isMediaFile()
     {
-        return isAudioFile(fileInfo) | isVideoFile(fileInfo);
+        return isAudioFile() | isVideoFile();
     }
 
-    function isZipFile(fileInfo)
+    function isZipFile()
     {
         return fileInfo.mimeTypeInherits("application/zip");
     }
 
-    function isRpmFile(fileInfo)
+    function isRpmFile()
     {
         return fileInfo.mimeType === "application/x-rpm";
+    }
+
+    function isApkFile()
+    {
+        return fileInfo.suffix === "apk" && fileInfo.mimeType === "application/vnd.android.package-archive";
     }
 
     function quickView()
@@ -346,19 +345,19 @@ Page {
                            command: "rdjpgcom",
                            arguments: [ "-verbose", fileInfo.file ] })
 
-        } else if (isImageFile(fileInfo) || isVideoFile(fileInfo) || isAudioFile(fileInfo)) {
+        } else if (isImageFile() || isVideoFile() || isAudioFile()) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                          { title: Functions.lastPartOfPath(fileInfo.file),
                            command: "file",
                            arguments: [ "-b", fileInfo.file ] })
 
-        } else if (isZipFile(fileInfo)) {
+        } else if (isZipFile()) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                          { title: Functions.lastPartOfPath(fileInfo.file),
                            command: "unzip",
                            arguments: [ "-Z", "-2ht", fileInfo.file ] })
 
-        } else if (isRpmFile(fileInfo)) {
+        } else if (isRpmFile()) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                          { title: Functions.lastPartOfPath(fileInfo.file),
                            command: "rpm",

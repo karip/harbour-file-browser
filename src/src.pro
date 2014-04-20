@@ -25,7 +25,6 @@ OTHER_FILES = \
     qml/pages/CreateFolderDialog.qml \
     qml/pages/RenameDialog.qml \
     qml/pages/PermissionsDialog.qml \
-    qml/pages/ApkPage.qml \
     qml/pages/AboutPage.qml \
     qml/components/DirPopup.qml \
     qml/components/Spacer.qml \
