@@ -25,6 +25,7 @@ class FileInfo : public QObject
     Q_PROPERTY(QString name READ name() NOTIFY nameChanged())
     Q_PROPERTY(QString suffix READ suffix() NOTIFY suffixChanged())
     Q_PROPERTY(QString symLinkTarget READ symLinkTarget() NOTIFY symLinkTargetChanged())
+    Q_PROPERTY(bool isSymLinkBroken READ isSymLinkBroken() NOTIFY isSymLinkBrokenChanged())
     Q_PROPERTY(QString errorMessage READ errorMessage() NOTIFY errorMessageChanged())
 
 public:
@@ -48,6 +49,7 @@ public:
     QString name() const;
     QString suffix() const;
     QString symLinkTarget() const;
+    bool isSymLinkBroken() const;
     QString errorMessage() const;
 
     // methods accessible from QML
@@ -68,6 +70,7 @@ signals:
     void suffixChanged();
     void absolutePathChanged();
     void symLinkTargetChanged();
+    void isSymLinkBrokenChanged();
     void errorMessageChanged();
 
 private:

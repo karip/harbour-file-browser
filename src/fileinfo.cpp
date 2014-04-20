@@ -55,16 +55,22 @@ QString FileInfo::permissions() const
 QString FileInfo::owner() const
 {
     QString owner = m_fileInfo.owner();
-    if (owner.isEmpty())
-        owner = QString::number(m_fileInfo.ownerId());
+    if (owner.isEmpty()) {
+        uint id = m_fileInfo.ownerId();
+        if (id != (uint)-2)
+            owner = QString::number(id);
+    }
     return owner;
 }
 
 QString FileInfo::group() const
 {
     QString group = m_fileInfo.group();
-    if (group.isEmpty())
-        group = QString::number(m_fileInfo.groupId());
+    if (group.isEmpty()) {
+        uint id = m_fileInfo.groupId();
+        if (id != (uint)-2)
+            group = QString::number(id);
+    }
     return group;
 }
 
@@ -104,6 +110,14 @@ QString FileInfo::symLinkTarget() const
     return m_fileInfo.symLinkTarget();
 }
 
+bool FileInfo::isSymLinkBroken() const
+{
+    // if it is a symlink but it doesn't exist, then it is broken
+    if (m_fileInfo.isSymLink() && !m_fileInfo.exists())
+        return true;
+    return false;
+}
+
 QString FileInfo::errorMessage() const
 {
     return m_errorMessage;
@@ -119,7 +133,8 @@ void FileInfo::readFile()
     m_errorMessage = "";
 
     m_fileInfo = QFileInfo(m_file);
-    if (!m_fileInfo.exists())
+    // exists() checks for target existence in symlinks, so ignore it for symlinks
+    if (!m_fileInfo.exists() && !m_fileInfo.isSymLink())
         m_errorMessage = tr("File does not exist");
 
     emit fileChanged();
@@ -136,5 +151,6 @@ void FileInfo::readFile()
     emit nameChanged();
     emit suffixChanged();
     emit symLinkTargetChanged();
+    emit isSymLinkBrokenChanged();
     emit errorMessageChanged();
 }

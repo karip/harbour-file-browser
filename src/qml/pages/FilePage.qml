@@ -198,6 +198,7 @@ Page {
                             wrapMode: Text.Wrap
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: Theme.fontSizeExtraSmall
+                            color: fileInfo.isSymLinkBroken ? "red" : Theme.primaryColor
                         }
                         Spacer { height: 20 }
                     }

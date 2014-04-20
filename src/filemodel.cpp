@@ -229,7 +229,7 @@ void FileModel::readEntries()
     QSettings settings;
     bool hiddenSetting = settings.value("show-hidden-files", false).toBool();
     QDir::Filter hidden = hiddenSetting ? QDir::Hidden : (QDir::Filter)0;
-    dir.setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot | hidden);
+    dir.setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot | QDir::System | hidden);
 
     if (settings.value("show-dirs-first", false).toBool())
         dir.setSorting(QDir::Name | QDir::DirsFirst);
