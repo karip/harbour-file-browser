@@ -299,7 +299,7 @@ void FileModel::refreshEntries()
     // compare old and new files and do inserts if needed
     for (int i = 0; i < newFiles.count(); ++i) {
         FileData data = newFiles.at(i);
-        if (!m_files.contains(data)) {
+        if (!filesContains(m_files, data)) {
             beginInsertRows(QModelIndex(), i, i);
             m_files.insert(i, data);
             endInsertRows();
@@ -310,4 +310,20 @@ void FileModel::refreshEntries()
         emit fileCountChanged();
 
     emit errorMessageChanged();
+}
+
+bool FileModel::filesContains(const QList<FileData> &files, const FileData &fileData) const
+{
+    // check if list contains fileData with relevant info
+    foreach (const FileData &f, files) {
+        if (f.info.fileName() == fileData.info.fileName() &&
+                f.info.size() == fileData.info.size() &&
+                f.info.permissions() == fileData.info.permissions() &&
+                f.info.lastModified() == fileData.info.lastModified() &&
+                f.info.isSymLink() == fileData.info.isSymLink() &&
+                f.info.isDir() == fileData.info.isDir()) {
+            return true;
+        }
+    }
+    return false;
 }

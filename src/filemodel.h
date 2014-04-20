@@ -71,6 +71,7 @@ private slots:
 private:
     void readEntries();
     void refreshEntries();
+    bool filesContains(const QList<FileData> &files, const FileData &fileData) const;
 
     QString m_dir;
     QList<FileData> m_files;
