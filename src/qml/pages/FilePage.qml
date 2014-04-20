@@ -339,19 +339,7 @@ Page {
     function viewContents()
     {
         // view depending on file type
-        if (fileInfo.suffix === "jpg") {
-            pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                         { title: Functions.lastPartOfPath(fileInfo.file),
-                           command: "rdjpgcom",
-                           arguments: [ "-verbose", fileInfo.file ] })
-
-        } else if (isImageFile() || isVideoFile() || isAudioFile()) {
-            pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                         { title: Functions.lastPartOfPath(fileInfo.file),
-                           command: "file",
-                           arguments: [ "-b", fileInfo.file ] })
-
-        } else if (isZipFile()) {
+        if (isZipFile()) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                          { title: Functions.lastPartOfPath(fileInfo.file),
                            command: "unzip",
