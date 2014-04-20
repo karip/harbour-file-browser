@@ -343,14 +343,20 @@ Page {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                          { title: Functions.lastPartOfPath(fileInfo.file),
                            command: "unzip",
-                           arguments: [ "-Z", "-2ht", fileInfo.file ] })
+                           arguments: [ "-Z", "-2ht", fileInfo.file ] });
 
         } else if (isRpmFile()) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                          { title: Functions.lastPartOfPath(fileInfo.file),
                            command: "rpm",
-                           arguments: [ "-qlp", "--info", fileInfo.file ] })
+                           arguments: [ "-qlp", "--info", fileInfo.file ] });
 
+        } else if (fileInfo.mimeType === "application/x-tar" ||
+                   fileInfo.mimeType === "application/x-compressed-tar") {
+            pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
+                         { title: Functions.lastPartOfPath(fileInfo.file),
+                           command: "tar",
+                           arguments: [ "tf", fileInfo.file ] });
         } else {
             pageStack.push(Qt.resolvedUrl("ViewPage.qml"), { path: page.file });
         }

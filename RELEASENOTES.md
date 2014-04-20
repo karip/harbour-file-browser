@@ -6,6 +6,7 @@
  * Displays broken symbolic links
  * Move and copy symbolic links
  * Display mime type information
+ * View contents of tar files
 
 ## Version 1.4.2 (2014-03-20)
 
