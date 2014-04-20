@@ -66,7 +66,7 @@ QString SearchWorker::searchRecursively(QString directory, QString searchTerm)
     QDir::Filter hidden = hiddenSetting ? QDir::Hidden : (QDir::Filter)0;
 
     // search dirs
-    QStringList names = dir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs | hidden);
+    QStringList names = dir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs | QDir::System | hidden);
     for (int i = 0 ; i < names.count() ; ++i) {
         // stop if cancelled
         if (m_cancelled.loadAcquire() == Cancelled)
