@@ -199,20 +199,6 @@ Page {
                 }
                 Spacer { height: 20 }
 
-                Label {
-                    visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
-                    width: parent.width
-                    text: qsTr("Installable packages may contain malware.")
-                    color: "red"
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.Wrap
-                }
-                Spacer {
-                    visible: fileInfo.suffix === "apk" || fileInfo.suffix === "rpm" && !fileInfo.isDir
-                    height: 40
-                }
-
                 CenteredField {
                     label: qsTr("Location")
                     value: fileInfo.absolutePath
