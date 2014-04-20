@@ -222,6 +222,16 @@ void FileWorker::copyOrMoveFiles()
 
 QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirectory)
 {
+    QFileInfo srcInfo(srcDirectory);
+    if (srcInfo.isSymLink()) {
+        // copy dir symlink by creating a new link
+        QFile targetFile(srcInfo.symLinkTarget());
+        if (!targetFile.link(destDirectory))
+            return targetFile.errorString();
+
+        return QString();
+    }
+
     QDir srcDir(srcDirectory);
     if (!srcDir.exists())
         return tr("Source folder doesn't exist");
