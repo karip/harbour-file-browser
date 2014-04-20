@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QMimeDatabase>
+#include <QImageReader>
 #include "globals.h"
 
 FileInfo::FileInfo(QObject *parent) :
@@ -161,6 +162,23 @@ void FileInfo::readInfo()
     QMimeDatabase db;
     m_mimeType = db.mimeTypeForFile(m_fileInfo);
 
+    m_metaData.clear();
+
+    // read metadata from image
+    if (m_mimeType.name() == "image/jpeg" || m_mimeType.name() == "image/png" ||
+            m_mimeType.name() == "image/gif") {
+        QImageReader reader(m_file);
+        QSize s = reader.size();
+        if (s.width() >= 0 && s.height() >= 0)
+            m_metaData.append(tr("Image Size")+QString(":%1 x %2").arg(s.width()).arg(s.height()));
+
+        QStringList textKeys = reader.textKeys();
+        foreach (QString key, textKeys) {
+            QString value = reader.text(key);
+            m_metaData.append(key+":"+value);
+        }
+    }
+
     emit fileChanged();
     emit isDirChanged();
     emit isSymLinkChanged();
@@ -179,5 +197,6 @@ void FileInfo::readInfo()
     emit isSymLinkBrokenChanged();
     emit typeChanged();
     emit mimeTypeChanged();
+    emit metaDataChanged();
     emit errorMessageChanged();
 }

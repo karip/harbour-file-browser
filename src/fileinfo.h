@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QVariantList>
 #include <QMimeType>
+#include <QSize>
 
 /**
  * @brief The FileInfo class provides info about one file.
@@ -30,6 +31,7 @@ class FileInfo : public QObject
     Q_PROPERTY(bool isSymLinkBroken READ isSymLinkBroken() NOTIFY isSymLinkBrokenChanged())
     Q_PROPERTY(QString type READ type() NOTIFY typeChanged())
     Q_PROPERTY(QString mimeType READ mimeType() NOTIFY mimeTypeChanged())
+    Q_PROPERTY(QStringList metaData READ metaData() NOTIFY metaDataChanged())
     Q_PROPERTY(QString errorMessage READ errorMessage() NOTIFY errorMessageChanged())
 
 public:
@@ -57,6 +59,7 @@ public:
     bool isSymLinkBroken() const;
     QString type() const;
     QString mimeType() const;
+    QStringList metaData() const { return m_metaData; }
     QString errorMessage() const;
 
     // methods accessible from QML
@@ -81,6 +84,7 @@ signals:
     void symLinkTargetChanged();
     void isSymLinkBrokenChanged();
     void typeChanged();
+    void metaDataChanged();
     void mimeTypeChanged();
     void errorMessageChanged();
 
@@ -90,6 +94,7 @@ private:
     QString m_file;
     QFileInfo m_fileInfo;
     QMimeType m_mimeType;
+    QStringList m_metaData;
     QString m_errorMessage;
 };
 

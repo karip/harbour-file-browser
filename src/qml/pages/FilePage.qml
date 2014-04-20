@@ -237,6 +237,20 @@ Page {
                     label: qsTr("Created")
                     value: fileInfo.created
                 }
+                Spacer {
+                    height: 10
+                }
+                // Display all metadata
+                Repeater {
+                    model: fileInfo.metaData
+                    CenteredField { // labels and values are delimited with ':'
+                        label: modelData.substring(0, modelData.indexOf(":"))
+                        value: modelData.substring(modelData.indexOf(":")+1)
+                    }
+                }
+                Spacer {
+                    height: 10
+                }
             }
 
             // error label, visible if error message is set
