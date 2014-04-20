@@ -352,7 +352,8 @@ Page {
                            arguments: [ "-qlp", "--info", fileInfo.file ] });
 
         } else if (fileInfo.mimeType === "application/x-tar" ||
-                   fileInfo.mimeType === "application/x-compressed-tar") {
+                   fileInfo.mimeType === "application/x-compressed-tar" ||
+                   fileInfo.mimeType === "application/x-bzip-compressed-tar") {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
                          { title: Functions.lastPartOfPath(fileInfo.file),
                            command: "tar",
