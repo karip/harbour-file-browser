@@ -1,6 +1,7 @@
 #include "fileinfo.h"
 #include <QDir>
 #include <QDateTime>
+#include <QMimeDatabase>
 #include "globals.h"
 
 FileInfo::FileInfo(QObject *parent) :
@@ -19,7 +20,7 @@ void FileInfo::setFile(QString file)
         return;
 
     m_file = file;
-    readFile();
+    readInfo();
 }
 
 bool FileInfo::isDir() const
@@ -118,6 +119,16 @@ bool FileInfo::isSymLinkBroken() const
     return false;
 }
 
+QString FileInfo::type() const
+{
+    return m_mimeType.comment();
+}
+
+QString FileInfo::mimeType() const
+{
+    return m_mimeType.name();
+}
+
 QString FileInfo::errorMessage() const
 {
     return m_errorMessage;
@@ -125,10 +136,10 @@ QString FileInfo::errorMessage() const
 
 void FileInfo::refresh()
 {
-    readFile();
+    readInfo();
 }
 
-void FileInfo::readFile()
+void FileInfo::readInfo()
 {
     m_errorMessage = "";
 
@@ -136,6 +147,9 @@ void FileInfo::readFile()
     // exists() checks for target existence in symlinks, so ignore it for symlinks
     if (!m_fileInfo.exists() && !m_fileInfo.isSymLink())
         m_errorMessage = tr("File does not exist");
+
+    QMimeDatabase db;
+    m_mimeType = db.mimeTypeForFile(m_fileInfo, QMimeDatabase::MatchContent);
 
     emit fileChanged();
     emit isDirChanged();
@@ -152,5 +166,7 @@ void FileInfo::readFile()
     emit suffixChanged();
     emit symLinkTargetChanged();
     emit isSymLinkBrokenChanged();
+    emit typeChanged();
+    emit mimeTypeChanged();
     emit errorMessageChanged();
 }

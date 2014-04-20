@@ -4,9 +4,10 @@
 #include <QObject>
 #include <QDir>
 #include <QVariantList>
+#include <QMimeType>
 
 /**
- * @brief The FileInfo class provides access to one file.
+ * @brief The FileInfo class provides info about one file.
  */
 class FileInfo : public QObject
 {
@@ -26,6 +27,8 @@ class FileInfo : public QObject
     Q_PROPERTY(QString suffix READ suffix() NOTIFY suffixChanged())
     Q_PROPERTY(QString symLinkTarget READ symLinkTarget() NOTIFY symLinkTargetChanged())
     Q_PROPERTY(bool isSymLinkBroken READ isSymLinkBroken() NOTIFY isSymLinkBrokenChanged())
+    Q_PROPERTY(QString type READ type() NOTIFY typeChanged())
+    Q_PROPERTY(QString mimeType READ mimeType() NOTIFY mimeTypeChanged())
     Q_PROPERTY(QString errorMessage READ errorMessage() NOTIFY errorMessageChanged())
 
 public:
@@ -50,6 +53,8 @@ public:
     QString suffix() const;
     QString symLinkTarget() const;
     bool isSymLinkBroken() const;
+    QString type() const;
+    QString mimeType() const;
     QString errorMessage() const;
 
     // methods accessible from QML
@@ -71,13 +76,16 @@ signals:
     void absolutePathChanged();
     void symLinkTargetChanged();
     void isSymLinkBrokenChanged();
+    void typeChanged();
+    void mimeTypeChanged();
     void errorMessageChanged();
 
 private:
-    void readFile();
+    void readInfo();
 
     QString m_file;
     QFileInfo m_fileInfo;
+    QMimeType m_mimeType;
     QString m_errorMessage;
 };
 

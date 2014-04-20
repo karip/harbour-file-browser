@@ -15,6 +15,9 @@ Row {
     // font size
     property int pixelSize: Theme.fontSizeExtraSmall
 
+    // elide mode for value text, by default, has no elide
+    property int valueElide: Text.ElideNone
+
     Label {
         text: label
         color: Theme.secondaryColor
@@ -27,7 +30,9 @@ Row {
         text: value
         color: Theme.highlightColor
         width: parent.width/2
-        wrapMode: Text.Wrap
+        elide: valueElide
+        maximumLineCount: valueElide != Text.ElideNone ? 1 : 100
+        wrapMode: valueElide != Text.ElideNone ? Text.NoWrap : Text.Wrap
         font.pixelSize: pixelSize
     }
 }

@@ -224,6 +224,15 @@ Page {
                     value: fileInfo.absolutePath
                 }
                 CenteredField {
+                    label: qsTr("Type")
+                    value: fileInfo.type
+                }
+                CenteredField {
+                    label: "" // blank label
+                    value: "("+fileInfo.mimeType+")"
+                    valueElide: page.orientation === Orientation.Portrait ? Text.ElideMiddle : Text.ElideNone
+                }
+                CenteredField {
                     label: qsTr("Size")
                     value: fileInfo.size
                 }

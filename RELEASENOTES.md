@@ -5,6 +5,7 @@
 
  * Displays broken symbolic links
  * Move and copy symbolic links
+ * Display mime type information
 
 ## Version 1.4.2 (2014-03-20)
 
