@@ -30,8 +30,8 @@ class FileData : public QObject
     Q_PROPERTY(QString suffix READ suffix() NOTIFY suffixChanged())
     Q_PROPERTY(QString symLinkTarget READ symLinkTarget() NOTIFY symLinkTargetChanged())
     Q_PROPERTY(bool isSymLinkBroken READ isSymLinkBroken() NOTIFY isSymLinkBrokenChanged())
-    Q_PROPERTY(QString type READ type() NOTIFY typeChanged())
     Q_PROPERTY(QString mimeType READ mimeType() NOTIFY mimeTypeChanged())
+    Q_PROPERTY(QString mimeTypeComment READ mimeTypeComment() NOTIFY mimeTypeCommentChanged())
     Q_PROPERTY(QStringList metaData READ metaData() NOTIFY metaDataChanged())
     Q_PROPERTY(QString errorMessage READ errorMessage() NOTIFY errorMessageChanged())
 
@@ -58,8 +58,8 @@ public:
     QString suffix() const;
     QString symLinkTarget() const;
     bool isSymLinkBroken() const;
-    QString type() const;
     QString mimeType() const;
+    QString mimeTypeComment() const;
     QStringList metaData() const { return m_metaData; }
     QString errorMessage() const;
 
@@ -84,9 +84,9 @@ signals:
     void absolutePathChanged();
     void symLinkTargetChanged();
     void isSymLinkBrokenChanged();
-    void typeChanged();
     void metaDataChanged();
     void mimeTypeChanged();
+    void mimeTypeCommentChanged();
     void errorMessageChanged();
 
 private:
@@ -96,6 +96,8 @@ private:
     QString m_file;
     StatFileInfo m_fileInfo;
     QMimeType m_mimeType;
+    QString m_mimeTypeName;
+    QString m_mimeTypeComment;
     QStringList m_metaData;
     QString m_errorMessage;
 };

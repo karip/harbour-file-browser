@@ -122,14 +122,14 @@ bool FileData::isSymLinkBroken() const
     return false;
 }
 
-QString FileData::type() const
-{
-    return m_mimeType.comment();
-}
-
 QString FileData::mimeType() const
 {
-    return m_mimeType.name();
+    return m_mimeTypeName;
+}
+
+QString FileData::mimeTypeComment() const
+{
+    return m_mimeTypeComment;
 }
 
 QString FileData::errorMessage() const
@@ -176,19 +176,41 @@ void FileData::readInfo()
     emit suffixChanged();
     emit symLinkTargetChanged();
     emit isSymLinkBrokenChanged();
-    emit typeChanged();
-    emit mimeTypeChanged();
     emit metaDataChanged();
+    emit mimeTypeChanged();
+    emit mimeTypeCommentChanged();
     emit errorMessageChanged();
 }
 
 void FileData::readMetaData()
 {
+    // special file types
+
+    m_mimeType = QMimeType();
+    if (m_fileInfo.isBlkAtEnd()) {
+        m_mimeTypeName = "inode/blockdevice";
+        m_mimeTypeComment = tr("block device");
+        return;
+    } else if (m_fileInfo.isChrAtEnd()) {
+        m_mimeTypeName = "inode/chardevice";
+        m_mimeTypeComment = tr("character device");
+        return;
+    } else if (m_fileInfo.isFifoAtEnd()) {
+        m_mimeTypeName = "inode/fifo";
+        m_mimeTypeComment = tr("pipe");
+        return;
+    } else if (m_fileInfo.isSocketAtEnd()) {
+        m_mimeTypeName = "inode/socket";
+        m_mimeTypeComment = tr("socket");
+        return;
+    }
+
+    // normal files
+
     QMimeDatabase db;
     m_mimeType = db.mimeTypeForFile(m_fileInfo.fileName());
-
-    if (!m_fileInfo.isSafeToRead())
-        return;
+    m_mimeTypeName = m_mimeType.name();
+    m_mimeTypeComment = m_mimeType.comment();
 
     // read metadata from image
     if (m_mimeType.name() == "image/jpeg" || m_mimeType.name() == "image/png" ||

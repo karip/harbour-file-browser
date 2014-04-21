@@ -205,8 +205,8 @@ Page {
                 }
                 CenteredField {
                     label: qsTr("Type")
-                    value: fileData.isSymLink ? qsTr("Link to %1").arg(fileData.type) :
-                                                fileData.type
+                    value: fileData.isSymLink ? qsTr("Link to %1").arg(fileData.mimeTypeComment) :
+                                                fileData.mimeTypeComment
                 }
                 CenteredField {
                     label: "" // blank label
