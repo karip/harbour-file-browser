@@ -3,9 +3,9 @@ TARGET = harbour-file-browser
 
 CONFIG += sailfishapp
 
-SOURCES += main.cpp filemodel.cpp fileinfo.cpp engine.cpp fileworker.cpp searchengine.cpp \
+SOURCES += main.cpp filemodel.cpp filedata.cpp engine.cpp fileworker.cpp searchengine.cpp \
            searchworker.cpp consolemodel.cpp globals.cpp
-HEADERS += filemodel.h fileinfo.h engine.h fileworker.h searchengine.h searchworker.h \
+HEADERS += filemodel.h filedata.h engine.h fileworker.h searchengine.h searchworker.h \
            consolemodel.h globals.h
 
 OTHER_FILES = \

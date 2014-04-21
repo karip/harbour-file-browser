@@ -236,7 +236,7 @@ void FileModel::readEntries()
 
     QFileInfoList infoList = dir.entryInfoList();
     foreach (QFileInfo info, infoList) {
-        FileData data;
+        StatFileInfo data;
         data.info = info;
         m_files.append(data);
     }
@@ -276,10 +276,10 @@ void FileModel::refreshEntries()
         dir.setSorting(QDir::Name | QDir::DirsFirst);
 
     // read all files
-    QList<FileData> newFiles;
+    QList<StatFileInfo> newFiles;
     QFileInfoList infoList = dir.entryInfoList();
     foreach (QFileInfo info, infoList) {
-        FileData data;
+        StatFileInfo data;
         data.info = info;
         newFiles.append(data);
     }
@@ -288,7 +288,7 @@ void FileModel::refreshEntries()
 
     // compare old and new files and do removes if needed
     for (int i = m_files.count()-1; i >= 0; --i) {
-        FileData data = m_files.at(i);
+        StatFileInfo data = m_files.at(i);
         if (!filesContains(newFiles, data)) {
             beginRemoveRows(QModelIndex(), i, i);
             m_files.removeAt(i);
@@ -297,7 +297,7 @@ void FileModel::refreshEntries()
     }
     // compare old and new files and do inserts if needed
     for (int i = 0; i < newFiles.count(); ++i) {
-        FileData data = newFiles.at(i);
+        StatFileInfo data = newFiles.at(i);
         if (!filesContains(m_files, data)) {
             beginInsertRows(QModelIndex(), i, i);
             m_files.insert(i, data);
@@ -319,10 +319,10 @@ void FileModel::clearModel()
     emit fileCountChanged();
 }
 
-bool FileModel::filesContains(const QList<FileData> &files, const FileData &fileData) const
+bool FileModel::filesContains(const QList<StatFileInfo> &files, const StatFileInfo &fileData) const
 {
     // check if list contains fileData with relevant info
-    foreach (const FileData &f, files) {
+    foreach (const StatFileInfo &f, files) {
         if (f.info.fileName() == fileData.info.fileName() &&
                 f.info.size() == fileData.info.size() &&
                 f.info.permissions() == fileData.info.permissions() &&

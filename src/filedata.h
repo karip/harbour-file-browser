@@ -1,5 +1,5 @@
-#ifndef FILEINFO_H
-#define FILEINFO_H
+#ifndef FILEDATA_H
+#define FILEDATA_H
 
 #include <QObject>
 #include <QDir>
@@ -8,9 +8,9 @@
 #include <QSize>
 
 /**
- * @brief The FileInfo class provides info about one file.
+ * @brief The FileData class provides info about one file.
  */
-class FileInfo : public QObject
+class FileData : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString file READ file() WRITE setFile(QString) NOTIFY fileChanged())
@@ -35,8 +35,8 @@ class FileInfo : public QObject
     Q_PROPERTY(QString errorMessage READ errorMessage() NOTIFY errorMessageChanged())
 
 public:
-    explicit FileInfo(QObject *parent = 0);
-    ~FileInfo();
+    explicit FileData(QObject *parent = 0);
+    ~FileData();
 
     // property accessors
     QString file() const { return m_file; }
@@ -98,4 +98,4 @@ private:
     QString m_errorMessage;
 };
 
-#endif // FILEINFO_H
+#endif // FILEDATA_H

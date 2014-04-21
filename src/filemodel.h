@@ -6,11 +6,11 @@
 #include <QFileSystemWatcher>
 
 // struct to hold data for a single file
-struct FileData
+struct StatFileInfo
 {
     QFileInfo info;
 
-    bool operator==(const FileData &other) const {
+    bool operator==(const StatFileInfo &other) const {
         return other.info == info;
     }
 };
@@ -72,10 +72,10 @@ private:
     void readEntries();
     void refreshEntries();
     void clearModel();
-    bool filesContains(const QList<FileData> &files, const FileData &fileData) const;
+    bool filesContains(const QList<StatFileInfo> &files, const StatFileInfo &fileData) const;
 
     QString m_dir;
-    QList<FileData> m_files;
+    QList<StatFileInfo> m_files;
     QString m_errorMessage;
     bool m_active;
     bool m_dirty;

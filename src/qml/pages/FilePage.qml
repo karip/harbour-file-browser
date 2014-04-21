@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.file.browser.FileInfo 1.0
+import harbour.file.browser.FileData 1.0
 import harbour.file.browser.ConsoleModel 1.0
 import QtMultimedia 5.0
 import "functions.js" as Functions
@@ -11,8 +11,8 @@ Page {
     allowedOrientations: Orientation.All
     property string file: "/"
 
-    FileInfo {
-        id: fileInfo
+    FileData {
+        id: fileData
         file: page.file
     }
 
@@ -68,7 +68,7 @@ Page {
                                                 { path: page.file })
                     dialog.accepted.connect(function() {
                         if (dialog.errorMessage === "")
-                            fileInfo.refresh();
+                            fileData.refresh();
                         else
                             notificationPanel.showTextWithTimer(dialog.errorMessage, "");
                     })
@@ -90,21 +90,21 @@ Page {
 
             MenuItem {
                 text: qsTr("View Contents")
-                visible: !fileInfo.isDir
+                visible: !fileData.isDir
                 onClicked: viewContents()
             }
-            // open/install tries to open the file and fileInfo.onProcessExited shows error
+            // open/install tries to open the file and fileData.onProcessExited shows error
             // if it fails
             MenuItem {
                 text: isRpmFile() || isApkFile() ? qsTr("Install") : qsTr("Open")
-                visible: !fileInfo.isDir
+                visible: !fileData.isDir
                 onClicked: consoleModel.executeCommand("xdg-open", [ page.file ])
             }
 
             MenuItem {
                 text: qsTr("Go to Target")
-                visible: fileInfo.isSymLink && fileInfo.isDir
-                onClicked: Functions.goToFolder(fileInfo.symLinkTarget);
+                visible: fileData.isSymLink && fileData.isDir
+                onClicked: Functions.goToFolder(fileData.symLinkTarget);
             }
         }
 
@@ -116,7 +116,7 @@ Page {
             anchors.rightMargin: Theme.paddingLarge
 
             PageHeader {
-                title: Functions.formatPathForTitle(fileInfo.absolutePath) + " " +
+                title: Functions.formatPathForTitle(fileData.absolutePath) + " " +
                        Functions.unicodeBlackDownPointingTriangle()
                 MouseArea {
                     anchors.fill: parent
@@ -126,7 +126,7 @@ Page {
 
             // file info texts, visible if error is not set
             Column {
-                visible: fileInfo.errorMessage === ""
+                visible: fileData.errorMessage === ""
                 anchors.left: parent.left
                 anchors.right: parent.right
 
@@ -158,7 +158,7 @@ Page {
                         Image { // preview of image, max height 400
                             id: imagePreview
                             visible: isImageFile()
-                            source: visible ? fileInfo.file : "" // access the source only if img is visible
+                            source: visible ? fileData.file : "" // access the source only if img is visible
                             anchors.left: parent.left
                             anchors.right: parent.right
                             height: implicitHeight < 400 && implicitHeight != 0 ? implicitHeight : 400
@@ -170,7 +170,7 @@ Page {
                             id: icon
                             anchors.topMargin: 6
                             anchors.horizontalCenter: parent.horizontalCenter
-                            source: "../images/large-"+fileInfo.icon+".png"
+                            source: "../images/large-"+fileData.icon+".png"
                             visible: !imagePreview.visible && !playButton.visible
                         }
                         Spacer { // spacing if image or play button is visible
@@ -181,18 +181,18 @@ Page {
                         Label {
                             id: filename
                             width: parent.width
-                            text: fileInfo.name
+                            text: fileData.name
                             wrapMode: Text.Wrap
                             horizontalAlignment: Text.AlignHCenter
                         }
                         Label {
-                            visible: fileInfo.isSymLink
+                            visible: fileData.isSymLink
                             width: parent.width
-                            text: Functions.unicodeArrow()+" "+fileInfo.symLinkTarget
+                            text: Functions.unicodeArrow()+" "+fileData.symLinkTarget
                             wrapMode: Text.Wrap
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: Theme.fontSizeExtraSmall
-                            color: fileInfo.isSymLinkBroken ? "red" : Theme.primaryColor
+                            color: fileData.isSymLinkBroken ? "red" : Theme.primaryColor
                         }
                         Spacer { height: 20 }
                     }
@@ -201,48 +201,48 @@ Page {
 
                 CenteredField {
                     label: qsTr("Location")
-                    value: fileInfo.absolutePath
+                    value: fileData.absolutePath
                 }
                 CenteredField {
                     label: qsTr("Type")
-                    value: fileInfo.isSymLink ? qsTr("Link to %1").arg(fileInfo.type) :
-                                                fileInfo.type
+                    value: fileData.isSymLink ? qsTr("Link to %1").arg(fileData.type) :
+                                                fileData.type
                 }
                 CenteredField {
                     label: "" // blank label
-                    value: "("+fileInfo.mimeType+")"
+                    value: "("+fileData.mimeType+")"
                     valueElide: page.orientation === Orientation.Portrait ? Text.ElideMiddle : Text.ElideNone
                 }
                 CenteredField {
                     label: qsTr("Size")
-                    value: fileInfo.size
+                    value: fileData.size
                 }
                 CenteredField {
                     label: qsTr("Permissions")
-                    value: fileInfo.permissions
+                    value: fileData.permissions
                 }
                 CenteredField {
                     label: qsTr("Owner")
-                    value: fileInfo.owner
+                    value: fileData.owner
                 }
                 CenteredField {
                     label: qsTr("Group")
-                    value: fileInfo.group
+                    value: fileData.group
                 }
                 CenteredField {
                     label: qsTr("Last modified")
-                    value: fileInfo.modified
+                    value: fileData.modified
                 }
                 CenteredField {
                     label: qsTr("Created")
-                    value: fileInfo.created
+                    value: fileData.created
                 }
                 Spacer {
                     height: 10
                 }
                 // Display all metadata
                 Repeater {
-                    model: fileInfo.metaData
+                    model: fileData.metaData
                     CenteredField { // labels and values are delimited with ':'
                         label: modelData.substring(0, modelData.indexOf(":"))
                         value: modelData.substring(modelData.indexOf(":")+1)
@@ -255,11 +255,11 @@ Page {
 
             // error label, visible if error message is set
             Label {
-                visible: fileInfo.errorMessage !== ""
+                visible: fileData.errorMessage !== ""
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Text.AlignHCenter
-                text: fileInfo.errorMessage
+                text: fileData.errorMessage
                 color: Theme.highlightColor
                 wrapMode: Text.Wrap
             }
@@ -286,20 +286,20 @@ Page {
 
     function isImageFile()
     {
-        return fileInfo.mimeType === "image/jpeg" || fileInfo.mimeType === "image/png" ||
-                fileInfo.mimeType === "image/gif";
+        return fileData.mimeType === "image/jpeg" || fileData.mimeType === "image/png" ||
+                fileData.mimeType === "image/gif";
     }
 
     function isAudioFile()
     {
-        return fileInfo.mimeType === "audio/x-wav" || fileInfo.mimeType === "audio/mpeg" ||
-                fileInfo.mimeType === "audio/x-vorbis+ogg" || fileInfo.mimeType === "audio/flac" ||
-                fileInfo.mimeType === "audio/mp4";
+        return fileData.mimeType === "audio/x-wav" || fileData.mimeType === "audio/mpeg" ||
+                fileData.mimeType === "audio/x-vorbis+ogg" || fileData.mimeType === "audio/flac" ||
+                fileData.mimeType === "audio/mp4";
     }
 
     function isVideoFile()
     {
-        return fileInfo.mimeType === "video/quicktime" || fileInfo.mimeType === "video/mp4";
+        return fileData.mimeType === "video/quicktime" || fileData.mimeType === "video/mp4";
     }
 
     function isMediaFile()
@@ -309,27 +309,27 @@ Page {
 
     function isZipFile()
     {
-        return fileInfo.mimeTypeInherits("application/zip");
+        return fileData.mimeTypeInherits("application/zip");
     }
 
     function isRpmFile()
     {
-        return fileInfo.mimeType === "application/x-rpm";
+        return fileData.mimeType === "application/x-rpm";
     }
 
     function isApkFile()
     {
-        return fileInfo.suffix === "apk" && fileInfo.mimeType === "application/vnd.android.package-archive";
+        return fileData.suffix === "apk" && fileData.mimeType === "application/vnd.android.package-archive";
     }
 
     function quickView()
     {
         // dirs are special cases - there's no way to display their contents, so go to them
-        if (fileInfo.isDir && fileInfo.isSymLink) {
-            Functions.goToFolder(fileInfo.symLinkTarget);
+        if (fileData.isDir && fileData.isSymLink) {
+            Functions.goToFolder(fileData.symLinkTarget);
 
-        } else if (fileInfo.isDir) {
-            Functions.goToFolder(fileInfo.file);
+        } else if (fileData.isDir) {
+            Functions.goToFolder(fileData.file);
 
         } else {
             viewContents();
@@ -341,23 +341,23 @@ Page {
         // view depending on file type
         if (isZipFile()) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                         { title: Functions.lastPartOfPath(fileInfo.file),
+                         { title: Functions.lastPartOfPath(fileData.file),
                            command: "unzip",
-                           arguments: [ "-Z", "-2ht", fileInfo.file ] });
+                           arguments: [ "-Z", "-2ht", fileData.file ] });
 
         } else if (isRpmFile()) {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                         { title: Functions.lastPartOfPath(fileInfo.file),
+                         { title: Functions.lastPartOfPath(fileData.file),
                            command: "rpm",
-                           arguments: [ "-qlp", "--info", fileInfo.file ] });
+                           arguments: [ "-qlp", "--info", fileData.file ] });
 
-        } else if (fileInfo.mimeType === "application/x-tar" ||
-                   fileInfo.mimeType === "application/x-compressed-tar" ||
-                   fileInfo.mimeType === "application/x-bzip-compressed-tar") {
+        } else if (fileData.mimeType === "application/x-tar" ||
+                   fileData.mimeType === "application/x-compressed-tar" ||
+                   fileData.mimeType === "application/x-bzip-compressed-tar") {
             pageStack.push(Qt.resolvedUrl("ConsolePage.qml"),
-                         { title: Functions.lastPartOfPath(fileInfo.file),
+                         { title: Functions.lastPartOfPath(fileData.file),
                            command: "tar",
-                           arguments: [ "tf", fileInfo.file ] });
+                           arguments: [ "tf", fileData.file ] });
         } else {
             pageStack.push(Qt.resolvedUrl("ViewPage.qml"), { path: page.file });
         }
@@ -366,7 +366,7 @@ Page {
     function playAudio()
     {
         if (audioPlayer.playbackState !== MediaPlayer.PlayingState) {
-            audioPlayer.source = fileInfo.file;
+            audioPlayer.source = fileData.file;
             audioPlayer.play();
         } else {
             audioPlayer.stop();

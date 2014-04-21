@@ -1,21 +1,21 @@
-#include "fileinfo.h"
+#include "filedata.h"
 #include <QDir>
 #include <QDateTime>
 #include <QMimeDatabase>
 #include <QImageReader>
 #include "globals.h"
 
-FileInfo::FileInfo(QObject *parent) :
+FileData::FileData(QObject *parent) :
     QObject(parent)
 {
     m_file = "";
 }
 
-FileInfo::~FileInfo()
+FileData::~FileData()
 {
 }
 
-void FileInfo::setFile(QString file)
+void FileData::setFile(QString file)
 {
     if (m_file == file)
         return;
@@ -24,17 +24,17 @@ void FileInfo::setFile(QString file)
     readInfo();
 }
 
-bool FileInfo::isDir() const
+bool FileData::isDir() const
 {
     return m_fileInfo.isDir();
 }
 
-bool FileInfo::isSymLink() const
+bool FileData::isSymLink() const
 {
     return m_fileInfo.isSymLink();
 }
 
-QString FileInfo::kind() const
+QString FileData::kind() const
 {
     if (m_fileInfo.isSymLink()) return "l";
     if (m_fileInfo.isDir()) return "d";
@@ -42,7 +42,7 @@ QString FileInfo::kind() const
     return "?";
 }
 
-QString FileInfo::icon() const
+QString FileData::icon() const
 {
     if (m_fileInfo.isSymLink() && m_fileInfo.isDir()) return "folder-link";
     if (m_fileInfo.isDir()) return "folder";
@@ -54,12 +54,12 @@ QString FileInfo::icon() const
     return "file";
 }
 
-QString FileInfo::permissions() const
+QString FileData::permissions() const
 {
     return permissionsToString(m_fileInfo.permissions());
 }
 
-QString FileInfo::owner() const
+QString FileData::owner() const
 {
     QString owner = m_fileInfo.owner();
     if (owner.isEmpty()) {
@@ -70,7 +70,7 @@ QString FileInfo::owner() const
     return owner;
 }
 
-QString FileInfo::group() const
+QString FileData::group() const
 {
     QString group = m_fileInfo.group();
     if (group.isEmpty()) {
@@ -81,43 +81,43 @@ QString FileInfo::group() const
     return group;
 }
 
-QString FileInfo::size() const
+QString FileData::size() const
 {
     if (m_fileInfo.isDir()) return "-";
     return filesizeToString(m_fileInfo.size());
 }
 
-QString FileInfo::modified() const
+QString FileData::modified() const
 {
     return datetimeToString(m_fileInfo.lastModified());
 }
 
-QString FileInfo::created() const
+QString FileData::created() const
 {
     return datetimeToString(m_fileInfo.created());
 }
 
-QString FileInfo::absolutePath() const
+QString FileData::absolutePath() const
 {
     return m_fileInfo.absolutePath();
 }
 
-QString FileInfo::name() const
+QString FileData::name() const
 {
     return m_fileInfo.fileName();
 }
 
-QString FileInfo::suffix() const
+QString FileData::suffix() const
 {
     return m_fileInfo.suffix().toLower();
 }
 
-QString FileInfo::symLinkTarget() const
+QString FileData::symLinkTarget() const
 {
     return m_fileInfo.symLinkTarget();
 }
 
-bool FileInfo::isSymLinkBroken() const
+bool FileData::isSymLinkBroken() const
 {
     // if it is a symlink but it doesn't exist, then it is broken
     if (m_fileInfo.isSymLink() && !m_fileInfo.exists())
@@ -125,32 +125,32 @@ bool FileInfo::isSymLinkBroken() const
     return false;
 }
 
-QString FileInfo::type() const
+QString FileData::type() const
 {
     return m_mimeType.comment();
 }
 
-QString FileInfo::mimeType() const
+QString FileData::mimeType() const
 {
     return m_mimeType.name();
 }
 
-QString FileInfo::errorMessage() const
+QString FileData::errorMessage() const
 {
     return m_errorMessage;
 }
 
-void FileInfo::refresh()
+void FileData::refresh()
 {
     readInfo();
 }
 
-bool FileInfo::mimeTypeInherits(QString parentMimeType)
+bool FileData::mimeTypeInherits(QString parentMimeType)
 {
     return m_mimeType.inherits(parentMimeType);
 }
 
-void FileInfo::readInfo()
+void FileData::readInfo()
 {
     m_errorMessage = "";
 
