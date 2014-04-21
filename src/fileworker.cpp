@@ -21,13 +21,8 @@ void FileWorker::startDeleteFiles(QStringList filenames)
         return;
     }
 
-    // basic validity check
-    foreach (QString filename, filenames) {
-        if (filename.isEmpty()) {
-            emit errorOccurred(tr("Empty filename"), "");
-            return;
-        }
-    }
+    if (!validateFilenames(filenames))
+        return;
 
     m_mode = DeleteMode;
     m_filenames = filenames;
@@ -42,13 +37,8 @@ void FileWorker::startCopyFiles(QStringList filenames, QString destDirectory)
         return;
     }
 
-    // basic validity check
-    foreach (QString filename, filenames) {
-        if (filename.isEmpty()) {
-            emit errorOccurred(tr("Empty filename"), "");
-            return;
-        }
-    }
+    if (!validateFilenames(filenames))
+        return;
 
     m_mode = CopyMode;
     m_filenames = filenames;
@@ -64,13 +54,8 @@ void FileWorker::startMoveFiles(QStringList filenames, QString destDirectory)
         return;
     }
 
-    // basic validity check
-    foreach (QString filename, filenames) {
-        if (filename.isEmpty()) {
-            emit errorOccurred(tr("Empty filename"), "");
-            return;
-        }
-    }
+    if (!validateFilenames(filenames))
+        return;
 
     m_mode = MoveMode;
     m_filenames = filenames;
@@ -96,6 +81,18 @@ void FileWorker::run() Q_DECL_OVERRIDE
         copyOrMoveFiles();
         break;
     }
+}
+
+bool FileWorker::validateFilenames(const QStringList &filenames)
+{
+    // basic validity check
+    foreach (QString filename, filenames) {
+        if (filename.isEmpty()) {
+            emit errorOccurred(tr("Empty filename"), "");
+            return false;
+        }
+    }
+    return true;
 }
 
 QString FileWorker::deleteFile(QString filename)

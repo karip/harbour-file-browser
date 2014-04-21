@@ -81,7 +81,7 @@ public:
 
     void refresh();
 
-//private:
+private:
     QString m_filename;
     QFileInfo m_fileInfo;
     struct stat m_stat; // after following possible symlinks

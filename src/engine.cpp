@@ -5,6 +5,7 @@
 #include <QStandardPaths>
 #include "globals.h"
 #include "fileworker.h"
+#include "statfileinfo.h"
 
 Engine::Engine(QObject *parent) :
     QObject(parent),
@@ -48,6 +49,15 @@ void Engine::cutFiles(QStringList filenames)
 
 void Engine::copyFiles(QStringList filenames)
 {
+    // don't copy special files (chr/blk/fifo/sock)
+    QMutableStringListIterator i(filenames);
+    while (i.hasNext()) {
+        QString filename = i.next();
+        StatFileInfo info(filename);
+        if (info.isSystem())
+            i.remove();
+    }
+
     m_clipboardFiles = filenames;
     m_clipboardContainsCopy = true;
     emit clipboardCountChanged();

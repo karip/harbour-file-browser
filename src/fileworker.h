@@ -42,6 +42,8 @@ private:
         Cancelled = 0, KeepRunning = 1
     };
 
+    bool validateFilenames(const QStringList &filenames);
+
     QString deleteFile(QString filenames);
     void deleteFiles();
     void copyOrMoveFiles();
