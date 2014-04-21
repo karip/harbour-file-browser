@@ -98,7 +98,7 @@ bool FileWorker::validateFilenames(const QStringList &filenames)
 QString FileWorker::deleteFile(QString filename)
 {
     QFileInfo info(filename);
-    if (!info.exists())
+    if (!info.exists() && !info.isSymLink())
         return tr("File not found");
 
     if (info.isDir() && info.isSymLink()) {
