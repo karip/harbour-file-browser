@@ -59,14 +59,7 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
         return info.kind();
 
     case FileIconRole:
-        if (info.isSymLink() && info.isDirAtEnd()) return "folder-link";
-        if (info.isDir()) return "folder";
-        if (info.isSymLink()) return "link";
-        if (info.isFileAtEnd()) {
-            QString suffix = info.suffix().toLower();
-            return suffixToIconName(suffix);
-        }
-        return "file";
+        return infoToIconName(info);
 
     case PermissionsRole:
         return permissionsToString(info.permissions());

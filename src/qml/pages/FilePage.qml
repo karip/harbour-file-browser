@@ -98,7 +98,14 @@ Page {
             MenuItem {
                 text: isRpmFile() || isApkFile() ? qsTr("Install") : qsTr("Open")
                 visible: !fileData.isDir
-                onClicked: consoleModel.executeCommand("xdg-open", [ page.file ])
+                onClicked: {
+                    if (!fileData.isSafeToOpen()) {
+                        notificationPanel.showTextWithTimer(qsTr("File can't be opened"),
+                                                   qsTr("This type of file can't be opened."));
+                        return;
+                    }
+                    consoleModel.executeCommand("xdg-open", [ page.file ])
+                }
             }
 
             MenuItem {

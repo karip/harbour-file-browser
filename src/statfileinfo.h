@@ -81,11 +81,11 @@ public:
 
     void refresh();
 
-private:
+//private:
     QString m_filename;
     QFileInfo m_fileInfo;
-    struct stat m_stat;
-    struct stat m_lstat;
+    struct stat m_stat; // after following possible symlinks
+    struct stat m_lstat; // file itself without following symlinks
 };
 
 #endif // STATFILEINFO_H

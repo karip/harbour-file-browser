@@ -41,14 +41,7 @@ QString FileData::kind() const
 
 QString FileData::icon() const
 {
-    if (m_fileInfo.isSymLink() && m_fileInfo.isDirAtEnd()) return "folder-link";
-    if (m_fileInfo.isDir()) return "folder";
-    if (m_fileInfo.isSymLink()) return "link";
-    if (m_fileInfo.isFileAtEnd()) {
-        QString suffix = m_fileInfo.suffix().toLower();
-        return suffixToIconName(suffix);
-    }
-    return "file";
+    return infoToIconName(m_fileInfo);
 }
 
 QString FileData::permissions() const
@@ -147,6 +140,11 @@ bool FileData::mimeTypeInherits(QString parentMimeType)
     return m_mimeType.inherits(parentMimeType);
 }
 
+bool FileData::isSafeToOpen() const
+{
+    return m_fileInfo.isSafeToRead();
+}
+
 void FileData::readInfo()
 {
     m_errorMessage = "";
@@ -203,12 +201,22 @@ void FileData::readMetaData()
         m_mimeTypeName = "inode/socket";
         m_mimeTypeComment = tr("socket");
         return;
+    } else if (m_fileInfo.isDirAtEnd()) {
+        m_mimeTypeName = "inode/directory";
+        m_mimeTypeComment = tr("folder");
+        return;
+    }
+    if (!m_fileInfo.isFileAtEnd()) { // something strange
+        m_mimeTypeName = "application/octet-stream";
+        m_mimeTypeComment = tr("unknown");
+        return;
     }
 
     // normal files
 
     QMimeDatabase db;
-    m_mimeType = db.mimeTypeForFile(m_fileInfo.fileName());
+    m_mimeType = db.mimeTypeForFile(m_fileInfo.isSymLink() ? m_fileInfo.symLinkTarget() :
+                                                             m_fileInfo.fileName());
     m_mimeTypeName = m_mimeType.name();
     m_mimeTypeComment = m_mimeType.comment();
 
