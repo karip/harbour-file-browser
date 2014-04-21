@@ -46,6 +46,7 @@ Page {
                 anchors.rightMargin: Theme.paddingLarge
                 anchors.top: parent.top
                 text: modelData
+                textFormat: Text.PlainText
                 color: page.consoleColor
                 wrapMode: Text.NoWrap
                 elide: Text.ElideRight

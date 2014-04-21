@@ -189,6 +189,7 @@ Page {
                             id: filename
                             width: parent.width
                             text: fileData.name
+                            textFormat: Text.PlainText
                             wrapMode: Text.Wrap
                             horizontalAlignment: Text.AlignHCenter
                         }
@@ -196,6 +197,7 @@ Page {
                             visible: fileData.isSymLink
                             width: parent.width
                             text: Functions.unicodeArrow()+" "+fileData.symLinkTarget
+                            textFormat: Text.PlainText
                             wrapMode: Text.Wrap
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: Theme.fontSizeExtraSmall

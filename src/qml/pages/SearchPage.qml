@@ -164,6 +164,7 @@ Page {
                 anchors.top: parent.top
                 anchors.topMargin: 5
                 text: filename
+                textFormat: Text.PlainText
                 elide: Text.ElideRight
             }
             Label {
