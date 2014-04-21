@@ -119,8 +119,6 @@ Page {
             id: column
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
 
             PageHeader {
                 title: Functions.formatPathForTitle(fileData.absolutePath) + " " +
@@ -136,6 +134,8 @@ Page {
                 visible: fileData.errorMessage === ""
                 anchors.left: parent.left
                 anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.rightMargin: Theme.paddingLarge
 
                 IconButton {
                     id: playButton
