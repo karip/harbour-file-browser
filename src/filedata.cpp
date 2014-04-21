@@ -128,6 +128,7 @@ void FileData::readInfo()
 void FileData::readMetaData()
 {
     // special file types
+    // do not sniff mimetype or metadata for these, because these can't really be read
 
     m_mimeType = QMimeType();
     if (m_fileInfo.isBlkAtEnd()) {
@@ -157,15 +158,16 @@ void FileData::readMetaData()
         return;
     }
 
-    // normal files
+    // normal files - match content to find mimetype, which means that the file is read
 
     QMimeDatabase db;
-    m_mimeType = db.mimeTypeForFile(m_fileInfo.isSymLink() ? m_fileInfo.symLinkTarget() :
-                                                             m_fileInfo.fileName());
+    QString filename = m_fileInfo.isSymLink() ? m_fileInfo.symLinkTarget() :
+                                                m_fileInfo.absoluteFilePath();
+    m_mimeType = db.mimeTypeForFile(filename);
     m_mimeTypeName = m_mimeType.name();
     m_mimeTypeComment = m_mimeType.comment();
 
-    // read metadata from image
+    // read metadata for images
     if (m_mimeType.name() == "image/jpeg" || m_mimeType.name() == "image/png" ||
             m_mimeType.name() == "image/gif") {
         QImageReader reader(m_file);
