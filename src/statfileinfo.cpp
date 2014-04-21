@@ -34,6 +34,11 @@ QString StatFileInfo::kind() const
     return "?";
 }
 
+bool StatFileInfo::exists() const
+{
+    return m_fileInfo.exists();
+}
+
 bool StatFileInfo::isSymLinkBroken() const
 {
     // if it is a symlink but it doesn't exist, then it is broken
@@ -42,14 +47,10 @@ bool StatFileInfo::isSymLinkBroken() const
     return false;
 }
 
-bool StatFileInfo::exists() const
-{
-    return m_fileInfo.exists();
-}
-
 void StatFileInfo::refresh()
 {
     memset(&m_stat, 0, sizeof(m_stat));
+    memset(&m_lstat, 0, sizeof(m_lstat));
 
     m_fileInfo = QFileInfo(m_filename);
     if (m_filename.isEmpty())
@@ -57,9 +58,17 @@ void StatFileInfo::refresh()
 
     QByteArray ba = m_filename.toUtf8();
     char *fn = ba.data();
-    int res = lstat(fn, &m_stat); // check the file/symlink (not symlink target)
+
+    // check the file after following possible symlinks
+    int res = stat(fn, &m_stat);
     if (res != 0) { // if error, then set to undefined
         m_stat.st_mode = 0;
+    }
+
+    // check the file without following symlinks
+    res = lstat(fn, &m_lstat);
+    if (res != 0) { // if error, then set to undefined
+        m_lstat.st_mode = 0;
     }
 }
 

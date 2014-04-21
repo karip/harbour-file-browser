@@ -26,7 +26,7 @@ void FileData::setFile(QString file)
 
 bool FileData::isDir() const
 {
-    return m_fileInfo.isDir();
+    return m_fileInfo.isDirAtEnd();
 }
 
 bool FileData::isSymLink() const
@@ -41,10 +41,10 @@ QString FileData::kind() const
 
 QString FileData::icon() const
 {
-    if (m_fileInfo.isSymLink() && m_fileInfo.isDir()) return "folder-link";
+    if (m_fileInfo.isSymLink() && m_fileInfo.isDirAtEnd()) return "folder-link";
     if (m_fileInfo.isDir()) return "folder";
     if (m_fileInfo.isSymLink()) return "link";
-    if (m_fileInfo.isFile()) {
+    if (m_fileInfo.isFileAtEnd()) {
         QString suffix = m_fileInfo.suffix().toLower();
         return suffixToIconName(suffix);
     }
@@ -80,7 +80,7 @@ QString FileData::group() const
 
 QString FileData::size() const
 {
-    if (m_fileInfo.isDir()) return "-";
+    if (m_fileInfo.isDirAtEnd()) return "-";
     return filesizeToString(m_fileInfo.size());
 }
 
@@ -150,31 +150,15 @@ bool FileData::mimeTypeInherits(QString parentMimeType)
 void FileData::readInfo()
 {
     m_errorMessage = "";
+    m_metaData.clear();
 
     m_fileInfo.setFile(m_file);
+
     // exists() checks for target existence in symlinks, so ignore it for symlinks
     if (!m_fileInfo.exists() && !m_fileInfo.isSymLink())
         m_errorMessage = tr("File does not exist");
 
-    QMimeDatabase db;
-    m_mimeType = db.mimeTypeForFile(m_fileInfo.fileName());
-
-    m_metaData.clear();
-
-    // read metadata from image
-    if (m_mimeType.name() == "image/jpeg" || m_mimeType.name() == "image/png" ||
-            m_mimeType.name() == "image/gif") {
-        QImageReader reader(m_file);
-        QSize s = reader.size();
-        if (s.width() >= 0 && s.height() >= 0)
-            m_metaData.append(tr("Image Size")+QString(":%1 x %2").arg(s.width()).arg(s.height()));
-
-        QStringList textKeys = reader.textKeys();
-        foreach (QString key, textKeys) {
-            QString value = reader.text(key);
-            m_metaData.append(key+":"+value);
-        }
-    }
+    readMetaData();
 
     emit fileChanged();
     emit isDirChanged();
@@ -197,3 +181,28 @@ void FileData::readInfo()
     emit metaDataChanged();
     emit errorMessageChanged();
 }
+
+void FileData::readMetaData()
+{
+    QMimeDatabase db;
+    m_mimeType = db.mimeTypeForFile(m_fileInfo.fileName());
+
+    if (!m_fileInfo.isSafeToRead())
+        return;
+
+    // read metadata from image
+    if (m_mimeType.name() == "image/jpeg" || m_mimeType.name() == "image/png" ||
+            m_mimeType.name() == "image/gif") {
+        QImageReader reader(m_file);
+        QSize s = reader.size();
+        if (s.width() >= 0 && s.height() >= 0)
+            m_metaData.append(tr("Image Size")+QString(":%1 x %2").arg(s.width()).arg(s.height()));
+
+        QStringList textKeys = reader.textKeys();
+        foreach (QString key, textKeys) {
+            QString value = reader.text(key);
+            m_metaData.append(key+":"+value);
+        }
+    }
+}
+

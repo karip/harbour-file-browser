@@ -59,10 +59,10 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
         return info.kind();
 
     case FileIconRole:
-        if (info.isSymLink() && info.isDir()) return "folder-link";
+        if (info.isSymLink() && info.isDirAtEnd()) return "folder-link";
         if (info.isDir()) return "folder";
         if (info.isSymLink()) return "link";
-        if (info.isFile()) {
+        if (info.isFileAtEnd()) {
             QString suffix = info.suffix().toLower();
             return suffixToIconName(suffix);
         }
@@ -72,7 +72,7 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
         return permissionsToString(info.permissions());
 
     case SizeRole:
-        if (info.isSymLink() && info.isDir()) return "dir-link";
+        if (info.isSymLink() && info.isDirAtEnd()) return "dir-link";
         if (info.isDir()) return "dir";
         return filesizeToString(info.size());
 
@@ -83,7 +83,7 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
         return datetimeToString(info.created());
 
     case IsDirRole:
-        return info.isDir();
+        return info.isDirAtEnd();
 
     case IsLinkRole:
         return info.isSymLink();
@@ -326,7 +326,7 @@ bool FileModel::filesContains(const QList<StatFileInfo> &files, const StatFileIn
                 f.permissions() == fileData.permissions() &&
                 f.lastModified() == fileData.lastModified() &&
                 f.isSymLink() == fileData.isSymLink() &&
-                f.isDir() == fileData.isDir()) {
+                f.isDirAtEnd() == fileData.isDirAtEnd()) {
             return true;
         }
     }

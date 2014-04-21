@@ -68,9 +68,9 @@ QString datetimeToString(QDateTime datetime)
 
 QString infoToIconName(const StatFileInfo &info)
 {
-    if (info.isDir()) return "folder";
+    if (info.isDirAtEnd()) return "folder";
     if (info.isSymLink()) return "link";
-    if (info.isFile()) {
+    if (info.isFileAtEnd()) {
         QString suffix = info.suffix().toLower();
         return suffixToIconName(suffix);
     }

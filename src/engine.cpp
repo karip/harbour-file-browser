@@ -196,12 +196,17 @@ QStringList Engine::readFile(QString filename)
     int maxBinSize = 2048;
 
     // check existence
-    QFileInfo fileInfo(filename);
+    StatFileInfo fileInfo(filename);
     if (!fileInfo.exists()) {
         if (!fileInfo.isSymLink())
             return makeStringList(tr("File does not exist\n%1").arg(filename));
         else
             return makeStringList(tr("Broken symbolic link\n%1").arg(filename));
+    }
+
+    // don't read unsafe system files
+    if (!fileInfo.isSafeToRead()) {
+        return makeStringList(tr("Can't read this type of file\n%1").arg(filename));
     }
 
     // check permissions

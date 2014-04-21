@@ -91,6 +91,7 @@ signals:
 
 private:
     void readInfo();
+    void readMetaData();
 
     QString m_file;
     StatFileInfo m_fileInfo;
