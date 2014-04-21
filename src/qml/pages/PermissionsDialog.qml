@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.file.browser.FileInfo 1.0
+import harbour.file.browser.FileData 1.0
 import "../components"
 
 Dialog {
@@ -19,16 +19,16 @@ Dialog {
                         groupRead.checked, groupWrite.checked, groupExecute.checked,
                         othersRead.checked, othersWrite.checked, othersExecute.checked);
 
-    FileInfo {
-        id: fileInfo
+    FileData {
+        id: fileData
         file: path
     }
 
     // copy values to fields when page shows up
     Component.onCompleted: {
-        ownerName.text = fileInfo.owner
-        groupName.text = fileInfo.group
-        var permissions = fileInfo.permissions
+        ownerName.text = fileData.owner
+        groupName.text = fileData.group
+        var permissions = fileData.permissions
         if (permissions.charAt(0) !== '-') ownerRead.checked = true;
         if (permissions.charAt(1) !== '-') ownerWrite.checked = true;
         if (permissions.charAt(2) !== '-') ownerExecute.checked = true;
