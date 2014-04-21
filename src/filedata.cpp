@@ -4,6 +4,7 @@
 #include <QMimeDatabase>
 #include <QImageReader>
 #include "globals.h"
+#include <QDebug>
 
 FileData::FileData(QObject *parent) :
     QObject(parent)
@@ -22,21 +23,6 @@ void FileData::setFile(QString file)
 
     m_file = file;
     readInfo();
-}
-
-bool FileData::isDir() const
-{
-    return m_fileInfo.isDirAtEnd();
-}
-
-bool FileData::isSymLink() const
-{
-    return m_fileInfo.isSymLink();
-}
-
-QString FileData::kind() const
-{
-    return m_fileInfo.kind();
 }
 
 QString FileData::icon() const
@@ -89,45 +75,9 @@ QString FileData::created() const
 
 QString FileData::absolutePath() const
 {
+    if (m_file.isEmpty())
+        return QString();
     return m_fileInfo.absolutePath();
-}
-
-QString FileData::name() const
-{
-    return m_fileInfo.fileName();
-}
-
-QString FileData::suffix() const
-{
-    return m_fileInfo.suffix().toLower();
-}
-
-QString FileData::symLinkTarget() const
-{
-    return m_fileInfo.symLinkTarget();
-}
-
-bool FileData::isSymLinkBroken() const
-{
-    // if it is a symlink but it doesn't exist, then it is broken
-    if (m_fileInfo.isSymLink() && !m_fileInfo.exists())
-        return true;
-    return false;
-}
-
-QString FileData::mimeType() const
-{
-    return m_mimeTypeName;
-}
-
-QString FileData::mimeTypeComment() const
-{
-    return m_mimeTypeComment;
-}
-
-QString FileData::errorMessage() const
-{
-    return m_errorMessage;
 }
 
 void FileData::refresh()
@@ -138,11 +88,6 @@ void FileData::refresh()
 bool FileData::mimeTypeInherits(QString parentMimeType)
 {
     return m_mimeType.inherits(parentMimeType);
-}
-
-bool FileData::isSafeToOpen() const
-{
-    return m_fileInfo.isSafeToRead();
 }
 
 void FileData::readInfo()

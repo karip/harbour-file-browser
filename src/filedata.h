@@ -43,9 +43,9 @@ public:
     QString file() const { return m_file; }
     void setFile(QString file);
 
-    bool isDir() const;
-    bool isSymLink() const;
-    QString kind() const;
+    bool isDir() const { return m_fileInfo.isDirAtEnd(); }
+    bool isSymLink() const { return m_fileInfo.isSymLink(); }
+    QString kind() const { return m_fileInfo.kind(); }
     QString icon() const;
     QString permissions() const;
     QString owner() const;
@@ -54,19 +54,19 @@ public:
     QString modified() const;
     QString created() const;
     QString absolutePath() const;
-    QString name() const;
-    QString suffix() const;
-    QString symLinkTarget() const;
-    bool isSymLinkBroken() const;
-    QString mimeType() const;
-    QString mimeTypeComment() const;
+    QString name() const { return m_fileInfo.fileName(); }
+    QString suffix() const { return m_fileInfo.suffix().toLower(); }
+    QString symLinkTarget() const { return m_fileInfo.symLinkTarget(); }
+    bool isSymLinkBroken() const { return m_fileInfo.isSymLinkBroken(); }
+    QString mimeType() const { return m_mimeTypeName; }
+    QString mimeTypeComment() const { return m_mimeTypeComment; }
     QStringList metaData() const { return m_metaData; }
-    QString errorMessage() const;
+    QString errorMessage() const { return m_errorMessage; }
 
     // methods accessible from QML
     Q_INVOKABLE void refresh();
     Q_INVOKABLE bool mimeTypeInherits(QString parentMimeType);
-    Q_INVOKABLE bool isSafeToOpen() const;
+    Q_INVOKABLE bool isSafeToOpen() const { return m_fileInfo.isSafeToRead(); }
 
 signals:
     void fileChanged();
