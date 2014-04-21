@@ -36,10 +36,7 @@ bool FileData::isSymLink() const
 
 QString FileData::kind() const
 {
-    if (m_fileInfo.isSymLink()) return "l";
-    if (m_fileInfo.isDir()) return "d";
-    if (m_fileInfo.isFile()) return "-";
-    return "?";
+    return m_fileInfo.kind();
 }
 
 QString FileData::icon() const
@@ -154,13 +151,13 @@ void FileData::readInfo()
 {
     m_errorMessage = "";
 
-    m_fileInfo = QFileInfo(m_file);
+    m_fileInfo.setFile(m_file);
     // exists() checks for target existence in symlinks, so ignore it for symlinks
     if (!m_fileInfo.exists() && !m_fileInfo.isSymLink())
         m_errorMessage = tr("File does not exist");
 
     QMimeDatabase db;
-    m_mimeType = db.mimeTypeForFile(m_fileInfo);
+    m_mimeType = db.mimeTypeForFile(m_fileInfo.fileName());
 
     m_metaData.clear();
 

@@ -6,6 +6,7 @@
 #include <QVariantList>
 #include <QMimeType>
 #include <QSize>
+#include "statfileinfo.h"
 
 /**
  * @brief The FileData class provides info about one file.
@@ -92,7 +93,7 @@ private:
     void readInfo();
 
     QString m_file;
-    QFileInfo m_fileInfo;
+    StatFileInfo m_fileInfo;
     QMimeType m_mimeType;
     QStringList m_metaData;
     QString m_errorMessage;

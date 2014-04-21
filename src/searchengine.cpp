@@ -1,6 +1,7 @@
 #include "searchengine.h"
 #include <QDateTime>
 #include "searchworker.h"
+#include "statfileinfo.h"
 #include "globals.h"
 
 SearchEngine::SearchEngine(QObject *parent) :
@@ -61,7 +62,7 @@ void SearchEngine::cancel()
 
 void SearchEngine::emitMatchFound(QString fullpath)
 {
-    QFileInfo info(fullpath);
+    StatFileInfo info(fullpath);
     emit matchFound(fullpath, info.fileName(), info.absoluteDir().absolutePath(),
-                    infoToIconName(info), infoToFileKind(info));
+                    infoToIconName(info), info.kind());
 }

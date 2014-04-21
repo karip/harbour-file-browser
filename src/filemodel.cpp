@@ -48,7 +48,7 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
     if (!index.isValid() || index.row() > m_files.size()-1)
         return QVariant();
 
-    QFileInfo info = m_files.at(index.row()).info;
+    StatFileInfo info = m_files.at(index.row());
     switch (role) {
 
     case Qt::DisplayRole:
@@ -56,10 +56,7 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
         return info.fileName();
 
     case FileKindRole:
-        if (info.isSymLink()) return "l";
-        if (info.isDir()) return "d";
-        if (info.isFile()) return "-";
-        return "?";
+        return info.kind();
 
     case FileIconRole:
         if (info.isSymLink() && info.isDir()) return "folder-link";
@@ -173,7 +170,7 @@ QString FileModel::fileNameAt(int fileIndex)
     if (fileIndex < 0 || fileIndex >= m_files.count())
         return QString();
 
-    return m_files.at(fileIndex).info.absoluteFilePath();
+    return m_files.at(fileIndex).absoluteFilePath();
 }
 
 void FileModel::refresh()
@@ -234,11 +231,11 @@ void FileModel::readEntries()
     if (settings.value("show-dirs-first", false).toBool())
         dir.setSorting(QDir::Name | QDir::DirsFirst);
 
-    QFileInfoList infoList = dir.entryInfoList();
-    foreach (QFileInfo info, infoList) {
-        StatFileInfo data;
-        data.info = info;
-        m_files.append(data);
+    QStringList fileList = dir.entryList();
+    foreach (QString filename, fileList) {
+        QString fullpath = dir.absoluteFilePath(filename);
+        StatFileInfo info(fullpath);
+        m_files.append(info);
     }
 }
 
@@ -277,11 +274,12 @@ void FileModel::refreshEntries()
 
     // read all files
     QList<StatFileInfo> newFiles;
-    QFileInfoList infoList = dir.entryInfoList();
-    foreach (QFileInfo info, infoList) {
-        StatFileInfo data;
-        data.info = info;
-        newFiles.append(data);
+
+    QStringList fileList = dir.entryList();
+    foreach (QString filename, fileList) {
+        QString fullpath = dir.absoluteFilePath(filename);
+        StatFileInfo info(fullpath);
+        newFiles.append(info);
     }
 
     int oldFileCount = m_files.count();
@@ -323,12 +321,12 @@ bool FileModel::filesContains(const QList<StatFileInfo> &files, const StatFileIn
 {
     // check if list contains fileData with relevant info
     foreach (const StatFileInfo &f, files) {
-        if (f.info.fileName() == fileData.info.fileName() &&
-                f.info.size() == fileData.info.size() &&
-                f.info.permissions() == fileData.info.permissions() &&
-                f.info.lastModified() == fileData.info.lastModified() &&
-                f.info.isSymLink() == fileData.info.isSymLink() &&
-                f.info.isDir() == fileData.info.isDir()) {
+        if (f.fileName() == fileData.fileName() &&
+                f.size() == fileData.size() &&
+                f.permissions() == fileData.permissions() &&
+                f.lastModified() == fileData.lastModified() &&
+                f.isSymLink() == fileData.isSymLink() &&
+                f.isDir() == fileData.isDir()) {
             return true;
         }
     }

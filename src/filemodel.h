@@ -4,16 +4,7 @@
 #include <QAbstractListModel>
 #include <QDir>
 #include <QFileSystemWatcher>
-
-// struct to hold data for a single file
-struct StatFileInfo
-{
-    QFileInfo info;
-
-    bool operator==(const StatFileInfo &other) const {
-        return other.info == info;
-    }
-};
+#include "statfileinfo.h"
 
 /**
  * @brief The FileModel class can be used as a model in a ListView to display a list of files

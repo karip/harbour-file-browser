@@ -66,15 +66,7 @@ QString datetimeToString(QDateTime datetime)
     return locale.toString(datetime.date(), QLocale::NarrowFormat);
 }
 
-QString infoToFileKind(QFileInfo info)
-{
-    if (info.isDir()) return "d";
-    if (info.isSymLink()) return "l";
-    if (info.isFile()) return "-";
-    return "?";
-}
-
-QString infoToIconName(QFileInfo info)
+QString infoToIconName(const StatFileInfo &info)
 {
     if (info.isDir()) return "folder";
     if (info.isSymLink()) return "link";

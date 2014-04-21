@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDateTime>
 #include <QDir>
+#include "statfileinfo.h"
 
 // Global functions
 
@@ -12,8 +13,7 @@ QString permissionsToString(QFile::Permissions permissions);
 QString filesizeToString(qint64 filesize);
 QString datetimeToString(QDateTime datetime);
 
-QString infoToFileKind(QFileInfo info);
-QString infoToIconName(QFileInfo info);
+QString infoToIconName(const StatFileInfo &info);
 
 int access(QString filename, int how);
 

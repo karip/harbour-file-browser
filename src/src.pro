@@ -4,9 +4,9 @@ TARGET = harbour-file-browser
 CONFIG += sailfishapp
 
 SOURCES += main.cpp filemodel.cpp filedata.cpp engine.cpp fileworker.cpp searchengine.cpp \
-           searchworker.cpp consolemodel.cpp globals.cpp
+           searchworker.cpp consolemodel.cpp statfileinfo.cpp globals.cpp
 HEADERS += filemodel.h filedata.h engine.h fileworker.h searchengine.h searchworker.h \
-           consolemodel.h globals.h
+           consolemodel.h statfileinfo.cpp globals.h
 
 OTHER_FILES = \
 # You DO NOT want .yaml be listed here as Qt Creator's editor is completely not ready for multi package .yaml's
