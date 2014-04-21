@@ -59,16 +59,22 @@ void StatFileInfo::refresh()
     QByteArray ba = m_filename.toUtf8();
     char *fn = ba.data();
 
+    // check the file without following symlinks
+    int res = lstat(fn, &m_lstat);
+    if (res != 0) { // if error, then set to undefined
+        m_lstat.st_mode = 0;
+    }
+    // if not symlink, then just copy lstat data to stat
+    if (!S_ISLNK(m_lstat.st_mode)) {
+        memcpy(&m_stat, &m_lstat, sizeof(m_stat));
+        return;
+    }
+
     // check the file after following possible symlinks
-    int res = stat(fn, &m_stat);
+    res = stat(fn, &m_stat);
     if (res != 0) { // if error, then set to undefined
         m_stat.st_mode = 0;
     }
 
-    // check the file without following symlinks
-    res = lstat(fn, &m_lstat);
-    if (res != 0) { // if error, then set to undefined
-        m_lstat.st_mode = 0;
-    }
 }
 
