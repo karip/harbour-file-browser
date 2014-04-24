@@ -39,6 +39,16 @@ bool StatFileInfo::exists() const
     return m_fileInfo.exists();
 }
 
+bool StatFileInfo::isSafeToRead() const
+{
+    // it is safe to read non-existing files
+    if (!exists())
+        return true;
+
+    // check the file is a regular file and not a special file
+    return isFileAtEnd();
+}
+
 bool StatFileInfo::isSymLinkBroken() const
 {
     // if it is a symlink but it doesn't exist, then it is broken

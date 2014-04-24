@@ -68,7 +68,7 @@ public:
     QDateTime lastModified() const { return m_fileInfo.lastModified(); }
     QDateTime created() const { return m_fileInfo.created(); }
     bool exists() const;
-    bool isSafeToRead() const { return isFileAtEnd(); }
+    bool isSafeToRead() const;
 
     // path accessors
 
