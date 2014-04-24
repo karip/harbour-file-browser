@@ -23,10 +23,12 @@ Page {
             TextSwitch {
                 id: showDirsFirst
                 text: qsTr("Show folders first")
+                onCheckedChanged: engine.writeSetting("show-dirs-first", showDirsFirst.checked.toString())
             }
             TextSwitch {
                 id: showHiddenFiles
                 text: qsTr("Show hidden files")
+                onCheckedChanged: engine.writeSetting("show-hidden-files", showHiddenFiles.checked.toString())
             }
 
             Spacer { height: 40 }
@@ -102,12 +104,6 @@ Page {
         if (status === PageStatus.Activating) {
             showDirsFirst.checked = (engine.readSetting("show-dirs-first") === "true");
             showHiddenFiles.checked = (engine.readSetting("show-hidden-files") === "true");
-        }
-
-        // write settings
-        if (status === PageStatus.Deactivating) {
-            engine.writeSetting("show-dirs-first", showDirsFirst.checked.toString());
-            engine.writeSetting("show-hidden-files", showHiddenFiles.checked.toString());
         }
     }
 }
