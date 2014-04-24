@@ -17,7 +17,11 @@
 #include "consolemodel.h"
 
 int main(int argc, char *argv[])
-{
+{    
+    // CONFIG += sailfishapp sets up QCoreApplication::OrganizationName and ApplicationName
+    // so that QSettings can access the app's config file at
+    // /home/nemo/.config/harbour-file-browser/harbour-file-browser.conf
+
     qmlRegisterType<FileModel>("harbour.file.browser.FileModel", 1, 0, "FileModel");
     qmlRegisterType<FileData>("harbour.file.browser.FileData", 1, 0, "FileData");
     qmlRegisterType<SearchEngine>("harbour.file.browser.SearchEngine", 1, 0, "SearchEngine");
@@ -25,18 +29,13 @@ int main(int argc, char *argv[])
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
-    // these values are used by QSettings to access the config file in
-    // /home/nemo/.local/share/harbour-file-browser/FileBrowser.conf
-    QCoreApplication::setOrganizationName("harbour-file-browser");
-    QCoreApplication::setApplicationName("FileBrowser");
-
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
     // QML global engine object
     QScopedPointer<Engine> engine(new Engine);
     view->rootContext()->setContextProperty("engine", engine.data());
 
-    // store pointer to engine to access it in any class
+    // store pointer to engine to access it in any class, to make it a singleton
     QVariant engineVariant = qVariantFromValue(engine.data());
     qApp->setProperty("engine", engineVariant);
 
