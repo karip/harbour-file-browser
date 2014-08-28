@@ -17,6 +17,8 @@ Page {
         active: page.status === PageStatus.Active
     }
 
+    RemorsePopup { id: remorsePopup }
+
     SilicaListView {
         id: fileList
         anchors.fill: parent
@@ -52,6 +54,7 @@ Page {
                 onClicked: {
                     progressPanel.showText(engine.clipboardContainsCopy ?
                                                qsTr("Copying") : qsTr("Moving"))
+                    fileModel.clearSelectedFiles();
                     engine.pasteFiles(page.dir);
                 }
             }
@@ -211,15 +214,21 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 IconButton {
                     icon.source: "image://theme/icon-l-mute-call"
-                    onClicked: { var files = fileModel.selectedFiles(); console.log("CUT!!!"+files); engine.cutFiles(files); }
+                    onClicked: { var files = fileModel.selectedFiles(); engine.cutFiles(files); }
                 }
                 IconButton {
                     icon.source: "image://theme/icon-l-copy"
-                    onClicked: { var files = fileModel.selectedFiles(); console.log("COPY!!!"+files); engine.copyFiles(files); }
+                    onClicked: { var files = fileModel.selectedFiles(); engine.copyFiles(files); }
                 }
                 IconButton {
                     icon.source: "image://theme/icon-l-delete"
-                    onClicked: { var files = fileModel.selectedFiles(); console.log("DELETE!!!"); deleteFiles(files); }
+                    onClicked: {
+                        var files = fileModel.selectedFiles();
+                        remorsePopup.execute("Deleting", function() {
+                            engine.deleteFiles(files);
+                            fileModel.clearSelectedFiles();
+                        });
+                    }
                 }
                 IconButton {
                     visible: fileModel.selectedFileCount === 1
@@ -228,10 +237,6 @@ Page {
                         var files = fileModel.selectedFiles();
                         pageStack.push(Qt.resolvedUrl("FilePage.qml"), { file: files[0] });
                     }
-                }
-                IconButton {
-                    icon.source: "image://theme/icon-l-mute-call"
-                    onClicked: console.log("SELECT ALL!!!");
                 }
             }
         }
