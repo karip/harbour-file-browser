@@ -170,12 +170,17 @@ Page {
         id: dockPanel
         width: parent.width
         open: true
-        height: dockColumn.height + Theme.paddingLarge
-        contentHeight: height
+        height: dockColumn.height
         dock: Dock.Bottom
+        Rectangle {
+            anchors.fill: parent
+            color: "black"
+            opacity: 0.7
+        }
         Column {
             id: dockColumn
             anchors.horizontalCenter: parent.horizontalCenter
+            Spacer { height: Theme.paddingLarge }
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("%1 selected").arg(fileModel.selectedFileCount)
@@ -184,6 +189,7 @@ Page {
             }
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
                 IconButton {
                     icon.source: "image://theme/icon-l-mute-call"
                     onClicked: { var files = fileModel.selectedFiles(); engine.cutFiles(files); }
@@ -203,7 +209,6 @@ Page {
                     }
                 }
                 IconButton {
-                    visible: fileModel.selectedFileCount === 1
                     icon.source: "image://theme/icon-l-hold"
                     onClicked: {
                         var files = fileModel.selectedFiles();
