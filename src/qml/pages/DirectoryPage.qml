@@ -141,40 +141,12 @@ Page {
                 onClicked: { fileModel.toggleSelectedFile(index); }
             }
 
-            // delete file after remorse time
-            ListView.onRemove: animateRemoval(fileItem)
-            function deleteFile(deleteFilename) {
-                remorseAction(qsTr("Deleting"), function() {
-                    progressPanel.showText(qsTr("Deleting"));
-                    engine.deleteFiles([ deleteFilename ]);
-                }, 5000)
-            }
-
             // context menu is activated with long press
             Component {
                  id: contextMenu
                  ContextMenu {
                      MenuItem {
-                         text: qsTr("Cut")
-                         onClicked: engine.cutFiles([ fileModel.fileNameAt(index) ]);
-                     }
-                     MenuItem {
-                         text: qsTr("Copy")
-                         onClicked: engine.copyFiles([ fileModel.fileNameAt(index) ]);
-                     }
-                     MenuItem {
-                         text: qsTr("Delete")
-                         onClicked:  {
-                             deleteFile(fileModel.fileNameAt(index));
-                         }
-                     }
-                     MenuItem {
-                         visible: model.isDir
-                         text: qsTr("Properties")
-                         onClicked:  {
-                             pageStack.push(Qt.resolvedUrl("FilePage.qml"),
-                                            { file: fileModel.fileNameAt(index) });
-                         }
+                         text: qsTr("Changed! Try tapping the file icons")
                      }
                  }
              }
@@ -225,8 +197,8 @@ Page {
                     onClicked: {
                         var files = fileModel.selectedFiles();
                         remorsePopup.execute("Deleting", function() {
-                            engine.deleteFiles(files);
                             fileModel.clearSelectedFiles();
+                            engine.deleteFiles(files);
                         });
                     }
                 }
