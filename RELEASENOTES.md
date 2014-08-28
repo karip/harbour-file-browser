@@ -8,6 +8,7 @@
  * Display mime type information
  * Display chr, blk, fifo and sock files correctly
  * View contents of tar files
+ * Display image size and other metadata
 
 ## Version 1.4.2 (2014-03-20)
 
