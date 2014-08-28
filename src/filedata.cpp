@@ -168,17 +168,19 @@ void FileData::readMetaData()
     m_mimeTypeComment = m_mimeType.comment();
 
     // read metadata for images
+    // store in m_metaData, first char is priority, then label:value
     if (m_mimeType.name() == "image/jpeg" || m_mimeType.name() == "image/png" ||
             m_mimeType.name() == "image/gif") {
         QImageReader reader(m_file);
         QSize s = reader.size();
         if (s.width() >= 0 && s.height() >= 0)
-            m_metaData.append(tr("Image Size")+QString(":%1 x %2").arg(s.width()).arg(s.height()));
+            m_metaData.append("0" + tr("Image Size") +
+                              QString(":%1 x %2").arg(s.width()).arg(s.height()));
 
         QStringList textKeys = reader.textKeys();
         foreach (QString key, textKeys) {
             QString value = reader.text(key);
-            m_metaData.append(key+":"+value);
+            m_metaData.append("9"+key+":"+value);
         }
     }
 }

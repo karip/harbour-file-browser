@@ -206,7 +206,21 @@ Page {
                         Spacer { height: 20 }
                     }
                 }
-                Spacer { height: 20 }
+                Spacer { height: 10 }
+
+                // Display metadata with priotity < 5
+                Repeater {
+                    model: fileData.metaData
+                    // first char is priority (0-9), labels and values are delimited with ':'
+                    CenteredField {
+                        visible: modelData.charAt(0) < '5'
+                        label: modelData.substring(1, modelData.indexOf(":"))
+                        value: modelData.substring(modelData.indexOf(":")+1)
+                    }
+                }
+                Spacer {
+                    height: 10
+                }
 
                 CenteredField {
                     label: qsTr("Location")
@@ -249,11 +263,13 @@ Page {
                 Spacer {
                     height: 10
                 }
-                // Display all metadata
+                // Display metadata with priotity >= 5
                 Repeater {
                     model: fileData.metaData
-                    CenteredField { // labels and values are delimited with ':'
-                        label: modelData.substring(0, modelData.indexOf(":"))
+                    // first char is priority (0-9), labels and values are delimited with ':'
+                    CenteredField {
+                        visible: modelData.charAt(0) >= '5'
+                        label: modelData.substring(1, modelData.indexOf(":"))
                         value: modelData.substring(modelData.indexOf(":")+1)
                     }
                 }
