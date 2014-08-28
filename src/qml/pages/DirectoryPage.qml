@@ -22,6 +22,7 @@ Page {
     SilicaListView {
         id: fileList
         anchors.fill: parent
+        anchors.bottomMargin: dockPanel.visible ? dockPanel.height : 0
 
         model: fileModel
 
@@ -189,13 +190,13 @@ Page {
             }
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 15
                 IconButton {
-                    icon.source: "image://theme/icon-l-mute-call"
+                    icon.source: "../images/toolbar-cut.png"
                     onClicked: { var files = fileModel.selectedFiles(); engine.cutFiles(files); }
                 }
                 IconButton {
-                    icon.source: "image://theme/icon-l-copy"
+                    icon.source: "../images/toolbar-copy.png"
                     onClicked: { var files = fileModel.selectedFiles(); engine.copyFiles(files); }
                 }
                 IconButton {
@@ -209,7 +210,7 @@ Page {
                     }
                 }
                 IconButton {
-                    icon.source: "image://theme/icon-l-hold"
+                    icon.source: "../images/toolbar-properties.png"
                     onClicked: {
                         var files = fileModel.selectedFiles();
                         pageStack.push(Qt.resolvedUrl("FilePage.qml"), { file: files[0] });
