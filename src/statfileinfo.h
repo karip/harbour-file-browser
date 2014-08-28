@@ -79,6 +79,10 @@ public:
     QString symLinkTarget() const { return m_fileInfo.symLinkTarget(); }
     bool isSymLinkBroken() const;
 
+    // selection
+    void setSelected(bool selected);
+    bool isSelected() const { return m_selected; }
+
     void refresh();
 
 private:
@@ -86,6 +90,7 @@ private:
     QFileInfo m_fileInfo;
     struct stat m_stat; // after following possible symlinks
     struct stat m_lstat; // file itself without following symlinks
+    bool m_selected;
 };
 
 #endif // STATFILEINFO_H

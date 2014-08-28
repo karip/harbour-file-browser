@@ -1,13 +1,13 @@
 #include "statfileinfo.h"
 
 StatFileInfo::StatFileInfo() :
-    m_filename("")
+    m_filename(""), m_selected(false)
 {
     refresh();
 }
 
 StatFileInfo::StatFileInfo(QString filename) :
-    m_filename(filename)
+    m_filename(filename), m_selected(false)
 {
     refresh();
 }
@@ -55,6 +55,11 @@ bool StatFileInfo::isSymLinkBroken() const
     if (m_fileInfo.isSymLink() && !m_fileInfo.exists())
         return true;
     return false;
+}
+
+void StatFileInfo::setSelected(bool selected)
+{
+    m_selected = selected;
 }
 
 void StatFileInfo::refresh()

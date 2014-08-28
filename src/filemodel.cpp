@@ -15,7 +15,8 @@ enum {
     CreatedRole = Qt::UserRole + 7,
     IsDirRole = Qt::UserRole + 8,
     IsLinkRole = Qt::UserRole + 9,
-    SymLinkTargetRole = Qt::UserRole + 10
+    SymLinkTargetRole = Qt::UserRole + 10,
+    IsSelectedRole = Qt::UserRole + 11
 };
 
 FileModel::FileModel(QObject *parent) :
@@ -84,6 +85,9 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
     case SymLinkTargetRole:
         return info.symLinkTarget();
 
+    case IsSelectedRole:
+        return info.isSelected();
+
     default:
         return QVariant();
     }
@@ -102,6 +106,7 @@ QHash<int, QByteArray> FileModel::roleNames() const
     roles.insert(IsDirRole, QByteArray("isDir"));
     roles.insert(IsLinkRole, QByteArray("isLink"));
     roles.insert(SymLinkTargetRole, QByteArray("symLinkTarget"));
+    roles.insert(IsSelectedRole, QByteArray("isSelected"));
     return roles;
 }
 
@@ -164,6 +169,57 @@ QString FileModel::fileNameAt(int fileIndex)
         return QString();
 
     return m_files.at(fileIndex).absoluteFilePath();
+}
+
+void FileModel::toggleSelectedFile(int fileIndex)
+{
+    if (!m_files.at(fileIndex).isSelected()) {
+        StatFileInfo info = m_files.at(fileIndex);
+        info.setSelected(true);
+        m_files[fileIndex] = info;
+        m_selectedFileCount++;
+    } else {
+        StatFileInfo info = m_files.at(fileIndex);
+        info.setSelected(false);
+        m_files[fileIndex] = info;
+        m_selectedFileCount--;
+    }
+    // emit signal for views
+    QModelIndex topLeft = index(fileIndex, 0);
+    QModelIndex bottomRight = index(fileIndex, 0);
+    emit dataChanged(topLeft, bottomRight);
+
+    emit selectedFileCountChanged();
+}
+
+void FileModel::clearSelectedFiles()
+{
+    QMutableListIterator<StatFileInfo> iter(m_files);
+    int row = 0;
+    while (iter.hasNext()) {
+        StatFileInfo &info = iter.next();
+        info.setSelected(false);
+        // emit signal for views
+        QModelIndex topLeft = index(row, 0);
+        QModelIndex bottomRight = index(row, 0);
+        emit dataChanged(topLeft, bottomRight);
+        row++;
+    }
+    m_selectedFileCount = 0;
+    emit selectedFileCountChanged();
+}
+
+QStringList FileModel::selectedFiles() const
+{
+    if (m_selectedFileCount == 0)
+        return QStringList();
+
+    QStringList filenames;
+    foreach (const StatFileInfo &info, m_files) {
+        if (info.isSelected())
+            filenames.append(info.absoluteFilePath());
+    }
+    return filenames;
 }
 
 void FileModel::refresh()

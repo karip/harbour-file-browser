@@ -21,6 +21,7 @@ public:
     explicit Engine(QObject *parent = 0);
     ~Engine();
 
+    // properties
     int clipboardCount() const { return m_clipboardFiles.count(); }
     bool clipboardContainsCopy() const { return m_clipboardContainsCopy; }
     int progress() const { return m_progress; }

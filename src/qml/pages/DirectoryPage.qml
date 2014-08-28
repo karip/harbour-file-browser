@@ -72,6 +72,12 @@ Page {
             width: ListView.view.width
             contentHeight: listLabel.height+listSize.height + 13
 
+            // background shown when item is selected
+            Rectangle {
+                anchors.fill: parent
+                color: isSelected ? fileItem.highlightedColor : "transparent"
+            }
+
             Image {
                 id: listIcon
                 anchors.left: parent.left
@@ -90,6 +96,7 @@ Page {
                 anchors.topMargin: 5
                 text: filename
                 elide: Text.ElideRight
+                color: isSelected ? Theme.highlightColor : Theme.primaryColor
             }
             Label {
                 id: listSize
@@ -117,13 +124,18 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
 
-            onClicked: {
+            onClicked: {                
                 if (model.isDir)
                     pageStack.push(Qt.resolvedUrl("DirectoryPage.qml"),
                                    { dir: fileModel.appendPath(listLabel.text) });
                 else
                     pageStack.push(Qt.resolvedUrl("FilePage.qml"),
                                    { file: fileModel.appendPath(listLabel.text) });
+            }
+            MouseArea {
+                width: 80
+                height: parent.height
+                onClicked: { fileModel.toggleSelectedFile(index); }
             }
 
             // delete file after remorse time
@@ -178,8 +190,58 @@ Page {
         }
     }
 
-    // update cover
+    // bottom dock panel to display cut & copy controls
+    DockedPanel {
+        id: dockPanel
+        width: parent.width
+        open: true
+        height: dockColumn.height + Theme.paddingLarge
+        contentHeight: height
+        dock: Dock.Bottom
+        Column {
+            id: dockColumn
+            anchors.horizontalCenter: parent.horizontalCenter
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("%1 selected").arg(fileModel.selectedFileCount)
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeTiny
+            }
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                IconButton {
+                    icon.source: "image://theme/icon-l-mute-call"
+                    onClicked: { var files = fileModel.selectedFiles(); console.log("CUT!!!"+files); engine.cutFiles(files); }
+                }
+                IconButton {
+                    icon.source: "image://theme/icon-l-copy"
+                    onClicked: { var files = fileModel.selectedFiles(); console.log("COPY!!!"+files); engine.copyFiles(files); }
+                }
+                IconButton {
+                    icon.source: "image://theme/icon-l-delete"
+                    onClicked: { var files = fileModel.selectedFiles(); console.log("DELETE!!!"); deleteFiles(files); }
+                }
+                IconButton {
+                    visible: fileModel.selectedFileCount === 1
+                    icon.source: "image://theme/icon-l-hold"
+                    onClicked: {
+                        var files = fileModel.selectedFiles();
+                        pageStack.push(Qt.resolvedUrl("FilePage.qml"), { file: files[0] });
+                    }
+                }
+                IconButton {
+                    icon.source: "image://theme/icon-l-mute-call"
+                    onClicked: console.log("SELECT ALL!!!");
+                }
+            }
+        }
+    }
+
     onStatusChanged: {
+        // clear file selections when the directory is changed
+        fileModel.clearSelectedFiles();
+
+        // update cover
         if (status === PageStatus.Activating) {
             coverPlaceholder.text = Functions.lastPartOfPath(page.dir)+"/";
 
