@@ -34,6 +34,7 @@ OTHER_FILES = \
     qml/components/InteractionBlocker.qml \
     qml/components/NotificationPanel.qml \
     qml/components/ProgressPanel.qml \
+    qml/components/SelectionPanel.qml \
     qml/main.qml \
     qml/functions.js
 

@@ -27,7 +27,7 @@ Page {
     SilicaListView {
         id: fileList
         anchors.fill: parent
-        anchors.bottomMargin: dockPanel.visible ? dockPanel.visibleSize : 0
+        anchors.bottomMargin: selectionPanel.visible ? selectionPanel.visibleSize : 0
         clip: true
 
         model: fileModel
@@ -63,8 +63,8 @@ Page {
                     progressPanel.showText(engine.clipboardContainsCopy ?
                                                qsTr("Copying") : qsTr("Moving"))
                     fileModel.clearSelectedFiles();
-                    dockPanel.open = false;
-                    dockPanel.overrideText = "";
+                    selectionPanel.open = false;
+                    selectionPanel.overrideText = "";
                     engine.pasteFiles(page.dir);
                 }
             }
@@ -99,7 +99,7 @@ Page {
                 anchors.topMargin: 11
                 source: "../images/small-"+fileIcon+".png"
             }
-            // selection circle
+            // circle shown when item is selected
             Label {
                 visible: isSelected
                 anchors.left: parent.left
@@ -161,8 +161,8 @@ Page {
                 height: parent.height
                 onClicked: {
                     fileModel.toggleSelectedFile(index);
-                    dockPanel.open = (fileModel.selectedFileCount > 0);
-                    dockPanel.overrideText = "";
+                    selectionPanel.open = (fileModel.selectedFileCount > 0);
+                    selectionPanel.overrideText = "";
                 }
             }
 
@@ -192,79 +192,36 @@ Page {
         }
     }
 
-    // bottom dock panel to display cut & copy controls
-    DockedPanel {
-        id: dockPanel
-        width: parent.width
-        open: false
-        height: dockColumn.height + Theme.paddingLarge
-        dock: Dock.Bottom
-        // override text is shown if set, it gets cleared whenever selected file count changes
-        property string overrideText: ""
+    // a bit hackery: called from selection panel
+    function selectedFiles() { var files = fileModel.selectedFiles(); return files; }
 
-        Column {
-            id: dockColumn
-            anchors.horizontalCenter: parent.horizontalCenter
-            Spacer { height: Theme.paddingLarge }
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: dockPanel.overrideText === "" ? qsTr("%1 selected").arg(fileModel.selectedFileCount)
-                                                    : dockPanel.overrideText
-                color: Theme.highlightColor
-                font.pixelSize: Theme.fontSizeTiny
-            }
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 20
-                IconButton {
-                    enabled: !page.remorsePopupOpen
-                    icon.source: "../images/toolbar-cut.png"
-                    onClicked: {
-                        var files = fileModel.selectedFiles();
-                        engine.cutFiles(files);
-                        dockPanel.overrideText = qsTr("%1 cut").arg(fileModel.selectedFileCount);
-                    }
-                }
-                IconButton {
-                    enabled: !page.remorsePopupOpen
-                    icon.source: "../images/toolbar-copy.png"
-                    onClicked: {
-                        var files = fileModel.selectedFiles();
-                        engine.copyFiles(files);
-                        dockPanel.overrideText = qsTr("%1 copied").arg(fileModel.selectedFileCount);
-                    }
-                }
-                IconButton {
-                    enabled: !page.remorsePopupOpen
-                    icon.source: "image://theme/icon-l-delete"
-                    onClicked: {
-                        var files = fileModel.selectedFiles();
-                        remorsePopupOpen = true;
-                        remorsePopup.execute("Deleting", function() {
-                            fileModel.clearSelectedFiles();
-                            dockPanel.open = false;
-                            dockPanel.overrideText = "";
-                            engine.deleteFiles(files);
-                        });
-                    }
-                }
-                IconButton {
-                    enabled: !page.remorsePopupOpen
-                    icon.source: "../images/toolbar-properties.png"
-                    onClicked: {
-                        var files = fileModel.selectedFiles();
-                        pageStack.push(Qt.resolvedUrl("FilePage.qml"), { file: files[0] });
-                    }
-                }
-            }
+    SelectionPanel {
+        id: selectionPanel
+        selectedCount: fileModel.selectedFileCount
+        enabled: !page.remorsePopupOpen
+
+        onDeleteTriggered: {
+            var files = fileModel.selectedFiles();
+            remorsePopupOpen = true;
+            remorsePopup.execute("Deleting", function() {
+                fileModel.clearSelectedFiles();
+                selectionPanel.open = false;
+                selectionPanel.overrideText = "";
+                console.log("delete"+files);
+                engine.deleteFiles(files);
+            });
+        }
+        onPropertyTriggered: {
+            var files = fileModel.selectedFiles();
+            pageStack.push(Qt.resolvedUrl("FilePage.qml"), { file: files[0] });
         }
     }
 
     onStatusChanged: {
         // clear file selections when the directory is changed
         fileModel.clearSelectedFiles();
-        dockPanel.open = false;
-        dockPanel.overrideText = "";
+        selectionPanel.open = false;
+        selectionPanel.overrideText = "";
 
         // update cover
         if (status === PageStatus.Activating) {
