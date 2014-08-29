@@ -64,6 +64,7 @@ Page {
                                                qsTr("Copying") : qsTr("Moving"))
                     fileModel.clearSelectedFiles();
                     dockPanel.open = false;
+                    dockPanel.overrideText = "";
                     engine.pasteFiles(page.dir);
                 }
             }
@@ -161,6 +162,7 @@ Page {
                 onClicked: {
                     fileModel.toggleSelectedFile(index);
                     dockPanel.open = (fileModel.selectedFileCount > 0);
+                    dockPanel.overrideText = "";
                 }
             }
 
@@ -168,6 +170,8 @@ Page {
             Component {
                  id: contextMenu
                  ContextMenu {
+                     // cancel delete if context menu is opened
+                     onActiveChanged: remorsePopup.cancel()
                      MenuItem {
                          text: qsTr("Changed! Try tapping the file icons")
                      }
@@ -195,6 +199,8 @@ Page {
         open: false
         height: dockColumn.height + Theme.paddingLarge
         dock: Dock.Bottom
+        // override text is shown if set, it gets cleared whenever selected file count changes
+        property string overrideText: ""
 
         Column {
             id: dockColumn
@@ -202,7 +208,8 @@ Page {
             Spacer { height: Theme.paddingLarge }
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("%1 selected").arg(fileModel.selectedFileCount)
+                text: dockPanel.overrideText === "" ? qsTr("%1 selected").arg(fileModel.selectedFileCount)
+                                                    : dockPanel.overrideText
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeTiny
             }
@@ -212,12 +219,20 @@ Page {
                 IconButton {
                     enabled: !page.remorsePopupOpen
                     icon.source: "../images/toolbar-cut.png"
-                    onClicked: { var files = fileModel.selectedFiles(); engine.cutFiles(files); }
+                    onClicked: {
+                        var files = fileModel.selectedFiles();
+                        engine.cutFiles(files);
+                        dockPanel.overrideText = qsTr("%1 cut").arg(fileModel.selectedFileCount);
+                    }
                 }
                 IconButton {
                     enabled: !page.remorsePopupOpen
                     icon.source: "../images/toolbar-copy.png"
-                    onClicked: { var files = fileModel.selectedFiles(); engine.copyFiles(files); }
+                    onClicked: {
+                        var files = fileModel.selectedFiles();
+                        engine.copyFiles(files);
+                        dockPanel.overrideText = qsTr("%1 copied").arg(fileModel.selectedFileCount);
+                    }
                 }
                 IconButton {
                     enabled: !page.remorsePopupOpen
@@ -228,6 +243,7 @@ Page {
                         remorsePopup.execute("Deleting", function() {
                             fileModel.clearSelectedFiles();
                             dockPanel.open = false;
+                            dockPanel.overrideText = "";
                             engine.deleteFiles(files);
                         });
                     }
@@ -248,6 +264,7 @@ Page {
         // clear file selections when the directory is changed
         fileModel.clearSelectedFiles();
         dockPanel.open = false;
+        dockPanel.overrideText = "";
 
         // update cover
         if (status === PageStatus.Activating) {
