@@ -22,7 +22,8 @@ Page {
     SilicaListView {
         id: fileList
         anchors.fill: parent
-        anchors.bottomMargin: dockPanel.visible ? dockPanel.height : 0
+        anchors.bottomMargin: dockPanel.visible ? dockPanel.visibleSize : 0
+        clip: true
 
         model: fileModel
 
@@ -56,6 +57,7 @@ Page {
                     progressPanel.showText(engine.clipboardContainsCopy ?
                                                qsTr("Copying") : qsTr("Moving"))
                     fileModel.clearSelectedFiles();
+                    dockPanel.open = false;
                     engine.pasteFiles(page.dir);
                 }
             }
@@ -89,6 +91,17 @@ Page {
                 anchors.top: parent.top
                 anchors.topMargin: 11
                 source: "../images/small-"+fileIcon+".png"
+            }
+            // selection circle
+            Label {
+                visible: isSelected
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.paddingLarge-4
+                anchors.top: parent.top
+                anchors.topMargin: 3
+                text: "\u25cb"
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeLarge
             }
             Label {
                 id: listLabel
@@ -137,9 +150,12 @@ Page {
                                    { file: fileModel.appendPath(listLabel.text) });
             }
             MouseArea {
-                width: 80
+                width: 90
                 height: parent.height
-                onClicked: { fileModel.toggleSelectedFile(index); }
+                onClicked: {
+                    fileModel.toggleSelectedFile(index);
+                    dockPanel.open = (fileModel.selectedFileCount > 0);
+                }
             }
 
             // context menu is activated with long press
@@ -170,14 +186,10 @@ Page {
     DockedPanel {
         id: dockPanel
         width: parent.width
-        open: true
-        height: dockColumn.height
+        open: false
+        height: dockColumn.height + Theme.paddingLarge
         dock: Dock.Bottom
-        Rectangle {
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.7
-        }
+
         Column {
             id: dockColumn
             anchors.horizontalCenter: parent.horizontalCenter
@@ -190,7 +202,7 @@ Page {
             }
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 15
+                spacing: 20
                 IconButton {
                     icon.source: "../images/toolbar-cut.png"
                     onClicked: { var files = fileModel.selectedFiles(); engine.cutFiles(files); }
@@ -205,6 +217,7 @@ Page {
                         var files = fileModel.selectedFiles();
                         remorsePopup.execute("Deleting", function() {
                             fileModel.clearSelectedFiles();
+                            dockPanel.open = false;
                             engine.deleteFiles(files);
                         });
                     }
@@ -223,6 +236,7 @@ Page {
     onStatusChanged: {
         // clear file selections when the directory is changed
         fileModel.clearSelectedFiles();
+        dockPanel.open = false;
 
         // update cover
         if (status === PageStatus.Activating) {
