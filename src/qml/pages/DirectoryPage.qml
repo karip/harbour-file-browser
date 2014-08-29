@@ -9,6 +9,7 @@ Page {
     allowedOrientations: Orientation.All
     property string dir: "/"
     property bool initial: false // this is set to true if the page is initial page
+    property bool remorsePopupOpen: false // set to true when remorsePopup is active
 
     FileModel {
         id: fileModel
@@ -17,7 +18,11 @@ Page {
         active: page.status === PageStatus.Active
     }
 
-    RemorsePopup { id: remorsePopup }
+    RemorsePopup {
+        id: remorsePopup
+        onCanceled: remorsePopupOpen = false
+        onTriggered: remorsePopupOpen = false
+    }
 
     SilicaListView {
         id: fileList
@@ -54,6 +59,7 @@ Page {
                 text: qsTr("Paste") +
                       (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
                 onClicked: {
+                    if (remorsePopupOpen) return;
                     progressPanel.showText(engine.clipboardContainsCopy ?
                                                qsTr("Copying") : qsTr("Moving"))
                     fileModel.clearSelectedFiles();
@@ -204,17 +210,21 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 20
                 IconButton {
+                    enabled: !page.remorsePopupOpen
                     icon.source: "../images/toolbar-cut.png"
                     onClicked: { var files = fileModel.selectedFiles(); engine.cutFiles(files); }
                 }
                 IconButton {
+                    enabled: !page.remorsePopupOpen
                     icon.source: "../images/toolbar-copy.png"
                     onClicked: { var files = fileModel.selectedFiles(); engine.copyFiles(files); }
                 }
                 IconButton {
+                    enabled: !page.remorsePopupOpen
                     icon.source: "image://theme/icon-l-delete"
                     onClicked: {
                         var files = fileModel.selectedFiles();
+                        remorsePopupOpen = true;
                         remorsePopup.execute("Deleting", function() {
                             fileModel.clearSelectedFiles();
                             dockPanel.open = false;
@@ -223,6 +233,7 @@ Page {
                     }
                 }
                 IconButton {
+                    enabled: !page.remorsePopupOpen
                     icon.source: "../images/toolbar-properties.png"
                     onClicked: {
                         var files = fileModel.selectedFiles();
