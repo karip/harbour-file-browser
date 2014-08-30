@@ -31,7 +31,7 @@ DockedPanel {
             text: dockPanel.overrideText === "" ? qsTr("%1 selected").arg(dockPanel.selectedCount)
                                                 : dockPanel.overrideText
             color: Theme.highlightColor
-            font.pixelSize: Theme.fontSizeTiny
+            font.pixelSize: Theme.fontSizeExtraSmall
         }
         Row {
             anchors.horizontalCenter: parent.horizontalCenter

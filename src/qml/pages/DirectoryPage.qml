@@ -87,8 +87,9 @@ Page {
 
             // background shown when item is selected
             Rectangle {
+                visible: isSelected
                 anchors.fill: parent
-                color: isSelected ? fileItem.highlightedColor : "transparent"
+                color: fileItem.highlightedColor
             }
 
             Image {
@@ -120,7 +121,7 @@ Page {
                 anchors.topMargin: 5
                 text: filename
                 elide: Text.ElideRight
-                color: isSelected ? Theme.highlightColor : Theme.primaryColor
+                color: fileItem.highlighted || isSelected ? Theme.highlightColor : Theme.primaryColor
             }
             Label {
                 id: listSize
@@ -128,7 +129,7 @@ Page {
                 anchors.leftMargin: 10
                 anchors.top: listLabel.bottom
                 text: !(isLink && isDir) ? size : Functions.unicodeArrow()+" "+symLinkTarget
-                color: Theme.secondaryColor
+                color: fileItem.highlighted || isSelected ? Theme.secondaryHighlightColor : Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
             Label {
@@ -136,7 +137,7 @@ Page {
                 anchors.top: listLabel.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: filekind+permissions
-                color: Theme.secondaryColor
+                color: fileItem.highlighted || isSelected ? Theme.secondaryHighlightColor : Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
             Label {
@@ -144,11 +145,11 @@ Page {
                 anchors.top: listLabel.bottom
                 anchors.right: listLabel.right
                 text: modified
-                color: Theme.secondaryColor
+                color: fileItem.highlighted || isSelected ? Theme.secondaryHighlightColor : Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
 
-            onClicked: {                
+            onClicked: {
                 if (model.isDir)
                     pageStack.push(Qt.resolvedUrl("DirectoryPage.qml"),
                                    { dir: fileModel.appendPath(listLabel.text) });

@@ -208,7 +208,7 @@ Page {
                 anchors.rightMargin: Theme.paddingLarge
                 anchors.top: listLabel.bottom
                 text: absoluteDir
-                color: Theme.secondaryColor
+                color: fileItem.highlighted || isSelected ? Theme.secondaryHighlightColor : Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
                 elide: Text.ElideLeft
             }

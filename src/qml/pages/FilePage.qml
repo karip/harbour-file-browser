@@ -192,6 +192,7 @@ Page {
                             textFormat: Text.PlainText
                             wrapMode: Text.Wrap
                             horizontalAlignment: Text.AlignHCenter
+                            color: openButton.highlighted ? Theme.highlightColor : Theme.primaryColor
                         }
                         Label {
                             visible: fileData.isSymLink
@@ -201,7 +202,9 @@ Page {
                             wrapMode: Text.Wrap
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: Theme.fontSizeExtraSmall
-                            color: fileData.isSymLinkBroken ? "red" : Theme.primaryColor
+                            color: fileData.isSymLinkBroken ? "red" :
+                                    (openButton.highlighted ? Theme.highlightColor
+                                                            : Theme.primaryColor)
                         }
                         Spacer { height: 20 }
                     }
