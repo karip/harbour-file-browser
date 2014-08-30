@@ -23,10 +23,11 @@ responsibility if that happens. So, be careful.
  * View contents of APK, RPM, ZIP and TAR packages
  * View contents of text and binary files
  * Cut, copy and paste files (move/copy files) (by long pressing an 
-   item in a list)
+   item or tapping the file icon in a list)
  * Rename files and folders
  * Create new folders
- * Delete files and folders (by long pressing an item in a list)
+ * Delete files and folders (by long pressing an item or tapping 
+   its file icon in a list)
  * Show hidden files (filenames starting with a dot)
  * Change permissions
 

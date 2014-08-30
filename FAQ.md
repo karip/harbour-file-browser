@@ -43,12 +43,12 @@ Yandex store), it can access Android and Jolla native file system.
 
 ### How to copy multiple files?
 
-It is not possible. Try the Cargo Dock file manager app in 
-the Jolla store, it can manage multiple files.
+Tap on the file or folder icons in the list view and
+you will see options to cut or copy at the bottom of the page.
 
 ### Does it have XXX feature?
 
-It can't change owners, sudo, multi-select files, create links,
+It can't change owners, sudo, create links,
 edit files, share files, send email, mms or sms, open ftp sites, 
 connect to samba server, simulate vi and it does not blend or make coffee.
 Sorry.
@@ -62,4 +62,3 @@ in Terminal (requires Developer Mode).
 
 For best access to Android storage, try ES File Explorer in Yandex store.
 It can access Android storage and Jolla file system.
-
