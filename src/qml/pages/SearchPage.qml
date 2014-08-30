@@ -10,7 +10,8 @@ Page {
     showNavigationIndicator: false // hide back indicator because it would be on top of search field
     property string dir: "/"
     property string currentDirectory: ""
-    property bool remorsePopupOpen: false // set to true when remorsePopup is active
+    property bool remorsePopupActive: false // set to true when remorsePopup is active (at top of page)
+    property bool remorseItemActive: false // set to true when remorseItem is active (item level)
 
     property int _selectedFileCount: 0
 
@@ -31,8 +32,8 @@ Page {
 
     RemorsePopup {
         id: remorsePopup
-        onCanceled: remorsePopupOpen = false
-        onTriggered: remorsePopupOpen = false
+        onCanceled: remorsePopupActive = false
+        onTriggered: remorsePopupActive = false
     }
 
     SilicaListView {
@@ -247,14 +248,23 @@ Page {
                 }
             }
 
+            RemorseItem {
+                id: remorseItem
+                onTriggered: remorseItemActive = false
+                onCanceled: remorseItemActive = false
+            }
+
             // delete file after remorse time
-            ListView.onRemove: animateRemoval(fileItem)
             function deleteFile(deleteFilename) {
-                remorseAction(qsTr("Deleting"), function() {
+                remorseItemActive = true;
+                remorseItem.execute(fileItem, qsTr("Deleting"), function() {
                     progressPanel.showText(qsTr("Deleting"));
                     engine.deleteFiles([ deleteFilename ]);
-                }, 5000)
+                });
             }
+
+            // enable animated list item removals
+            ListView.onRemove: animateRemoval(fileItem)
 
             // context menu is activated with long press, visible if search is not running
             Component {
@@ -308,11 +318,11 @@ Page {
     SelectionPanel {
         id: selectionPanel
         selectedCount: _selectedFileCount
-        enabled: !page.remorsePopupOpen
+        enabled: !page.remorsePopupActive && !page.remorseItemActive
 
         onDeleteTriggered: {
             var files = selectedFiles();
-            remorsePopupOpen = true;
+            remorsePopupActive = true;
             remorsePopup.execute("Deleting", function() {
                 clearSelectedFiles();
                 selectionPanel.open = false;

@@ -9,7 +9,8 @@ Page {
     allowedOrientations: Orientation.All
     property string dir: "/"
     property bool initial: false // this is set to true if the page is initial page
-    property bool remorsePopupOpen: false // set to true when remorsePopup is active
+    property bool remorsePopupActive: false // set to true when remorsePopup is active
+    property bool remorseItemActive: false // set to true when remorseItem is active (item level)
 
     FileModel {
         id: fileModel
@@ -20,8 +21,8 @@ Page {
 
     RemorsePopup {
         id: remorsePopup
-        onCanceled: remorsePopupOpen = false
-        onTriggered: remorsePopupOpen = false
+        onCanceled: remorsePopupActive = false
+        onTriggered: remorsePopupActive = false
     }
 
     SilicaListView {
@@ -59,7 +60,7 @@ Page {
                 text: qsTr("Paste") +
                       (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
                 onClicked: {
-                    if (remorsePopupOpen) return;
+                    if (remorsePopupActive) return;
                     progressPanel.showText(engine.clipboardContainsCopy ?
                                                qsTr("Copying") : qsTr("Moving"))
                     clearSelectedFiles();
@@ -165,14 +166,23 @@ Page {
                 }
             }
 
+            RemorseItem {
+                id: remorseItem
+                onTriggered: remorseItemActive = false
+                onCanceled: remorseItemActive = false
+            }
+
             // delete file after remorse time
-            ListView.onRemove: animateRemoval(fileItem)
             function deleteFile(deleteFilename) {
-                remorseAction(qsTr("Deleting"), function() {
+                remorseItemActive = true;
+                remorseItem.execute(fileItem, qsTr("Deleting"), function() {
                     progressPanel.showText(qsTr("Deleting"));
                     engine.deleteFiles([ deleteFilename ]);
-                }, 5000)
+                });
             }
+
+            // enable animated list item removals
+            ListView.onRemove: animateRemoval(fileItem)
 
             // context menu is activated with long press
             Component {
@@ -231,11 +241,11 @@ Page {
     SelectionPanel {
         id: selectionPanel
         selectedCount: fileModel.selectedFileCount
-        enabled: !page.remorsePopupOpen
+        enabled: !page.remorsePopupActive && !page.remorseItemActive
 
         onDeleteTriggered: {
             var files = fileModel.selectedFiles();
-            remorsePopupOpen = true;
+            remorsePopupActive = true;
             remorsePopup.execute("Deleting", function() {
                 clearSelectedFiles();
                 engine.deleteFiles(files);
