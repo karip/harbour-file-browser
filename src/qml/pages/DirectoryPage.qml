@@ -62,9 +62,7 @@ Page {
                     if (remorsePopupOpen) return;
                     progressPanel.showText(engine.clipboardContainsCopy ?
                                                qsTr("Copying") : qsTr("Moving"))
-                    fileModel.clearSelectedFiles();
-                    selectionPanel.open = false;
-                    selectionPanel.overrideText = "";
+                    clearSelectedFiles();
                     engine.pasteFiles(page.dir);
                 }
             }
@@ -172,7 +170,7 @@ Page {
                  id: contextMenu
                  ContextMenu {
                      // cancel delete if context menu is opened
-                     onActiveChanged: remorsePopup.cancel()
+                     onActiveChanged: { remorsePopup.cancel(); clearSelectedFiles(); }
                      MenuItem {
                          text: qsTr("Changed! Try tapping the file icons")
                      }
@@ -193,6 +191,12 @@ Page {
         }
     }
 
+    function clearSelectedFiles() {
+        fileModel.clearSelectedFiles();
+        selectionPanel.open = false;
+        selectionPanel.overrideText = "";
+    }
+
     // a bit hackery: called from selection panel
     function selectedFiles() { var files = fileModel.selectedFiles(); return files; }
 
@@ -205,10 +209,7 @@ Page {
             var files = fileModel.selectedFiles();
             remorsePopupOpen = true;
             remorsePopup.execute("Deleting", function() {
-                fileModel.clearSelectedFiles();
-                selectionPanel.open = false;
-                selectionPanel.overrideText = "";
-                console.log("delete"+files);
+                clearSelectedFiles();
                 engine.deleteFiles(files);
             });
         }
@@ -220,9 +221,7 @@ Page {
 
     onStatusChanged: {
         // clear file selections when the directory is changed
-        fileModel.clearSelectedFiles();
-        selectionPanel.open = false;
-        selectionPanel.overrideText = "";
+        clearSelectedFiles();
 
         // update cover
         if (status === PageStatus.Activating) {

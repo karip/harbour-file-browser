@@ -2,13 +2,14 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 // bottom dock panel to display cut & copy controls
-// this assumes that its parent implements selectedFiles() function
+// this requires that its parent implements selectedFiles() function
 DockedPanel {
     id: dockPanel
     width: parent.width
     open: false
     height: dockColumn.height + Theme.paddingLarge
     dock: Dock.Bottom
+    visible: shouldBeVisible & !Qt.inputMethod.visible
 
     signal deleteTriggered
     signal propertyTriggered
@@ -21,6 +22,11 @@ DockedPanel {
 
     // override text is shown if set, it gets cleared whenever selected file count changes
     property string overrideText: ""
+
+    // property to indicate that the panel is really visible (open or showing closing animation)
+    property bool shouldBeVisible: false
+    onOpenChanged: { if (open) shouldBeVisible = true; }
+    onMovingChanged: { if (!open && !moving) shouldBeVisible = false; }
 
     Column {
         id: dockColumn

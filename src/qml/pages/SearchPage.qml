@@ -261,7 +261,7 @@ Page {
                  id: contextMenu
                  ContextMenu {
                      // cancel delete if context menu is opened
-                     onActiveChanged: remorsePopup.cancel()
+                     onActiveChanged: { remorsePopup.cancel(); clearSelectedFiles(); }
                      MenuItem {
                          text: qsTr("Go to containing folder")
                          onClicked: Functions.goToFolder(model.absoluteDir)
@@ -289,7 +289,6 @@ Page {
         var list = [];
         for (var i = 0; i < listModel.count; ++i) {
             var item = listModel.get(i);
-            console.log("selected item:"+item);
             if (item.isSelected)
                 list.push(item.fullname);
         }
@@ -298,11 +297,12 @@ Page {
     function clearSelectedFiles() {
         for (var i = 0; i < listModel.count; ++i) {
             var item = listModel.get(i);
-            console.log("clear item:"+item);
             item.isSelected = false;
             listModel.set(i, item);
         }
         _selectedFileCount = 0;
+        selectionPanel.open = false;
+        selectionPanel.overrideText = "";
     }
 
     SelectionPanel {
