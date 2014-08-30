@@ -165,6 +165,15 @@ Page {
                 }
             }
 
+            // delete file after remorse time
+            ListView.onRemove: animateRemoval(fileItem)
+            function deleteFile(deleteFilename) {
+                remorseAction(qsTr("Deleting"), function() {
+                    progressPanel.showText(qsTr("Deleting"));
+                    engine.deleteFiles([ deleteFilename ]);
+                }, 5000)
+            }
+
             // context menu is activated with long press
             Component {
                  id: contextMenu
@@ -172,7 +181,26 @@ Page {
                      // cancel delete if context menu is opened
                      onActiveChanged: { remorsePopup.cancel(); clearSelectedFiles(); }
                      MenuItem {
-                         text: qsTr("Changed! Try tapping the file icons")
+                         text: qsTr("Cut")
+                         onClicked: engine.cutFiles([ fileModel.fileNameAt(index) ]);
+                     }
+                     MenuItem {
+                         text: qsTr("Copy")
+                         onClicked: engine.copyFiles([ fileModel.fileNameAt(index) ]);
+                     }
+                     MenuItem {
+                         text: qsTr("Delete")
+                         onClicked:  {
+                             deleteFile(fileModel.fileNameAt(index));
+                         }
+                     }
+                     MenuItem {
+                         visible: model.isDir
+                         text: qsTr("Properties")
+                         onClicked:  {
+                             pageStack.push(Qt.resolvedUrl("FilePage.qml"),
+                                            { file: fileModel.fileNameAt(index) });
+                         }
                      }
                  }
              }
