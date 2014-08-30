@@ -21,6 +21,7 @@ enum {
 
 FileModel::FileModel(QObject *parent) :
     QAbstractListModel(parent),
+    m_selectedFileCount(0),
     m_active(false),
     m_dirty(false)
 {
@@ -253,14 +254,28 @@ void FileModel::readDirectory()
     m_errorMessage = "";
 
     if (!m_dir.isEmpty())
-        readEntries();
+        readAllEntries();
 
     endResetModel();
     emit fileCountChanged();
     emit errorMessageChanged();
+    recountSelectedFiles();
 }
 
-void FileModel::readEntries()
+void FileModel::recountSelectedFiles()
+{
+    int count = 0;
+    foreach (const StatFileInfo &info, m_files) {
+        if (info.isSelected())
+            count++;
+    }
+    if (m_selectedFileCount != count) {
+        m_selectedFileCount = count;
+        emit selectedFileCountChanged();
+    }
+}
+
+void FileModel::readAllEntries()
 {
     QDir dir(m_dir);
     if (!dir.exists()) {
@@ -356,6 +371,7 @@ void FileModel::refreshEntries()
         emit fileCountChanged();
 
     emit errorMessageChanged();
+    recountSelectedFiles();
 }
 
 void FileModel::clearModel()

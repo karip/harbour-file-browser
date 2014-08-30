@@ -68,7 +68,8 @@ private slots:
     void readDirectory();
 
 private:
-    void readEntries();
+    void recountSelectedFiles();
+    void readAllEntries();
     void refreshEntries();
     void clearModel();
     bool filesContains(const QList<StatFileInfo> &files, const StatFileInfo &fileData) const;
