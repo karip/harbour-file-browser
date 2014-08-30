@@ -10,6 +10,9 @@ Page {
     showNavigationIndicator: false // hide back indicator because it would be on top of search field
     property string dir: "/"
     property string currentDirectory: ""
+    property bool remorsePopupOpen: false // set to true when remorsePopup is active
+
+    property int _selectedFileCount: 0
 
     // this and its bg worker thread will be destroyed when page in popped from stack
     SearchEngine {
@@ -18,15 +21,25 @@ Page {
 
         onProgressChanged: page.currentDirectory = directory
         onMatchFound: listModel.append({ fullname: fullname, filename: filename,
-                                           absoluteDir: absoluteDir,
-                                           fileIcon: fileIcon, fileKind: fileKind });
+                                         absoluteDir: absoluteDir,
+                                         fileIcon: fileIcon, fileKind: fileKind,
+                                         isSelected: false
+                                       });
         onWorkerDone: { clearCover(); }
         onWorkerErrorOccurred: { clearCover(); notificationPanel.showText(message, filename); }
+    }
+
+    RemorsePopup {
+        id: remorsePopup
+        onCanceled: remorsePopupOpen = false
+        onTriggered: remorsePopupOpen = false
     }
 
     SilicaListView {
         id: fileList
         anchors.fill: parent
+        anchors.bottomMargin: selectionPanel.visible ? selectionPanel.visibleSize : 0
+        clip: true
 
         // prevent newly added list delegates from stealing focus away from the search field
         currentIndex: -1
@@ -39,6 +52,7 @@ Page {
                     searchEngine.cancel();
 
                 clear();
+                clearSelectedFiles();
                 if (txt !== "") {
                     searchEngine.search(txt);
                     coverPlaceholder.text = qsTr("Searching")+"\n"+txt;
@@ -147,6 +161,13 @@ Page {
             width: ListView.view.width
             contentHeight: listLabel.height+listAbsoluteDir.height + 13
 
+            // background shown when item is selected
+            Rectangle {
+                visible: isSelected
+                anchors.fill: parent
+                color: fileItem.highlightedColor
+            }
+
             Image {
                 id: listIcon
                 anchors.left: parent.left
@@ -154,6 +175,17 @@ Page {
                 anchors.top: parent.top
                 anchors.topMargin: 11
                 source: "../images/small-"+fileIcon+".png"
+            }
+            // circle shown when item is selected
+            Label {
+                visible: isSelected
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.paddingLarge-4
+                anchors.top: parent.top
+                anchors.topMargin: 3
+                text: "\u25cb"
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeLarge
             }
             Label {
                 id: listLabel
@@ -166,6 +198,7 @@ Page {
                 text: filename
                 textFormat: Text.PlainText
                 elide: Text.ElideRight
+                color: fileItem.highlighted || isSelected ? Theme.highlightColor : Theme.primaryColor
             }
             Label {
                 id: listAbsoluteDir
@@ -188,6 +221,31 @@ Page {
                     pageStack.push(Qt.resolvedUrl("FilePage.qml"),
                                    { file: model.fullname });
             }
+            MouseArea {
+                width: 90
+                height: parent.height
+                onClicked: {
+                    if (!model.isSelected) {
+                        _selectedFileCount++;
+                        var item = { fullname: fullname, filename: filename,
+                            absoluteDir: absoluteDir,
+                            fileIcon: fileIcon, fileKind: fileKind,
+                            isSelected: true
+                        };
+                        fileList.model.set(index, item);
+                    } else {
+                        _selectedFileCount--;
+                        var item2 = { fullname: fullname, filename: filename,
+                            absoluteDir: absoluteDir,
+                            fileIcon: fileIcon, fileKind: fileKind,
+                            isSelected: false
+                        };
+                        fileList.model.set(index, item2);
+                    }
+                    selectionPanel.open = (_selectedFileCount > 0);
+                    selectionPanel.overrideText = "";
+                }
+            }
 
             // delete file after remorse time
             ListView.onRemove: animateRemoval(fileItem)
@@ -202,6 +260,8 @@ Page {
             Component {
                  id: contextMenu
                  ContextMenu {
+                     // cancel delete if context menu is opened
+                     onActiveChanged: remorsePopup.cancel()
                      MenuItem {
                          text: qsTr("Go to containing folder")
                          onClicked: Functions.goToFolder(model.absoluteDir)
@@ -224,8 +284,55 @@ Page {
 
     }
 
+    // a bit hackery: these are called from selection panel
+    function selectedFiles() {
+        var list = [];
+        for (var i = 0; i < listModel.count; ++i) {
+            var item = listModel.get(i);
+            console.log("selected item:"+item);
+            if (item.isSelected)
+                list.push(item.fullname);
+        }
+        return list;
+    }
+    function clearSelectedFiles() {
+        for (var i = 0; i < listModel.count; ++i) {
+            var item = listModel.get(i);
+            console.log("clear item:"+item);
+            item.isSelected = false;
+            listModel.set(i, item);
+        }
+        _selectedFileCount = 0;
+    }
+
+    SelectionPanel {
+        id: selectionPanel
+        selectedCount: _selectedFileCount
+        enabled: !page.remorsePopupOpen
+
+        onDeleteTriggered: {
+            var files = selectedFiles();
+            remorsePopupOpen = true;
+            remorsePopup.execute("Deleting", function() {
+                clearSelectedFiles();
+                selectionPanel.open = false;
+                selectionPanel.overrideText = "";
+                engine.deleteFiles(files);
+            });
+        }
+        onPropertyTriggered: {
+            var files = selectedFiles();
+            pageStack.push(Qt.resolvedUrl("FilePage.qml"), { file: files[0] });
+        }
+    }
+
     // update cover
     onStatusChanged: {
+        // clear file selections when the directory is changed
+        clearSelectedFiles();
+        selectionPanel.open = false;
+        selectionPanel.overrideText = "";
+
         if (status === PageStatus.Activating)
             clearCover();
     }
