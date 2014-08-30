@@ -325,8 +325,7 @@ Page {
             remorsePopupActive = true;
             remorsePopup.execute("Deleting", function() {
                 clearSelectedFiles();
-                selectionPanel.open = false;
-                selectionPanel.overrideText = "";
+                progressPanel.showText(qsTr("Deleting"));
                 engine.deleteFiles(files);
             });
         }
@@ -340,8 +339,6 @@ Page {
     onStatusChanged: {
         // clear file selections when the directory is changed
         clearSelectedFiles();
-        selectionPanel.open = false;
-        selectionPanel.overrideText = "";
 
         if (status === PageStatus.Activating)
             clearCover();

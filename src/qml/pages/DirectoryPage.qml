@@ -248,6 +248,7 @@ Page {
             remorsePopupActive = true;
             remorsePopup.execute("Deleting", function() {
                 clearSelectedFiles();
+                progressPanel.showText(qsTr("Deleting"));
                 engine.deleteFiles(files);
             });
         }
