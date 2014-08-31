@@ -131,7 +131,7 @@ void appendImageInfo(QStringList &metadata)
     }
 
     if (ImageInfo.IsColor == 0){
-        metadata.append(QObject::tr("Color/bw:Black and white"));
+        metadata.append(QObject::tr("Color/BW:Black and White"));
     }
 
     if (ImageInfo.FlashUsed >= 0){
@@ -202,20 +202,20 @@ void appendImageInfo(QStringList &metadata)
     }
     if (ImageInfo.Distance){
         if (ImageInfo.Distance < 0){
-            metadata.append(QObject::tr("Focus dist.:Infinite"));
+            metadata.append(QObject::tr("Focus Distance:Infinite"));
         }else{
-            metadata.append(QObject::tr("Focus dist.:%1m").arg((double)ImageInfo.Distance, 4, 'f', 2));
+            metadata.append(QObject::tr("Focus Distance:%1m").arg((double)ImageInfo.Distance, 4, 'f', 2));
         }
     }
 
     if (ImageInfo.ISOequivalent){
-        metadata.append(QObject::tr("ISO equiv.:%1").arg((int)ImageInfo.ISOequivalent));
+        metadata.append(QObject::tr("ISO Equivalent:%1").arg((int)ImageInfo.ISOequivalent));
     }
 
     if (ImageInfo.ExposureBias){
         // If exposure bias was specified, but set to zero, presumably its no bias at all,
         // so only show it if its nonzero.
-        metadata.append(QObject::tr("Exposure bias:%1").arg((double)ImageInfo.ExposureBias, 4, 'f', 2));
+        metadata.append(QObject::tr("Exposure Bias:%1").arg((double)ImageInfo.ExposureBias, 4, 'f', 2));
     }
 
     switch(ImageInfo.Whitebalance) {
@@ -289,10 +289,10 @@ void appendImageInfo(QStringList &metadata)
             e += QObject::tr("Action program (based towards fast shutter speed)");
             break;
         case 7:
-            e += QObject::tr("Portrait Mode");
+            e += QObject::tr("Portrait mode");
             break;
         case 8:
-            e += QObject::tr("Landscape Mode");
+            e += QObject::tr("Landscape mode");
             break;
         default:
             break;
@@ -333,11 +333,11 @@ void appendImageInfo(QStringList &metadata)
         for (a=0;;a++){
             if (a >= PROCESS_TABLE_SIZE){
                 // ran off the end of the table.
-                metadata.append(QObject::tr("Jpeg Process:Unknown"));
+                metadata.append(QObject::tr("JPEG Process:Unknown"));
                 break;
             }
             if (ProcessTable[a].Tag == ImageInfo.Process){
-                metadata.append(QObject::tr("Jpeg Process:%1").arg(QString::fromUtf8(ProcessTable[a].Desc)));
+                metadata.append(QObject::tr("JPEG Process:%1").arg(QString::fromUtf8(ProcessTable[a].Desc)));
                 break;
             }
         }
@@ -471,7 +471,7 @@ void appendIPTC(unsigned char* Data, unsigned int itemlen, QStringList &metadata
         // Process tag here
         switch (type) {
             case IPTC_RECORD_VERSION:
-                metadata.append(QObject::tr("Record vers.:%1").arg((int)((*pos << 8) + (*(pos+1)))));
+                metadata.append(QObject::tr("Record Version:%1").arg((int)((*pos << 8) + (*(pos+1)))));
                 break;
 
             case IPTC_SUPLEMENTAL_CATEGORIES:  description = "SuplementalCategories"; break;

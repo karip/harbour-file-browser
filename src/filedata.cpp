@@ -197,8 +197,8 @@ void FileData::readMetaData()
     }
 }
 
-const int aspectWidths[] = { 16, 4, 3, 5, 5, 1,  -1 };
-const int aspectHeights[] = { 9, 3, 2, 3, 4, 1,  -1 };
+const int aspectWidths[] = { 16, 4, 3, 5, 5,  -1 };
+const int aspectHeights[] = { 9, 3, 2, 3, 4,  -1 };
 
 QString FileData::calculateAspectRatio(int width, int height) const
 {
