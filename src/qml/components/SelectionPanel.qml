@@ -33,7 +33,8 @@ DockedPanel {
 
     Column {
         id: dockColumn
-        visible: dockPanel.orientation === Orientation.Portrait
+        visible: dockPanel.orientation === Orientation.Portrait ||
+                 dockPanel.orientation === Orientation.PortraitInverted
         anchors.horizontalCenter: parent.horizontalCenter
         Spacer { height: Theme.paddingLarge }
         Label {
@@ -79,7 +80,8 @@ DockedPanel {
 
     Row {
         id: dockRow
-        visible: dockPanel.orientation === Orientation.Landscape
+        visible: dockPanel.orientation === Orientation.Landscape ||
+                 dockPanel.orientation === Orientation.LandscapeInverted
         anchors.horizontalCenter: parent.horizontalCenter
         height: cutButton.height + Theme.paddingLarge*2
         spacing: 20

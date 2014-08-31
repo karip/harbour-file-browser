@@ -31,7 +31,8 @@ Page {
                 font.pixelSize: Theme.fontSizeTiny
                 font.family: "Monospace"
                 color: Theme.secondaryColor
-                visible: page.orientation === Orientation.Portrait
+                visible: page.orientation === Orientation.Portrait ||
+                         page.orientation === Orientation.PortraitInverted
             }
             Label {
                 id: landscapeText
@@ -41,7 +42,8 @@ Page {
                 font.pixelSize: Theme.fontSizeTiny
                 font.family: "Monospace"
                 color: Theme.secondaryColor
-                visible: page.orientation === Orientation.Landscape
+                visible: page.orientation === Orientation.Landscape ||
+                         page.orientation === Orientation.LandscapeInverted
             }
             Spacer {
                 height: 40

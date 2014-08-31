@@ -237,7 +237,9 @@ Page {
                 CenteredField {
                     label: "" // blank label
                     value: "("+fileData.mimeType+")"
-                    valueElide: page.orientation === Orientation.Portrait ? Text.ElideMiddle : Text.ElideNone
+                    valueElide: (page.orientation === Orientation.Portrait ||
+                                 page.orientation === Orientation.PortraitInverted)
+                                ? Text.ElideMiddle : Text.ElideNone
                 }
                 CenteredField {
                     label: qsTr("Size")
