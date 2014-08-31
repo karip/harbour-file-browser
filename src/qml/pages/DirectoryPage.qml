@@ -242,6 +242,7 @@ Page {
         id: selectionPanel
         selectedCount: fileModel.selectedFileCount
         enabled: !page.remorsePopupActive && !page.remorseItemActive
+        orientation: page.orientation
 
         onDeleteTriggered: {
             var files = fileModel.selectedFiles();

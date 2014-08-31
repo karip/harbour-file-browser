@@ -173,9 +173,11 @@ void FileData::readMetaData()
             m_mimeType.name() == "image/gif") {
         QImageReader reader(m_file);
         QSize s = reader.size();
-        if (s.width() >= 0 && s.height() >= 0)
+        if (s.width() >= 0 && s.height() >= 0) {
+            QString ar = calculateAspectRatio(s.width(), s.height());
             m_metaData.append("0" + tr("Image Size") +
-                              QString(":%1 x %2").arg(s.width()).arg(s.height()));
+                              QString(":%1 x %2 %3").arg(s.width()).arg(s.height()).arg(ar));
+        }
 
         QStringList textKeys = reader.textKeys();
         foreach (QString key, textKeys) {
@@ -185,3 +187,23 @@ void FileData::readMetaData()
     }
 }
 
+const int aspectWidths[] = { 16, 4, 3, 5, 5, 1,  -1 };
+const int aspectHeights[] = { 9, 3, 2, 3, 4, 1,  -1 };
+
+QString FileData::calculateAspectRatio(int width, int height) const
+{
+    // Jolla Camera almost 16:9 aspect ratio
+    if ((width == 3264 && height == 1840) || (height == 1840 && width == 3264)) {
+        return QString("(16:9)");
+    }
+
+    int i = 0;
+    while (aspectWidths[i] != -1) {
+        if (width * aspectWidths[i] == height * aspectHeights[i] ||
+                height * aspectWidths[i] == width * aspectHeights[i]) {
+            return QString("(%1:%2)").arg(aspectWidths[i]).arg(aspectHeights[i]);
+        }
+        ++i;
+    }
+    return QString();
+}

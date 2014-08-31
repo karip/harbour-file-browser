@@ -93,6 +93,7 @@ signals:
 private:
     void readInfo();
     void readMetaData();
+    QString calculateAspectRatio(int width, int height) const;
 
     QString m_file;
     StatFileInfo m_fileInfo;
