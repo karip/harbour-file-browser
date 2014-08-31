@@ -5,7 +5,7 @@
 
  * Add multiple file selections
  * View contents of tar files
- * Display image size and other metadata
+ * Display image size, exif and other metadata
  * Displays broken symbolic links
  * Move and copy symbolic links
  * Display mime type information
