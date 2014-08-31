@@ -153,7 +153,7 @@ QString Engine::sdcardPath() const
 
 QString Engine::androidSdcardPath() const
 {
-    return "/data/sdcard";
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+"/android_storage";
 }
 
 bool Engine::exists(QString filename)

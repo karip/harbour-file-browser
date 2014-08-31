@@ -35,12 +35,6 @@ You need to enable installation of untrusted software in the phone.
 Go to Settings -> System -> Untrusted software, and enable 
 "Allow untrusted software".
 
-### How to copy files to Android Storage?
-
-File Browser can't copy files to Android Storage, because of its permissions.
-Try an Android file manager, such as ES File Explorer (available in 
-Yandex store), it can access Android and Jolla native file system.
-
 ### How to copy multiple files?
 
 Tap on the file or folder icons in the list view and
