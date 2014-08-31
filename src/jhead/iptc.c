@@ -108,7 +108,7 @@ void show_IPTC (unsigned char* Data, unsigned int itemlen)
 
     pos += 4;                    // move data pointer to the next field
 
-    printf("======= IPTC data: =======\n");
+    xprintf("======= IPTC data: =======\n");
 
     // Now read IPTC data
     while (pos < (Data + itemlen-5)) {
@@ -132,7 +132,7 @@ void show_IPTC (unsigned char* Data, unsigned int itemlen)
         // Process tag here
         switch (type) {
             case IPTC_RECORD_VERSION:
-                printf("Record vers.  : %d\n", (*pos << 8) + (*(pos+1)));
+                xprintf("Record vers.  : %d\n", (*pos << 8) + (*(pos+1)));
                 break;
 
             case IPTC_SUPLEMENTAL_CATEGORIES:  description = "SuplementalCategories"; break;
@@ -162,7 +162,7 @@ void show_IPTC (unsigned char* Data, unsigned int itemlen)
 
             default:
                 if (ShowTags){
-                    printf("Unrecognised IPTC tag: %d\n", type );
+                    xprintf("Unrecognised IPTC tag: %d\n", type );
                 }
             break;
         }
@@ -172,7 +172,7 @@ void show_IPTC (unsigned char* Data, unsigned int itemlen)
             memset(TempBuf, ' ', 14);
             memcpy(TempBuf, description, strlen(description));
             strcat(TempBuf, ":"); 
-            printf("%s %*.*s\n", TempBuf, length, length, pos);
+            xprintf("%s %*.*s\n", TempBuf, length, length, pos);
         }
         pos += length;
     }

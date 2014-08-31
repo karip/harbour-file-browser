@@ -60,7 +60,7 @@ static void process_COM (const uchar * Data, int length)
     Comment[nch] = '\0'; // Null terminate
 
     if (ShowTags){
-        printf("COM marker comment: %s\n",Comment);
+        xprintf("COM marker comment: %s\n",Comment);
     }
 
     strcpy(ImageInfo.Comments,Comment);
@@ -89,7 +89,7 @@ static void process_SOFn (const uchar * Data, int marker)
     ImageInfo.Process = marker;
 
     if (ShowTags){
-        printf("JPEG image is %uw * %uh, %d color components, %d bits per sample\n",
+        xprintf("JPEG image is %uw * %uh, %d color components, %d bits per sample\n",
                    ImageInfo.Width, ImageInfo.Height, num_components, data_precision);
     }
 }
@@ -98,18 +98,21 @@ static void process_SOFn (const uchar * Data, int marker)
 //--------------------------------------------------------------------------
 // Check sections array to see if it needs to be increased in size.
 //--------------------------------------------------------------------------
-static void CheckSectionsAllocated(void)
+static int CheckSectionsAllocated(void)
 {
     if (SectionsRead > SectionsAllocated){
         ErrFatal("allocation screwup");
+        return FALSE;
     }
     if (SectionsRead >= SectionsAllocated){
         SectionsAllocated += SectionsAllocated/2;
         Sections = (Section_t *)realloc(Sections, sizeof(Section_t)*SectionsAllocated);
         if (Sections == NULL){
             ErrFatal("could not allocate data for entire image");
+            return FALSE;
         }
     }
+    return TRUE;
 }
 
 
@@ -137,7 +140,7 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
         int ll,lh, got;
         uchar * Data;
 
-        CheckSectionsAllocated();
+        if (!CheckSectionsAllocated()) return FALSE;
 
         prev = 0;
         for (a=0;;a++){
@@ -145,6 +148,7 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
             if (marker != 0xff && prev == 0xff) break;
             if (marker == EOF){
                 ErrFatal("Unexpected end of file");
+                return FALSE;
             }
             prev = marker;
         }
@@ -160,12 +164,14 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
         ll = fgetc(infile);
         if (lh == EOF || ll == EOF){
             ErrFatal("Unexpected end of file");
+            return FALSE;
         }
 
         itemlen = (lh << 8) | ll;
 
         if (itemlen < 2){
             ErrFatal("invalid marker");
+            return FALSE;
         }
 
         Sections[SectionsRead].Size = itemlen;
@@ -173,6 +179,7 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
         Data = (uchar *)malloc(itemlen);
         if (Data == NULL){
             ErrFatal("Could not allocate memory");
+            return FALSE;
         }
         Sections[SectionsRead].Data = Data;
 
@@ -183,6 +190,7 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
         got = fread(Data+2, 1, itemlen-2, infile); // Read the whole section.
         if (got != itemlen-2){
             ErrFatal("Premature end of file?");
+            return FALSE;
         }
         SectionsRead += 1;
 
@@ -202,14 +210,16 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
                     Data = (uchar *)malloc(size);
                     if (Data == NULL){
                         ErrFatal("could not allocate data for entire image");
+                        return FALSE;
                     }
 
                     got = fread(Data, 1, size, infile);
                     if (got != size){
                         ErrFatal("could not read the rest of the image");
+                        return FALSE;
                     }
 
-                    CheckSectionsAllocated();
+                    if (!CheckSectionsAllocated()) return FALSE;
                     Sections[SectionsRead].Data = Data;
                     Sections[SectionsRead].Size = size;
                     Sections[SectionsRead].Type = PSEUDO_IMAGE_MARKER;
@@ -261,14 +271,14 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
                 ImageInfo.JfifHeader.XDensity = (Data[10]<<8) | Data[11];
                 ImageInfo.JfifHeader.YDensity = (Data[12]<<8) | Data[13];
                 if (ShowTags){
-                    printf("JFIF SOI marker: Units: %d ",ImageInfo.JfifHeader.ResolutionUnits);
+                    xprintf("JFIF SOI marker: Units: %d ",ImageInfo.JfifHeader.ResolutionUnits);
                     switch(ImageInfo.JfifHeader.ResolutionUnits){
-                        case 0: printf("(aspect ratio)"); break;
-                        case 1: printf("(dots per inch)"); break;
-                        case 2: printf("(dots per cm)"); break;
-                        default: printf("(unknown)"); break;
+                        case 0: xprintf("(aspect ratio)"); break;
+                        case 1: xprintf("(dots per inch)"); break;
+                        case 2: xprintf("(dots per cm)"); break;
+                        default: xprintf("(unknown)"); break;
                     }
-                    printf("  X-density=%d Y-density=%d\n",ImageInfo.JfifHeader.XDensity, ImageInfo.JfifHeader.YDensity);
+                    xprintf("  X-density=%d Y-density=%d\n",ImageInfo.JfifHeader.XDensity, ImageInfo.JfifHeader.YDensity);
 
                     if (Data[14] || Data[15]){
                         fprintf(stderr,"Ignoring jfif header thumbnail\n");
@@ -289,7 +299,7 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
                     }else if (memcmp(Data+2, "http:", 5) == 0){
                         Sections[SectionsRead-1].Type = M_XMP; // Change tag for internal purposes.
                         if (ShowTags){
-                            printf("Image cotains XMP section, %d bytes long\n", itemlen);
+                            xprintf("Image cotains XMP section, %d bytes long\n", itemlen);
                             if (ShowTags){
                                 ShowXmp(Sections[SectionsRead-1]);
                             }
@@ -304,7 +314,7 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
             case M_IPTC:
                 if (ReadMode & READ_METADATA){
                     if (ShowTags){
-                        printf("Image cotains IPTC section, %d bytes long\n", itemlen);
+                        xprintf("Image cotains IPTC section, %d bytes long\n", itemlen);
                     }
                     // Note: We just store the IPTC section.  Its relatively straightforward
                     // and we don't act on any part of it, so just display it at parse time.
@@ -331,7 +341,7 @@ int ReadJpegSections (FILE * infile, ReadMode_t ReadMode)
             default:
                 // Skip any other sections.
                 if (ShowTags){
-                    printf("Jpeg section marker 0x%02x size %d\n",marker, itemlen);
+                    xprintf("Jpeg section marker 0x%02x size %d\n",marker, itemlen);
                 }
                 break;
         }
@@ -484,7 +494,8 @@ int ReplaceThumbnail(const char * ThumbFileName)
     ThumbnailPointer = ExifSection->Data+ImageInfo.ThumbnailOffset+8;
 
     if (ThumbnailFile){
-        fread(ThumbnailPointer, ThumbLen, 1, ThumbnailFile);
+        int res = fread(ThumbnailPointer, ThumbLen, 1, ThumbnailFile);
+        (void)res;
         fclose(ThumbnailFile);
     }
 

@@ -1,3 +1,11 @@
+//
+// This is a modified version of jhead 2.97, which is a
+// public domain Exif manipulation tool.
+//
+// The original files can be found at http://www.sentex.net/~mwandel/jhead/
+//
+
+
 //--------------------------------------------------------------------------
 // Include file for jhead program.
 //
@@ -262,3 +270,6 @@ extern int ShowTags;
 #define M_DHT   0xC4          // Define Huffmann Table
 #define M_DRI   0xDD
 #define M_IPTC  0xED          // IPTC marker
+
+// dummy printf
+int xprintf(const char *, ...);

@@ -63,7 +63,7 @@ void ProcessGpsInfo(unsigned char * DirStart, unsigned char * OffsetBase, unsign
     #define DIR_ENTRY_ADDR(Start, Entry) (Start+2+12*(Entry))
 
     if (ShowTags){
-        printf("(dir has %d entries)\n",NumDirEntries);
+        xprintf("(dir has %d entries)\n",NumDirEntries);
     }
 
     ImageInfo.GpsInfoPresent = TRUE;
@@ -169,10 +169,10 @@ void ProcessGpsInfo(unsigned char * DirStart, unsigned char * OffsetBase, unsign
         if (ShowTags){
             // Show tag value.
             if (Tag < MAX_GPS_TAG){
-                printf("        GPS%s =", GpsTags[Tag]);
+                xprintf("        GPS%s =", GpsTags[Tag]);
             }else{
                 // Show unknown tag
-                printf("        Illegal GPS tag %04x=", Tag);
+                xprintf("        Illegal GPS tag %04x=", Tag);
             }
 
             switch(Format){
@@ -182,12 +182,12 @@ void ProcessGpsInfo(unsigned char * DirStart, unsigned char * OffsetBase, unsign
                 case FMT_STRING:
                     // String arrays printed without function call (different from int arrays)
                     {
-                        printf("\"");
+                        xprintf("\"");
                         for (a=0;a<ByteCount;a++){
                             int ZeroSkipped = 0;
                             if (ValuePtr[a] >= 32){
                                 if (ZeroSkipped){
-                                    printf("?");
+                                    xprintf("?");
                                     ZeroSkipped = 0;
                                 }
                                 putchar(ValuePtr[a]);
@@ -197,7 +197,7 @@ void ProcessGpsInfo(unsigned char * DirStart, unsigned char * OffsetBase, unsign
                                 }
                             }
                         }
-                        printf("\"\n");
+                        xprintf("\"\n");
                     }
                     break;
 
@@ -206,9 +206,9 @@ void ProcessGpsInfo(unsigned char * DirStart, unsigned char * OffsetBase, unsign
                     for (a=0;;){
                         PrintFormatNumber(ValuePtr+a*ComponentSize, Format, ByteCount);
                         if (++a >= Components) break;
-                        printf(", ");
+                        xprintf(", ");
                     }
-                    printf("\n");
+                    xprintf("\n");
             }
         }
     }

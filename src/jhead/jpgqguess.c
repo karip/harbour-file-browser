@@ -94,7 +94,7 @@ static int jpeg_zigzag_order[64] = {
         c = Data[a++];
         tableindex = c & 0x0f;
         if (ShowTags>1){
-            printf("DQT:  table %d precision %d\n", tableindex, (c>>4) ? 16 : 8);
+            xprintf("DQT:  table %d precision %d\n", tableindex, (c>>4) ? 16 : 8);
         }
         if (tableindex < 2){
             reftable = deftabs[tableindex];
@@ -125,11 +125,11 @@ static int jpeg_zigzag_order[64] = {
         // If requested, print table in normal array order 
         if (ShowTags>2){
             for (row=0; row<8; row++) {
-                printf("    ");
+                xprintf("    ");
                 for (col=0; col<8; col++) {
-                    printf("%5u ", table[jpeg_zigzag_order[row*8+col]]);
+                    xprintf("%5u ", table[jpeg_zigzag_order[row*8+col]]);
                 }
-                printf("\n");
+                xprintf("\n");
             }
         }
         // Print summary stats 
@@ -145,10 +145,10 @@ static int jpeg_zigzag_order[64] = {
             }else{
                 qual = 5000.0 / cumsf;
             }
-            if (ShowTags>1)  printf("  ");
+            if (ShowTags>1)  xprintf("  ");
 
             if (ShowTags){
-                printf("Approximate quality factor for qtable %d: %.0f (scale %.2f, var %.2f)\n",
+                xprintf("Approximate quality factor for qtable %d: %.0f (scale %.2f, var %.2f)\n",
                      tableindex, qual, cumsf, var);
             } else {
                 if (tableindex == 0){
@@ -174,7 +174,7 @@ void process_DHT (const uchar * Data, int length)
     unsigned char huff[16];
 
     if (ShowTags>1){
-        printf("DHT (length %d bytes)\n", length);
+        xprintf("DHT (length %d bytes)\n", length);
     }
 
     a=2; // first two bytes is length
@@ -182,23 +182,23 @@ void process_DHT (const uchar * Data, int length)
     {
         c = Data[a++];
         if (ShowTags>1){
-            printf("  table %d\n", c);
+            xprintf("  table %d\n", c);
         }
         for (i=0; i<16; i++) {
             huff[i]=(unsigned char) Data[a++];
         }
         for (i=0; i<16; i++) {
             if (ShowTags>2){
-                printf("  bits %2d (codes=%3u) ", i+1, (unsigned int) huff[i]);
+                xprintf("  bits %2d (codes=%3u) ", i+1, (unsigned int) huff[i]);
             }
             while (huff[i]--) {
                 c2 = Data[a++];
                 if (ShowTags>2){
-                    printf("  $%02x ", c2);
+                    xprintf("  $%02x ", c2);
                 }
             }
             if (ShowTags>2){
-                printf("\n");
+                xprintf("\n");
             }
         }
     }

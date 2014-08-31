@@ -374,34 +374,34 @@ void PrintFormatNumber(void * ValuePtr, int Format, int ByteCount)
     for(n=0;n<16;n++){
         switch(Format){
             case FMT_SBYTE:
-            case FMT_BYTE:      printf("%02x",*(uchar *)ValuePtr); s=1;  break;
-            case FMT_USHORT:    printf("%d",Get16u(ValuePtr)); s=2;      break;
+            case FMT_BYTE:      xprintf("%02x",*(uchar *)ValuePtr); s=1;  break;
+            case FMT_USHORT:    xprintf("%d",Get16u(ValuePtr)); s=2;      break;
             case FMT_ULONG:     
-            case FMT_SLONG:     printf("%d",Get32s(ValuePtr)); s=4;      break;
-            case FMT_SSHORT:    printf("%hd",(signed short)Get16u(ValuePtr)); s=2; break;
+            case FMT_SLONG:     xprintf("%d",Get32s(ValuePtr)); s=4;      break;
+            case FMT_SSHORT:    xprintf("%hd",(signed short)Get16u(ValuePtr)); s=2; break;
             case FMT_URATIONAL:
-                printf("%u/%u",Get32s(ValuePtr), Get32s(4+(char *)ValuePtr)); 
+                xprintf("%u/%u",Get32s(ValuePtr), Get32s(4+(char *)ValuePtr));
                 s = 8;
                 break;
 
             case FMT_SRATIONAL: 
-                printf("%d/%d",Get32s(ValuePtr), Get32s(4+(char *)ValuePtr)); 
+                xprintf("%d/%d",Get32s(ValuePtr), Get32s(4+(char *)ValuePtr));
                 s = 8;
                 break;
 
-            case FMT_SINGLE:    printf("%f",(double)*(float *)ValuePtr); s=8; break;
-            case FMT_DOUBLE:    printf("%f",*(double *)ValuePtr);        s=8; break;
+            case FMT_SINGLE:    xprintf("%f",(double)*(float *)ValuePtr); s=8; break;
+            case FMT_DOUBLE:    xprintf("%f",*(double *)ValuePtr);        s=8; break;
             default: 
-                printf("Unknown format %d:", Format);
+                xprintf("Unknown format %d:", Format);
                 return;
         }
         ByteCount -= s;
         if (ByteCount <= 0) break;
-        printf(", ");
+        xprintf(", ");
         ValuePtr = (void *)((char *)ValuePtr + s);
 
     }
-    if (n >= 16) printf("...");
+    if (n >= 16) xprintf("...");
 }
 
 
@@ -489,14 +489,14 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
             }
         }
         if (DumpExifMap){
-            printf("Map: %05d-%05d: Directory\n",(int)(DirStart-OffsetBase), (int)(DirEnd+4-OffsetBase));
+            xprintf("Map: %05d-%05d: Directory\n",(int)(DirStart-OffsetBase), (int)(DirEnd+4-OffsetBase));
         }
 
 
     }
 
     if (ShowTags){
-        printf("(dir has %d entries)\n",NumDirEntries);
+        xprintf("(dir has %d entries)\n",NumDirEntries);
     }
 
     for (de=0;de<NumDirEntries;de++){
@@ -539,7 +539,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
             }
 
             if (DumpExifMap){
-                printf("Map: %05d-%05d:   Data for tag %04x\n",OffsetVal, OffsetVal+ByteCount, Tag);
+                xprintf("Map: %05d-%05d:   Data for tag %04x\n",OffsetVal, OffsetVal+ByteCount, Tag);
             }
         }else{
             // 4 bytes or less and value is in the dir entry itself
@@ -548,7 +548,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
 
         if (Tag == TAG_MAKER_NOTE){
             if (ShowTags){
-                printf("%s    Maker note: ",IndentString);
+                xprintf("%s    Maker note: ",IndentString);
             }
             ProcessMakerNote(ValuePtr, ByteCount, OffsetBase, ExifLength);
             continue;
@@ -557,12 +557,12 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
         if (ShowTags){
             // Show tag name
             for (a=0;;a++){
-                if (a >= TAG_TABLE_SIZE){
-                    printf("%s    Unknown Tag %04x Value = ", IndentString, Tag);
+                if ((unsigned int)a >= TAG_TABLE_SIZE){
+                    xprintf("%s    Unknown Tag %04x Value = ", IndentString, Tag);
                     break;
                 }
                 if (TagTable[a].Tag == Tag){
-                    printf("%s    %s = ",IndentString, TagTable[a].Desc);
+                    xprintf("%s    %s = ",IndentString, TagTable[a].Desc);
                     break;
                 }
             }
@@ -571,10 +571,10 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
             switch(Format){
                 case FMT_BYTE:
                     if(ByteCount>1){
-                        printf("%.*ls\n", ByteCount/2, (wchar_t *)ValuePtr);
+                        xprintf("%.*ls\n", ByteCount/2, (wchar_t *)ValuePtr);
                     }else{
                         PrintFormatNumber(ValuePtr, Format, ByteCount);
-                        printf("\n");
+                        xprintf("\n");
                     }
                     break;
 
@@ -585,7 +585,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
                     // String arrays printed without function call (different from int arrays)
                     {
                         int NoPrint = 0;
-                        printf("\"");
+                        xprintf("\"");
                         for (a=0;a<ByteCount;a++){
                             if (ValuePtr[a] >= 32){
                                 putchar(ValuePtr[a]);
@@ -599,14 +599,14 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
                                 }
                             }
                         }
-                        printf("\"\n");
+                        xprintf("\"\n");
                     }
                     break;
 
                 default:
                     // Handle arrays of numbers later (will there ever be?)
                     PrintFormatNumber(ValuePtr, Format, ByteCount);
-                    printf("\n");
+                    xprintf("\n");
             }
         }
 
@@ -645,7 +645,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
             case TAG_WINXP_COMMENT:
                 if (ImageInfo.Comments[0]){ // We already have a jpeg comment.
                     // Already have a comment (probably windows comment), skip this one.
-                    if (ShowTags) printf("Windows XP commend and other comment in header\n");
+                    if (ShowTags) xprintf("Windows XP commend and other comment in header\n");
                     break; // Already have a windows comment, skip this one.
                 }
 
@@ -659,7 +659,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
             case TAG_USERCOMMENT:
                 if (ImageInfo.Comments[0]){ // We already have a jpeg comment.
                     // Already have a comment (probably windows comment), skip this one.
-                    if (ShowTags) printf("Multiple comments in exif header\n");
+                    if (ShowTags) xprintf("Multiple comments in exif header\n");
                     break; // Already have a windows comment, skip this one.
                 }
 
@@ -840,10 +840,10 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
                 break;
 
             case TAG_EXIF_OFFSET:
-                if (ShowTags) printf("%s    Exif Dir:",IndentString);
+                if (ShowTags) xprintf("%s    Exif Dir:",IndentString);
 
             case TAG_INTEROP_OFFSET:
-                if (Tag == TAG_INTEROP_OFFSET && ShowTags) printf("%s    Interop Dir:",IndentString);
+                if (Tag == TAG_INTEROP_OFFSET && ShowTags) xprintf("%s    Interop Dir:",IndentString);
                 {
                     unsigned char * SubdirStart;
                     SubdirStart = OffsetBase + Get32u(ValuePtr);
@@ -857,7 +857,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
                 break;
 
             case TAG_GPSINFO:
-                if (ShowTags) printf("%s    GPS info dir:",IndentString);
+                if (ShowTags) xprintf("%s    GPS info dir:",IndentString);
                 {
                     unsigned char * SubdirStart;
                     SubdirStart = OffsetBase + Get32u(ValuePtr);
@@ -927,13 +927,13 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
                         // Jhead 1.3 or earlier would crop the whole directory!
                         // As Jhead produces this form of format incorrectness, 
                         // I'll just let it pass silently
-                        if (ShowTags) printf("Thumbnail removed with Jhead 1.3 or earlier\n");
+                        if (ShowTags) xprintf("Thumbnail removed with Jhead 1.3 or earlier\n");
                     }else{
                         ErrNonfatal("Illegal subdirectory link in Exif header",0,0);
                     }
                 }else{
                     if (SubdirStart <= OffsetBase+ExifLength){
-                        if (ShowTags) printf("%s    Continued directory ",IndentString);
+                        if (ShowTags) xprintf("%s    Continued directory ",IndentString);
                         ProcessExifDir(SubdirStart, OffsetBase, ExifLength, NestingLevel+1);
                     }
                 }
@@ -950,7 +950,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
         ImageInfo.ThumbnailAtEnd = FALSE;
 
         if (DumpExifMap){
-            printf("Map: %05d-%05d: Thumbnail\n",ThumbnailOffset, ThumbnailOffset+ThumbnailSize);
+            xprintf("Map: %05d-%05d: Thumbnail\n",ThumbnailOffset, ThumbnailOffset+ThumbnailSize);
         }
 
         if (ThumbnailOffset <= ExifLength){
@@ -959,7 +959,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
                 // actually exists.  Canon's EOS viewer utility will do this - the
                 // thumbnail extracts ok with this hack.
                 ThumbnailSize = ExifLength-ThumbnailOffset;
-                if (ShowTags) printf("Thumbnail incorrectly placed in header\n");
+                if (ShowTags) xprintf("Thumbnail incorrectly placed in header\n");
 
             }
             // The thumbnail pointer appears to be valid.  Store it.
@@ -967,7 +967,7 @@ static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
             ImageInfo.ThumbnailSize = ThumbnailSize;
 
             if (ShowTags){
-                printf("Thumbnail size: %d bytes\n",ThumbnailSize);
+                xprintf("Thumbnail size: %d bytes\n",ThumbnailSize);
             }
         }
     }
@@ -988,7 +988,7 @@ void process_EXIF (unsigned char * ExifSection, unsigned int length)
     NumOrientations = 0;
 
     if (ShowTags){
-        printf("Exif header %d bytes long\n",length);
+        xprintf("Exif header %d bytes long\n",length);
     }
 
     {   // Check the EXIF header component
@@ -1000,11 +1000,11 @@ void process_EXIF (unsigned char * ExifSection, unsigned int length)
     }
 
     if (memcmp(ExifSection+8,"II",2) == 0){
-        if (ShowTags) printf("Exif section in Intel order\n");
+        if (ShowTags) xprintf("Exif section in Intel order\n");
         MotorolaOrder = 0;
     }else{
         if (memcmp(ExifSection+8,"MM",2) == 0){
-            if (ShowTags) printf("Exif section in Motorola order\n");
+            if (ShowTags) xprintf("Exif section in Motorola order\n");
             MotorolaOrder = 1;
         }else{
             ErrNonfatal("Invalid Exif alignment marker.",0,0);
@@ -1038,11 +1038,11 @@ void process_EXIF (unsigned char * ExifSection, unsigned int length)
 
     if (DumpExifMap){
         unsigned a,b;
-        printf("Map: %05d- End of exif\n",length-8);
+        xprintf("Map: %05d- End of exif\n",length-8);
         for (a=0;a<length-8;a+= 10){
-            printf("Map: %05d ",a);
-            for (b=0;b<10;b++) printf(" %02x",*(ExifSection+8+a+b));
-            printf("\n");
+            xprintf("Map: %05d ",a);
+            for (b=0;b<10;b++) xprintf(" %02x",*(ExifSection+8+a+b));
+            xprintf("\n");
         }
     }
 
@@ -1288,143 +1288,143 @@ int Exif2tm(struct tm * timeptr, char * ExifTime)
 void ShowImageInfo(int ShowFileInfo)
 {
     if (ShowFileInfo){
-        printf("File name    : %s\n",ImageInfo.FileName);
-        printf("File size    : %d bytes\n",ImageInfo.FileSize);
+        xprintf("File name    : %s\n",ImageInfo.FileName);
+        xprintf("File size    : %d bytes\n",ImageInfo.FileSize);
 
         {
             char Temp[20];
             FileTimeAsString(Temp);
-            printf("File date    : %s\n",Temp);
+            xprintf("File date    : %s\n",Temp);
         }
     }
 
     if (ImageInfo.CameraMake[0]){
-        printf("Camera make  : %s\n",ImageInfo.CameraMake);
-        printf("Camera model : %s\n",ImageInfo.CameraModel);
+        xprintf("Camera make  : %s\n",ImageInfo.CameraMake);
+        xprintf("Camera model : %s\n",ImageInfo.CameraModel);
     }
     if (ImageInfo.DateTime[0]){
-        printf("Date/Time    : %s\n",ImageInfo.DateTime);
+        xprintf("Date/Time    : %s\n",ImageInfo.DateTime);
     }
-    printf("Resolution   : %d x %d\n",ImageInfo.Width, ImageInfo.Height);
+    xprintf("Resolution   : %d x %d\n",ImageInfo.Width, ImageInfo.Height);
 
     if (ImageInfo.Orientation > 1){
         // Only print orientation if one was supplied, and if its not 1 (normal orientation)
-        printf("Orientation  : %s\n", OrientTab[ImageInfo.Orientation]);
+        xprintf("Orientation  : %s\n", OrientTab[ImageInfo.Orientation]);
     }
 
     if (ImageInfo.IsColor == 0){
-        printf("Color/bw     : Black and white\n");
+        xprintf("Color/bw     : Black and white\n");
     }
 
     if (ImageInfo.FlashUsed >= 0){
         if (ImageInfo.FlashUsed & 1){    
-            printf("Flash used   : Yes");
+            xprintf("Flash used   : Yes");
             switch (ImageInfo.FlashUsed){
-	            case 0x5: printf(" (Strobe light not detected)"); break;
-	            case 0x7: printf(" (Strobe light detected) "); break;
-	            case 0x9: printf(" (manual)"); break;
-	            case 0xd: printf(" (manual, return light not detected)"); break;
-	            case 0xf: printf(" (manual, return light  detected)"); break;
-	            case 0x19:printf(" (auto)"); break;
-	            case 0x1d:printf(" (auto, return light not detected)"); break;
-	            case 0x1f:printf(" (auto, return light detected)"); break;
-	            case 0x41:printf(" (red eye reduction mode)"); break;
-	            case 0x45:printf(" (red eye reduction mode return light not detected)"); break;
-	            case 0x47:printf(" (red eye reduction mode return light  detected)"); break;
-	            case 0x49:printf(" (manual, red eye reduction mode)"); break;
-	            case 0x4d:printf(" (manual, red eye reduction mode, return light not detected)"); break;
-	            case 0x4f:printf(" (red eye reduction mode, return light detected)"); break;
-	            case 0x59:printf(" (auto, red eye reduction mode)"); break;
-	            case 0x5d:printf(" (auto, red eye reduction mode, return light not detected)"); break;
-	            case 0x5f:printf(" (auto, red eye reduction mode, return light detected)"); break;
+                case 0x5: xprintf(" (Strobe light not detected)"); break;
+                case 0x7: xprintf(" (Strobe light detected) "); break;
+                case 0x9: xprintf(" (manual)"); break;
+                case 0xd: xprintf(" (manual, return light not detected)"); break;
+                case 0xf: xprintf(" (manual, return light  detected)"); break;
+                case 0x19:xprintf(" (auto)"); break;
+                case 0x1d:xprintf(" (auto, return light not detected)"); break;
+                case 0x1f:xprintf(" (auto, return light detected)"); break;
+                case 0x41:xprintf(" (red eye reduction mode)"); break;
+                case 0x45:xprintf(" (red eye reduction mode return light not detected)"); break;
+                case 0x47:xprintf(" (red eye reduction mode return light  detected)"); break;
+                case 0x49:xprintf(" (manual, red eye reduction mode)"); break;
+                case 0x4d:xprintf(" (manual, red eye reduction mode, return light not detected)"); break;
+                case 0x4f:xprintf(" (red eye reduction mode, return light detected)"); break;
+                case 0x59:xprintf(" (auto, red eye reduction mode)"); break;
+                case 0x5d:xprintf(" (auto, red eye reduction mode, return light not detected)"); break;
+                case 0x5f:xprintf(" (auto, red eye reduction mode, return light detected)"); break;
             }
         }else{
-            printf("Flash used   : No");
+            xprintf("Flash used   : No");
             switch (ImageInfo.FlashUsed){
-	            case 0x18:printf(" (auto)"); break;
+                case 0x18:xprintf(" (auto)"); break;
             }
         }
-        printf("\n");
+        xprintf("\n");
     }
 
 
     if (ImageInfo.FocalLength){
-        printf("Focal length : %4.1fmm",(double)ImageInfo.FocalLength);
+        xprintf("Focal length : %4.1fmm",(double)ImageInfo.FocalLength);
         if (ImageInfo.FocalLength35mmEquiv){
-            printf("  (35mm equivalent: %dmm)", ImageInfo.FocalLength35mmEquiv);
+            xprintf("  (35mm equivalent: %dmm)", ImageInfo.FocalLength35mmEquiv);
         }
-        printf("\n");
+        xprintf("\n");
     }
 
     if (ImageInfo.DigitalZoomRatio > 1){
         // Digital zoom used.  Shame on you!
-        printf("Digital Zoom : %1.3fx\n", (double)ImageInfo.DigitalZoomRatio);
+        xprintf("Digital Zoom : %1.3fx\n", (double)ImageInfo.DigitalZoomRatio);
     }
 
     if (ImageInfo.CCDWidth){
-        printf("CCD width    : %4.2fmm\n",(double)ImageInfo.CCDWidth);
+        xprintf("CCD width    : %4.2fmm\n",(double)ImageInfo.CCDWidth);
     }
 
     if (ImageInfo.ExposureTime){
         if (ImageInfo.ExposureTime < 0.010){
-            printf("Exposure time: %6.4f s ",(double)ImageInfo.ExposureTime);
+            xprintf("Exposure time: %6.4f s ",(double)ImageInfo.ExposureTime);
         }else{
-            printf("Exposure time: %5.3f s ",(double)ImageInfo.ExposureTime);
+            xprintf("Exposure time: %5.3f s ",(double)ImageInfo.ExposureTime);
         }
         if (ImageInfo.ExposureTime <= 0.5){
-            printf(" (1/%d)",(int)(0.5 + 1/ImageInfo.ExposureTime));
+            xprintf(" (1/%d)",(int)(0.5 + 1/ImageInfo.ExposureTime));
         }
-        printf("\n");
+        xprintf("\n");
     }
     if (ImageInfo.ApertureFNumber){
-        printf("Aperture     : f/%3.1f\n",(double)ImageInfo.ApertureFNumber);
+        xprintf("Aperture     : f/%3.1f\n",(double)ImageInfo.ApertureFNumber);
     }
     if (ImageInfo.Distance){
         if (ImageInfo.Distance < 0){
-            printf("Focus dist.  : Infinite\n");
+            xprintf("Focus dist.  : Infinite\n");
         }else{
-            printf("Focus dist.  : %4.2fm\n",(double)ImageInfo.Distance);
+            xprintf("Focus dist.  : %4.2fm\n",(double)ImageInfo.Distance);
         }
     }
 
     if (ImageInfo.ISOequivalent){
-        printf("ISO equiv.   : %2d\n",(int)ImageInfo.ISOequivalent);
+        xprintf("ISO equiv.   : %2d\n",(int)ImageInfo.ISOequivalent);
     }
 
     if (ImageInfo.ExposureBias){
         // If exposure bias was specified, but set to zero, presumably its no bias at all,
         // so only show it if its nonzero.
-        printf("Exposure bias: %4.2f\n",(double)ImageInfo.ExposureBias);
+        xprintf("Exposure bias: %4.2f\n",(double)ImageInfo.ExposureBias);
     }
         
     switch(ImageInfo.Whitebalance) {
         case 1:
-            printf("Whitebalance : Manual\n");
+            xprintf("Whitebalance : Manual\n");
             break;
         case 0:
-            printf("Whitebalance : Auto\n");
+            xprintf("Whitebalance : Auto\n");
             break;
     }
 
     //Quercus: 17-1-2004 Added LightSource, some cams return this, whitebalance or both
     switch(ImageInfo.LightSource) {
         case 1:
-            printf("Light Source : Daylight\n");
+            xprintf("Light Source : Daylight\n");
             break;
         case 2:
-            printf("Light Source : Fluorescent\n");
+            xprintf("Light Source : Fluorescent\n");
             break;
         case 3:
-            printf("Light Source : Incandescent\n");
+            xprintf("Light Source : Incandescent\n");
             break;
         case 4:
-            printf("Light Source : Flash\n");
+            xprintf("Light Source : Flash\n");
             break;
         case 9:
-            printf("Light Source : Fine weather\n");
+            xprintf("Light Source : Fine weather\n");
             break;
         case 11:
-            printf("Light Source : Shade\n");
+            xprintf("Light Source : Shade\n");
             break;
         default:; //Quercus: 17-1-2004 There are many more modes for this, check Exif2.2 specs
             // If it just says 'unknown' or we don't know it, then
@@ -1432,44 +1432,44 @@ void ShowImageInfo(int ShowFileInfo)
     }
 
     if (ImageInfo.MeteringMode > 0){ // 05-jan-2001 vcs
-        printf("Metering Mode: ");
+        xprintf("Metering Mode: ");
         switch(ImageInfo.MeteringMode) {
-        case 1: printf("average\n"); break;
-        case 2: printf("center weight\n"); break;
-        case 3: printf("spot\n"); break;
-        case 4: printf("multi spot\n");  break;
-        case 5: printf("pattern\n"); break;
-        case 6: printf("partial\n");  break;
-        case 255: printf("other\n");  break;
-        default: printf("unknown (%d)\n",ImageInfo.MeteringMode); break;
+        case 1: xprintf("average\n"); break;
+        case 2: xprintf("center weight\n"); break;
+        case 3: xprintf("spot\n"); break;
+        case 4: xprintf("multi spot\n");  break;
+        case 5: xprintf("pattern\n"); break;
+        case 6: xprintf("partial\n");  break;
+        case 255: xprintf("other\n");  break;
+        default: xprintf("unknown (%d)\n",ImageInfo.MeteringMode); break;
         }
     }
 
     if (ImageInfo.ExposureProgram){ // 05-jan-2001 vcs
         switch(ImageInfo.ExposureProgram) {
         case 1:
-            printf("Exposure     : Manual\n");
+            xprintf("Exposure     : Manual\n");
             break;
         case 2:
-            printf("Exposure     : program (auto)\n");
+            xprintf("Exposure     : program (auto)\n");
             break;
         case 3:
-            printf("Exposure     : aperture priority (semi-auto)\n");
+            xprintf("Exposure     : aperture priority (semi-auto)\n");
             break;
         case 4:
-            printf("Exposure     : shutter priority (semi-auto)\n");
+            xprintf("Exposure     : shutter priority (semi-auto)\n");
             break;
         case 5:
-            printf("Exposure     : Creative Program (based towards depth of field)\n"); 
+            xprintf("Exposure     : Creative Program (based towards depth of field)\n");
             break;
         case 6:
-            printf("Exposure     : Action program (based towards fast shutter speed)\n");
+            xprintf("Exposure     : Action program (based towards fast shutter speed)\n");
             break;
         case 7:
-            printf("Exposure     : Portrait Mode\n");
+            xprintf("Exposure     : Portrait Mode\n");
             break;
         case 8:
-            printf("Exposure     : LandscapeMode \n");
+            xprintf("Exposure     : LandscapeMode \n");
             break;
         default:
             break;
@@ -1478,26 +1478,26 @@ void ShowImageInfo(int ShowFileInfo)
     switch(ImageInfo.ExposureMode){
         case 0: // Automatic (not worth cluttering up output for)
             break;
-        case 1: printf("Exposure Mode: Manual\n");
+        case 1: xprintf("Exposure Mode: Manual\n");
             break;
-        case 2: printf("Exposure Mode: Auto bracketing\n");
+        case 2: xprintf("Exposure Mode: Auto bracketing\n");
             break;
     }
 
     if (ImageInfo.DistanceRange) {
-        printf("Focus range  : ");
+        xprintf("Focus range  : ");
         switch(ImageInfo.DistanceRange) {
             case 1:
-                printf("macro");
+                xprintf("macro");
                 break;
             case 2:
-                printf("close");
+                xprintf("close");
                 break;
             case 3:
-                printf("distant");
+                xprintf("distant");
                 break;
         }
-        printf("\n");
+        xprintf("\n");
     }
 
 
@@ -1509,30 +1509,30 @@ void ShowImageInfo(int ShowFileInfo)
         for (a=0;;a++){
             if (a >= PROCESS_TABLE_SIZE){
                 // ran off the end of the table.
-                printf("Jpeg process : Unknown\n");
+                xprintf("Jpeg process : Unknown\n");
                 break;
             }
             if (ProcessTable[a].Tag == ImageInfo.Process){
-                printf("Jpeg process : %s\n",ProcessTable[a].Desc);
+                xprintf("Jpeg process : %s\n",ProcessTable[a].Desc);
                 break;
             }
         }
     }
 
     if (ImageInfo.GpsInfoPresent){
-        printf("GPS Latitude : %s\n",ImageInfo.GpsLat);
-        printf("GPS Longitude: %s\n",ImageInfo.GpsLong);
-        if (ImageInfo.GpsAlt[0]) printf("GPS Altitude : %s\n",ImageInfo.GpsAlt);
+        xprintf("GPS Latitude : %s\n",ImageInfo.GpsLat);
+        xprintf("GPS Longitude: %s\n",ImageInfo.GpsLong);
+        if (ImageInfo.GpsAlt[0]) xprintf("GPS Altitude : %s\n",ImageInfo.GpsAlt);
     }
 
     if (ImageInfo.QualityGuess){
-        printf("JPEG Quality : %d\n", ImageInfo.QualityGuess);
+        xprintf("JPEG Quality : %d\n", ImageInfo.QualityGuess);
     }
 
     // Print the comment. Print 'Comment:' for each new line of comment.
     if (ImageInfo.Comments[0]){
         int a,c;
-        printf("Comment      : ");
+        xprintf("Comment      : ");
         if (!ImageInfo.CommentWidthchars){
             for (a=0;a<MAX_COMMENT_SIZE;a++){
                 c = ImageInfo.Comments[a];
@@ -1540,17 +1540,17 @@ void ShowImageInfo(int ShowFileInfo)
                 if (c == '\n'){
                     // Do not start a new line if the string ends with a carriage return.
                     if (ImageInfo.Comments[a+1] != '\0'){
-                        printf("\nComment      : ");
+                        xprintf("\nComment      : ");
                     }else{
-                        printf("\n");
+                        xprintf("\n");
                     }
                 }else{
                     putchar(c);
                 }
             }
-            printf("\n");
+            xprintf("\n");
         }else{
-            printf("%.*ls\n", ImageInfo.CommentWidthchars, (wchar_t *)ImageInfo.Comments);
+            xprintf("%.*ls\n", ImageInfo.CommentWidthchars, (wchar_t *)ImageInfo.Comments);
         }
     }
 }
@@ -1561,33 +1561,33 @@ void ShowImageInfo(int ShowFileInfo)
 //--------------------------------------------------------------------------
 void ShowConciseImageInfo(void)
 {
-    printf("\"%s\"",ImageInfo.FileName);
+    xprintf("\"%s\"",ImageInfo.FileName);
 
-    printf(" %dx%d",ImageInfo.Width, ImageInfo.Height);
+    xprintf(" %dx%d",ImageInfo.Width, ImageInfo.Height);
 
     if (ImageInfo.ExposureTime){
         if (ImageInfo.ExposureTime <= 0.5){
-            printf(" (1/%d)",(int)(0.5 + 1/ImageInfo.ExposureTime));
+            xprintf(" (1/%d)",(int)(0.5 + 1/ImageInfo.ExposureTime));
         }else{
-            printf(" (%1.1f)",ImageInfo.ExposureTime);
+            xprintf(" (%1.1f)",ImageInfo.ExposureTime);
         }
     }
 
     if (ImageInfo.ApertureFNumber){
-        printf(" f/%3.1f",(double)ImageInfo.ApertureFNumber);
+        xprintf(" f/%3.1f",(double)ImageInfo.ApertureFNumber);
     }
 
     if (ImageInfo.FocalLength35mmEquiv){
-        printf(" f(35)=%dmm",ImageInfo.FocalLength35mmEquiv);
+        xprintf(" f(35)=%dmm",ImageInfo.FocalLength35mmEquiv);
     }
 
     if (ImageInfo.FlashUsed >= 0 && ImageInfo.FlashUsed & 1){
-        printf(" (flash)");
+        xprintf(" (flash)");
     }
 
     if (ImageInfo.IsColor == 0){
-        printf(" (bw)");
+        xprintf(" (bw)");
     }
 
-    printf("\n");
+    xprintf("\n");
 }

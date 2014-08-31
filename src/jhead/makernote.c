@@ -28,12 +28,12 @@ static void ProcessCanonMakerNoteDir(unsigned char * DirStart, unsigned char * O
         }
 
         if (DumpExifMap){
-            printf("Map: %05d-%05d: Directory (makernote)\n",(int)(DirStart-OffsetBase), (int)(DirEnd-OffsetBase));
+            xprintf("Map: %05d-%05d: Directory (makernote)\n",(int)(DirStart-OffsetBase), (int)(DirEnd-OffsetBase));
         }
     }
 
     if (ShowTags){
-        printf("(dir has %d entries)\n",NumDirEntries);
+        xprintf("(dir has %d entries)\n",NumDirEntries);
     }
 
     for (de=0;de<NumDirEntries;de++){
@@ -72,7 +72,7 @@ static void ProcessCanonMakerNoteDir(unsigned char * DirStart, unsigned char * O
             ValuePtr = OffsetBase+OffsetVal;
 
             if (DumpExifMap){
-                printf("Map: %05d-%05d:   Data for makernote tag %04x\n",OffsetVal, OffsetVal+ByteCount, Tag);
+                xprintf("Map: %05d-%05d:   Data for makernote tag %04x\n",OffsetVal, OffsetVal+ByteCount, Tag);
             }
         }else{
             // 4 bytes or less and value is in the dir entry itself
@@ -81,7 +81,7 @@ static void ProcessCanonMakerNoteDir(unsigned char * DirStart, unsigned char * O
 
         if (ShowTags){
             // Show tag name
-            printf("            Canon maker tag %04x Value = ", Tag);
+            xprintf("            Canon maker tag %04x Value = ", Tag);
         }
 
         // Show tag value.
@@ -93,12 +93,12 @@ static void ProcessCanonMakerNoteDir(unsigned char * DirStart, unsigned char * O
             case FMT_STRING:
                 // String arrays printed without function call (different from int arrays)
                 if (ShowTags){
-                    printf("\"");
+                    xprintf("\"");
                     for (a=0;a<ByteCount;a++){
                         int ZeroSkipped = 0;
                         if (ValuePtr[a] >= 32){
                             if (ZeroSkipped){
-                                printf("?");
+                                xprintf("?");
                                 ZeroSkipped = 0;
                             }
                             putchar(ValuePtr[a]);
@@ -108,14 +108,14 @@ static void ProcessCanonMakerNoteDir(unsigned char * DirStart, unsigned char * O
                             }
                         }
                     }
-                    printf("\"\n");
+                    xprintf("\"\n");
                 }
                 break;
 
             default:
                 if (ShowTags){
                     PrintFormatNumber(ValuePtr, Format, ByteCount);
-                    printf("\n");
+                    xprintf("\n");
                 }
         }
         if (Tag == 1 && Components > 16){
@@ -159,13 +159,13 @@ static void ShowMakerNoteGeneric(unsigned char * ValuePtr, int ByteCount)
     int a;
     for (a=0;a<ByteCount;a++){
         if (a > 10){
-            printf("...");
+            xprintf("...");
             break;
         }
-        printf(" %02x",ValuePtr[a]);
+        xprintf(" %02x",ValuePtr[a]);
     }
-    printf(" (%d bytes)", ByteCount);
-    printf("\n");
+    xprintf(" (%d bytes)", ByteCount);
+    xprintf("\n");
 }
 
 //--------------------------------------------------------------------------
