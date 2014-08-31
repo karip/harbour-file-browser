@@ -7,7 +7,7 @@ DockedPanel {
     id: dockPanel
     width: parent.width
     open: false
-    height: (dockColumn.visible ? dockColumn.height : dockRow.height) + Theme.paddingLarge
+    height: (dockColumn.visible ? dockColumn.height + Theme.paddingLarge : dockRow.height)
     dock: Dock.Bottom
     visible: shouldBeVisible & !Qt.inputMethod.visible
 
@@ -40,7 +40,7 @@ DockedPanel {
             anchors.horizontalCenter: parent.horizontalCenter
             text: dockPanel.overrideText === "" ? qsTr("%1 selected").arg(dockPanel.selectedCount)
                                                 : dockPanel.overrideText
-            color: Theme.highlightColor
+            color: dockPanel.enabled ? Theme.highlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeExtraSmall
         }
         Row {
@@ -81,17 +81,21 @@ DockedPanel {
         id: dockRow
         visible: dockPanel.orientation === Orientation.Landscape
         anchors.horizontalCenter: parent.horizontalCenter
+        height: cutButton.height + Theme.paddingLarge*2
         spacing: 20
-        Spacer { width: Theme.paddingLarge }
+        Spacer { width: Theme.paddingLarge; height: parent.height }
         Label {
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
             text: dockPanel.overrideText === "" ? qsTr("%1 selected").arg(dockPanel.selectedCount)
                                                 : dockPanel.overrideText
-            color: Theme.highlightColor
+            color: dockPanel.enabled ? Theme.highlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeExtraSmall
         }
+        Spacer { width: 40; height: parent.height }
         IconButton {
+            id: cutButton
             enabled: dockPanel.enabled
+            anchors.verticalCenter: parent.verticalCenter
             icon.source: "../images/toolbar-cut.png"
             onClicked: {
                 var files = dockPanel.parent.selectedFiles();
@@ -101,6 +105,7 @@ DockedPanel {
         }
         IconButton {
             enabled: dockPanel.enabled
+            anchors.verticalCenter: parent.verticalCenter
             icon.source: "../images/toolbar-copy.png"
             onClicked: {
                 var files = dockPanel.parent.selectedFiles();
@@ -110,11 +115,13 @@ DockedPanel {
         }
         IconButton {
             enabled: dockPanel.enabled
+            anchors.verticalCenter: parent.verticalCenter
             icon.source: "image://theme/icon-l-delete"
             onClicked: { deleteTriggered(); }
         }
         IconButton {
             enabled: dockPanel.enabled
+            anchors.verticalCenter: parent.verticalCenter
             icon.source: "../images/toolbar-properties.png"
             onClicked: { propertyTriggered(); }
         }
