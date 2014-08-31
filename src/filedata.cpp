@@ -4,6 +4,7 @@
 #include <QMimeDatabase>
 #include <QImageReader>
 #include "globals.h"
+#include "jhead/jhead-api.h"
 #include <QDebug>
 
 FileData::FileData(QObject *parent) :
@@ -171,6 +172,8 @@ void FileData::readMetaData()
     // store in m_metaData, first char is priority, then label:value
     if (m_mimeType.name() == "image/jpeg" || m_mimeType.name() == "image/png" ||
             m_mimeType.name() == "image/gif") {
+
+        // read size
         QImageReader reader(m_file);
         QSize s = reader.size();
         if (s.width() >= 0 && s.height() >= 0) {
@@ -179,6 +182,13 @@ void FileData::readMetaData()
                               QString(":%1 x %2 %3").arg(s.width()).arg(s.height()).arg(ar));
         }
 
+        // read exif data
+        QStringList exif = readExifData(filename);
+        foreach (QString e, exif) {
+            m_metaData.append("8"+e);
+        }
+
+        // read comments
         QStringList textKeys = reader.textKeys();
         foreach (QString key, textKeys) {
             QString value = reader.text(key);
@@ -206,4 +216,12 @@ QString FileData::calculateAspectRatio(int width, int height) const
         ++i;
     }
     return QString();
+}
+
+QStringList FileData::readExifData(QString filename)
+{
+    QByteArray ba = filename.toUtf8();
+    const char *f = ba.data();
+    bool error = false;
+    return jhead_readJpegFile(f, &error);
 }

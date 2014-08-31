@@ -8,6 +8,10 @@ SOURCES += main.cpp filemodel.cpp filedata.cpp engine.cpp fileworker.cpp searche
 HEADERS += filemodel.h filedata.h engine.h fileworker.h searchengine.h searchworker.h \
            consolemodel.h statfileinfo.cpp globals.h
 
+SOURCES += jhead/jhead-api.cpp jhead/exif.c jhead/gpsinfo.c jhead/iptc.c jhead/jpgfile.c \
+           jhead/jpgqguess.c jhead/makernote.c
+HEADERS += jhead/jhead-api.h jhead/jhead.h
+
 OTHER_FILES = \
 # You DO NOT want .yaml be listed here as Qt Creator's editor is completely not ready for multi package .yaml's
 #
