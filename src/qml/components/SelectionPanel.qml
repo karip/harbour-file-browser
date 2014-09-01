@@ -77,7 +77,7 @@ DockedPanel {
             }
             IconButton {
                 enabled: dockPanel.enabled
-                icon.source: "image://theme/icon-l-delete"
+                icon.source: "image://theme/icon-m-delete"
                 onClicked: { deleteTriggered(); }
             }
             IconButton {
@@ -135,7 +135,7 @@ DockedPanel {
         IconButton {
             enabled: dockPanel.enabled
             anchors.verticalCenter: parent.verticalCenter
-            icon.source: "image://theme/icon-l-delete"
+            icon.source: "image://theme/icon-m-delete"
             onClicked: { deleteTriggered(); }
         }
         IconButton {
