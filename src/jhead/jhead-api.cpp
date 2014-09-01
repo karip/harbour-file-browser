@@ -160,7 +160,7 @@ void appendImageInfo(QStringList &metadata)
         }else{
             QString flash;
             switch (ImageInfo.FlashUsed){
-                case 0x18:flash = QObject::tr("(auto)"); break;
+                case 0x18:flash = QObject::tr("(Auto)"); break;
             }
             metadata.append(QObject::tr("Flash:No")+" "+flash);
         }
@@ -470,7 +470,8 @@ void appendIPTC(unsigned char* Data, unsigned int itemlen, QStringList &metadata
         // Process tag here
         switch (type) {
             case IPTC_RECORD_VERSION:
-                metadata.append(QObject::tr("Record Version:%1").arg((int)((*pos << 8) + (*(pos+1)))));
+                // always 4, so irrelevant information
+                //metadata.append(QObject::tr("Record Version:%1").arg((int)((*pos << 8) + (*(pos+1)))));
                 break;
 
             case IPTC_SUPLEMENTAL_CATEGORIES:  description = "Suplemental Categories"; break;
