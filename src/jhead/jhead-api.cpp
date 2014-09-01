@@ -32,9 +32,9 @@ static const char * OrientTab[9] = {
     "Rotate 180",       // 3
     "Flip vertical",    // upside down mirror
     "Transpose",        // Flipped about top-left <--> bottom-right axis.
-    "Rotate 90",        // rotate 90 cw to right it.
+    "Rotate 90 CW",        // rotate 90 cw to right it.
     "Transverse",       // flipped about top-right <--> bottom-left axis
-    "Rotate 270",       // rotate 270 to right it.
+    "Rotate 270 CW",       // rotate 270 to right it.
 };
 
 typedef struct {
@@ -114,7 +114,7 @@ void ErrNonfatal(const char * msg, int a1, int a2)
 void appendImageInfo(QStringList &metadata)
 {
     if (ImageInfo.CameraMake[0]){
-        metadata.append(QObject::tr("Manufacturer:%1").arg(QString::fromUtf8(ImageInfo.CameraMake)));
+        metadata.append(QObject::tr("Make:%1").arg(QString::fromUtf8(ImageInfo.CameraMake)));
         metadata.append(QObject::tr("Model:%1").arg(QString::fromUtf8(ImageInfo.CameraModel)));
     }
     if (ImageInfo.DateTime[0]){
@@ -473,30 +473,30 @@ void appendIPTC(unsigned char* Data, unsigned int itemlen, QStringList &metadata
                 metadata.append(QObject::tr("Record Version:%1").arg((int)((*pos << 8) + (*(pos+1)))));
                 break;
 
-            case IPTC_SUPLEMENTAL_CATEGORIES:  description = "SuplementalCategories"; break;
+            case IPTC_SUPLEMENTAL_CATEGORIES:  description = "Suplemental Categories"; break;
             case IPTC_KEYWORDS:                description = "Keywords"; break;
             case IPTC_CAPTION:                 description = "Caption"; break;
             case IPTC_AUTHOR:                  description = "Author"; break;
             case IPTC_HEADLINE:                description = "Headline"; break;
-            case IPTC_SPECIAL_INSTRUCTIONS:    description = "Spec. Instr."; break;
+            case IPTC_SPECIAL_INSTRUCTIONS:    description = "Special Instructions"; break;
             case IPTC_CATEGORY:                description = "Category"; break;
             case IPTC_BYLINE:                  description = "Byline"; break;
             case IPTC_BYLINE_TITLE:            description = "Byline Title"; break;
             case IPTC_CREDIT:                  description = "Credit"; break;
             case IPTC_SOURCE:                  description = "Source"; break;
-            case IPTC_COPYRIGHT_NOTICE:        description = "(C)Notice"; break;
+            case IPTC_COPYRIGHT_NOTICE:        description = "Copyright Notice"; break;
             case IPTC_OBJECT_NAME:             description = "Object Name"; break;
             case IPTC_CITY:                    description = "City"; break;
             case IPTC_STATE:                   description = "State"; break;
             case IPTC_COUNTRY:                 description = "Country"; break;
-            case IPTC_TRANSMISSION_REFERENCE:  description = "OriginalTransmissionReference"; break;
-            case IPTC_DATE:                    description = "DateCreated"; break;
-            case IPTC_COPYRIGHT:               description = "(C)Flag"; break;
-            case IPTC_REFERENCE_SERVICE:       description = "Country Code"; break;
-            case IPTC_COUNTRY_CODE:            description = "Ref. Service"; break;
+            case IPTC_TRANSMISSION_REFERENCE:  description = "Original Transmission Reference"; break;
+            case IPTC_DATE:                    description = "Date Created"; break;
+            case IPTC_COPYRIGHT:               description = "Urgency"; break;
+            case IPTC_REFERENCE_SERVICE:       description = "Reference Service"; break;
+            case IPTC_COUNTRY_CODE:            description = "Country Code"; break;
             case IPTC_TIME_CREATED:            description = "Time Created"; break;
             case IPTC_SUB_LOCATION:            description = "Sub Location"; break;
-            case IPTC_IMAGE_TYPE:              description = "Image type"; break;
+            case IPTC_IMAGE_TYPE:              description = "Image Type"; break;
 
             default:
                 if (ShowTags){
@@ -504,7 +504,8 @@ void appendIPTC(unsigned char* Data, unsigned int itemlen, QStringList &metadata
                 }
             break;
         }
-        if (!description.isEmpty()) {
+        // display only applications records (02), not envelope records (01)
+        if (!description.isEmpty() && signature == 0x1c02) {
             metadata.append(description+":"+QString::fromUtf8((char *)pos, length));
         }
         pos += length;
