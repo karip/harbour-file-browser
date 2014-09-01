@@ -314,13 +314,26 @@ Page {
         selectionPanel.open = false;
         selectionPanel.overrideText = "";
     }
+    function selectAllFiles() {
+        for (var i = 0; i < listModel.count; ++i) {
+            var item = listModel.get(i);
+            item.isSelected = true;
+            listModel.set(i, item);
+        }
+        _selectedFileCount = listModel.count;
+        selectionPanel.open = true;
+        selectionPanel.overrideText = "";
+    }
 
     SelectionPanel {
         id: selectionPanel
         selectedCount: _selectedFileCount
         enabled: !page.remorsePopupActive && !page.remorseItemActive
         orientation: page.orientation
+        displayClose: _selectedFileCount === listModel.count
 
+        onSelectAllTriggered: selectAllFiles();
+        onCloseTriggered: clearSelectedFiles();
         onDeleteTriggered: {
             var files = selectedFiles();
             remorsePopupActive = true;

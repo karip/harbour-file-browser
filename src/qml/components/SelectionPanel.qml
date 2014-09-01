@@ -11,6 +11,8 @@ DockedPanel {
     dock: Dock.Bottom
     visible: shouldBeVisible & !Qt.inputMethod.visible
 
+    signal selectAllTriggered
+    signal closeTriggered
     signal deleteTriggered
     signal propertyTriggered
 
@@ -19,6 +21,8 @@ DockedPanel {
 
     // number of selected items
     property int selectedCount: 0
+
+    property bool displayClose: false
 
     // enable or disable the buttons
     property bool enabled: true
@@ -47,6 +51,12 @@ DockedPanel {
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
+            IconButton {
+                enabled: dockPanel.enabled
+                icon.source: displayClose ? "image://theme/icon-m-close"
+                                          : "../images/toolbar-select-all.png"
+                onClicked: { displayClose ? closeTriggered() : selectAllTriggered(); }
+            }
             IconButton {
                 enabled: dockPanel.enabled
                 icon.source: "../images/toolbar-cut.png"
@@ -94,6 +104,13 @@ DockedPanel {
             font.pixelSize: Theme.fontSizeExtraSmall
         }
         Spacer { width: 40; height: parent.height }
+        IconButton {
+            enabled: dockPanel.enabled
+            anchors.verticalCenter: parent.verticalCenter
+            icon.source: displayClose ? "image://theme/icon-m-close"
+                                      : "../images/toolbar-select-all.png"
+            onClicked: { displayClose ? closeTriggered() : selectAllTriggered(); }
+        }
         IconButton {
             id: cutButton
             enabled: dockPanel.enabled

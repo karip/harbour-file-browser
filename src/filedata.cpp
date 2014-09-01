@@ -5,7 +5,6 @@
 #include <QImageReader>
 #include "globals.h"
 #include "jhead/jhead-api.h"
-#include <QDebug>
 
 FileData::FileData(QObject *parent) :
     QObject(parent)

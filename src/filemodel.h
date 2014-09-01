@@ -49,6 +49,7 @@ public:
     // file selection
     Q_INVOKABLE void toggleSelectedFile(int fileIndex);
     Q_INVOKABLE void clearSelectedFiles();
+    Q_INVOKABLE void selectAllFiles();
     Q_INVOKABLE QStringList selectedFiles() const;
 
 public slots:

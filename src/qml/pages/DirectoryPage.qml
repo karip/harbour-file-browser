@@ -234,6 +234,11 @@ Page {
         selectionPanel.open = false;
         selectionPanel.overrideText = "";
     }
+    function selectAllFiles() {
+        fileModel.selectAllFiles();
+        selectionPanel.open = true;
+        selectionPanel.overrideText = "";
+    }
 
     // a bit hackery: called from selection panel
     function selectedFiles() { var files = fileModel.selectedFiles(); return files; }
@@ -243,7 +248,10 @@ Page {
         selectedCount: fileModel.selectedFileCount
         enabled: !page.remorsePopupActive && !page.remorseItemActive
         orientation: page.orientation
+        displayClose: fileModel.selectedFileCount == fileModel.fileCount
 
+        onSelectAllTriggered: selectAllFiles();
+        onCloseTriggered: clearSelectedFiles();
         onDeleteTriggered: {
             var files = fileModel.selectedFiles();
             remorsePopupActive = true;

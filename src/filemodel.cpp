@@ -210,6 +210,23 @@ void FileModel::clearSelectedFiles()
     emit selectedFileCountChanged();
 }
 
+void FileModel::selectAllFiles()
+{
+    QMutableListIterator<StatFileInfo> iter(m_files);
+    int row = 0;
+    while (iter.hasNext()) {
+        StatFileInfo &info = iter.next();
+        info.setSelected(true);
+        // emit signal for views
+        QModelIndex topLeft = index(row, 0);
+        QModelIndex bottomRight = index(row, 0);
+        emit dataChanged(topLeft, bottomRight);
+        row++;
+    }
+    m_selectedFileCount = m_files.count();
+    emit selectedFileCountChanged();
+}
+
 QStringList FileModel::selectedFiles() const
 {
     if (m_selectedFileCount == 0)
