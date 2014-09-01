@@ -54,7 +54,7 @@ Page {
                     color: Theme.secondaryColor
                 }
                 Label {
-                    text: "1.4.2" // Version number must be changed manually!
+                    text: "1.5.0" // Version number must be changed manually!
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.highlightColor
                 }
