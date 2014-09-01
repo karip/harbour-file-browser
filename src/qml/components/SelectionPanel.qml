@@ -97,13 +97,15 @@ DockedPanel {
         spacing: 20
         Spacer { width: Theme.paddingLarge; height: parent.height }
         Label {
+            width: 220
             anchors.verticalCenter: parent.verticalCenter
+            horizontalAlignment: Text.AlignHCenter
             text: dockPanel.overrideText === "" ? qsTr("%1 selected").arg(dockPanel.selectedCount)
                                                 : dockPanel.overrideText
             color: dockPanel.enabled ? Theme.highlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeExtraSmall
         }
-        Spacer { width: 40; height: parent.height }
+        Spacer { width: 20; height: parent.height }
         IconButton {
             enabled: dockPanel.enabled
             anchors.verticalCenter: parent.verticalCenter
