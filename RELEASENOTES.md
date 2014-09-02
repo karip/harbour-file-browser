@@ -1,7 +1,9 @@
 
 # File Browser Release Notes
 
-## Version 1.5
+## Version 1.5 (2014-09-01)
+
+Published in Jolla store on 2014-09-02.
 
  * Add multiple file selections
  * View contents of tar files
