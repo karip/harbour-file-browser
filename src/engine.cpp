@@ -201,9 +201,9 @@ QStringList Engine::diskSpace(QString path)
 
 QStringList Engine::readFile(QString filename)
 {
-    int maxLines = 1000;
-    int maxSize = 10000;
-    int maxBinSize = 2048;
+    const int maxLines = 2000;
+    const int maxSize = 131072;
+    const int maxBinSize = 8192;
 
     // check existence
     StatFileInfo fileInfo(filename);
@@ -227,9 +227,15 @@ QStringList Engine::readFile(QString filename)
     if (!file.open(QIODevice::ReadOnly))
         return makeStringList(tr("Error reading file\n%1").arg(filename));
 
+    // determine buffer size
+    qint64 readSize = file.size();
+    if (readSize < 10000) readSize = 10000; // for the virtual files
+    if (readSize > maxSize) readSize = maxSize;
+
     // read start of file
-    char buffer[maxSize+1];
-    qint64 readSize = file.read(buffer, maxSize);
+    QByteArray ba((int)readSize+1,0);
+    char *buffer = ba.data();
+    readSize = file.read(buffer, readSize);
     if (readSize < 0)
         return makeStringList(tr("Error reading file\n%1").arg(filename));
 
@@ -238,6 +244,7 @@ QStringList Engine::readFile(QString filename)
 
     bool atEnd = file.atEnd();
     file.close();
+    ba.resize(readSize); // cut the array to the actual size read
 
     // detect binary or text file, it is binary if it contains zeros
     bool isText = true;
@@ -268,7 +275,6 @@ QStringList Engine::readFile(QString filename)
     }
 
     // read lines to a string list and join
-    QByteArray ba(buffer, readSize);
     QTextStream in(&ba);
     QStringList lines;
     int lineCount = 0;
