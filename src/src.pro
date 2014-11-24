@@ -12,6 +12,22 @@ SOURCES += jhead/jhead-api.cpp jhead/exif.c jhead/gpsinfo.c jhead/iptc.c jhead/j
            jhead/jpgqguess.c jhead/makernote.c
 HEADERS += jhead/jhead-api.h jhead/jhead.h
 
+i18n.path = /usr/share/harbour-file-browser/i18n
+i18n.files = i18n/file-browser_de.qm
+
+INSTALLS += i18n
+
+TRANSLATIONS = \
+    i18n/file-browser_de.ts
+
+lupdate_only {
+SOURCES += \
+    qml/*.qml \
+    qml/pages/*.qml \
+    qml/components/*.qml
+}
+
+
 OTHER_FILES = \
 # You DO NOT want .yaml be listed here as Qt Creator's editor is completely not ready for multi package .yaml's
 #
