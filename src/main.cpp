@@ -29,6 +29,14 @@ int main(int argc, char *argv[])
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
+    QTranslator* translator = new QTranslator;
+    QString locale = QLocale::system().name();
+    //locale="de"; // for testing purposes only
+    if(!translator->load("file-browser_" + locale, SailfishApp::pathTo("i18n").toLocalFile())) {
+        qDebug() << "Couldn't load translation";
+    }
+    app->installTranslator(translator);
+
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
     // QML global engine object
