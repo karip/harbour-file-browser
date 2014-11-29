@@ -7,6 +7,7 @@
 #include <QQuickView>
 #include <QQmlEngine>
 #include <QGuiApplication>
+#include <QTranslator>
 #include <QQmlContext>
 #include <QtQuick/QQuickPaintedItem>
 
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     QString locale = QLocale::system().name();
     //locale="de"; // for testing purposes only
     if(!translator->load("file-browser_" + locale, SailfishApp::pathTo("i18n").toLocalFile())) {
-        qDebug() << "Couldn't load translation";
+        qDebug() << "Couldn't load translation for locale "+locale + " from " + SailfishApp::pathTo("i18n").toLocalFile();
     }
     app->installTranslator(translator);
 

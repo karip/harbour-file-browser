@@ -56,6 +56,7 @@ OTHER_FILES = \
     qml/components/ProgressPanel.qml \
     qml/components/SelectionPanel.qml \
     qml/main.qml \
-    qml/functions.js
+    qml/functions.js \
+    i18n/file-browser_de.ts
 
 INCLUDEPATH += $$PWD
