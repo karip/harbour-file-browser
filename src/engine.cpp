@@ -202,7 +202,7 @@ QStringList Engine::diskSpace(QString path)
 QStringList Engine::readFile(QString filename)
 {
     int maxLines = 1000;
-    int maxSize = 10000;
+    int maxSize = 10240;
     int maxBinSize = 2048;
 
     // check existence
@@ -260,8 +260,8 @@ QStringList Engine::readFile(QString filename)
         QString msg = "";
 
         if (!atEnd) {
-            msg = tr("--- Binary file preview clipped at %1 kB ---").arg(maxBinSize/1000);
-            msg = tr("--- Binary file preview clipped at %1 kB ---").arg(maxBinSize/1000);
+            msg = tr("--- Binary file preview clipped at %1 kB ---").arg(maxBinSize/1024);
+            msg = tr("--- Binary file preview clipped at %1 kB ---").arg(maxBinSize/1024);
         }
 
         return QStringList() << msg << out8 << out16;
@@ -282,7 +282,7 @@ QStringList Engine::readFile(QString filename)
     if (lineCount == maxLines)
         msg = tr("--- Text file preview clipped at %1 lines ---").arg(maxLines);
     else if (!atEnd)
-        msg = tr("--- Text file preview clipped at %1 kB ---").arg(maxSize/1000);
+        msg = tr("--- Text file preview clipped at %1 kB ---").arg(maxSize/1024);
 
     return makeStringList(msg, lines.join("\n"));
 }
