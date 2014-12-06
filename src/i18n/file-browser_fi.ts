@@ -590,375 +590,375 @@
         <translation>%1 Gt</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="117"/>
+        <location filename="../jhead/jhead-api.cpp" line="119"/>
         <source>Make:%1</source>
         <translation>Valmistaja:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="118"/>
+        <location filename="../jhead/jhead-api.cpp" line="120"/>
         <source>Model:%1</source>
         <translation>Malli:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="121"/>
+        <location filename="../jhead/jhead-api.cpp" line="123"/>
         <source>Date/Time:%1</source>
         <translation>Päiväys/aika:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="128"/>
+        <location filename="../jhead/jhead-api.cpp" line="130"/>
         <source>Orientation:%1</source>
         <translation>Asento:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="133"/>
+        <location filename="../jhead/jhead-api.cpp" line="135"/>
         <source>Color/BW:Black and White</source>
         <translation>Väri/MV:Mustavalkoinen</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="140"/>
+        <location filename="../jhead/jhead-api.cpp" line="142"/>
         <source>(Strobe light not detected)</source>
         <translation>(Strobe-valoa ei havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="141"/>
+        <location filename="../jhead/jhead-api.cpp" line="143"/>
         <source>(Strobe light detected) </source>
         <translation>(Strobe-valoa havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="142"/>
+        <location filename="../jhead/jhead-api.cpp" line="144"/>
         <source>(Manual)</source>
         <translation>(Manuaalinen)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="143"/>
+        <location filename="../jhead/jhead-api.cpp" line="145"/>
         <source>(Manual, return light not detected)</source>
         <translation>(Manuaalinen, heijastunutta valoa ei havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="145"/>
-        <location filename="../jhead/jhead-api.cpp" line="163"/>
+        <location filename="../jhead/jhead-api.cpp" line="147"/>
+        <location filename="../jhead/jhead-api.cpp" line="165"/>
         <source>(Auto)</source>
         <translation>(Auto)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="146"/>
+        <location filename="../jhead/jhead-api.cpp" line="148"/>
         <source>(Auto, return light not detected)</source>
         <translation>(Auto,  heijastunutta valoa ei havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="147"/>
+        <location filename="../jhead/jhead-api.cpp" line="149"/>
         <source>(Auto, return light detected)</source>
         <translation>(Auto,  heijastunutta valoa havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="148"/>
+        <location filename="../jhead/jhead-api.cpp" line="150"/>
         <source>(Red eye reduction mode)</source>
         <translation>(Punasilmäisyyden vähennyksellä)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="149"/>
+        <location filename="../jhead/jhead-api.cpp" line="151"/>
         <source>(Red eye reduction mode return light not detected)</source>
         <translation>(Punasilmäisyyden vähennyksellä heijastunutta valoa ei havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="144"/>
+        <location filename="../jhead/jhead-api.cpp" line="146"/>
         <source>(Manual, return light detected)</source>
         <translation>(Manuaalinen, heijastunutta valoa havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="150"/>
+        <location filename="../jhead/jhead-api.cpp" line="152"/>
         <source>(Red eye reduction mode return light detected)</source>
         <translation>(Punasilmäisyyden vähennyksellä heijastunutta valoa havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="151"/>
+        <location filename="../jhead/jhead-api.cpp" line="153"/>
         <source>(Manual, red eye reduction mode)</source>
         <translation>(Manuaalinen, punasilmäisyyden vähennyksellä)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="152"/>
+        <location filename="../jhead/jhead-api.cpp" line="154"/>
         <source>(Manual, red eye reduction mode, return light not detected)</source>
         <translation>(Manuaalinen, punasilmäisyyden vähennyksellä, heijastunutta valoa ei havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="153"/>
+        <location filename="../jhead/jhead-api.cpp" line="155"/>
         <source>(Red eye reduction mode, return light detected)</source>
         <translation>(Punasilmäisyyden vähennyksellä, heijastunutta valoa havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="154"/>
+        <location filename="../jhead/jhead-api.cpp" line="156"/>
         <source>(Auto, red eye reduction mode)</source>
         <translation>(Auto, punasilmäisyyden vähennyksellä)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="155"/>
+        <location filename="../jhead/jhead-api.cpp" line="157"/>
         <source>(Auto, red eye reduction mode, return light not detected)</source>
         <translation>(Auto, punasilmäisyyden vähennyksellä, heijastunutta valoa ei havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="156"/>
+        <location filename="../jhead/jhead-api.cpp" line="158"/>
         <source>(Auto, red eye reduction mode, return light detected)</source>
         <translation>(Auto, punasilmäisyyden vähennyksellä, heijastunutta valoa havaittu)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="158"/>
+        <location filename="../jhead/jhead-api.cpp" line="160"/>
         <source>Flash:Yes</source>
         <translation>Salama:Päällä</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="165"/>
+        <location filename="../jhead/jhead-api.cpp" line="167"/>
         <source>Flash:No</source>
         <translation>Salama:Pois päältä</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="171"/>
+        <location filename="../jhead/jhead-api.cpp" line="173"/>
         <source>Focal Length:%1mm</source>
         <translation>Polttoväli:%1mm</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="173"/>
+        <location filename="../jhead/jhead-api.cpp" line="175"/>
         <source>(35mm equivalent: %1mm)</source>
         <translation>(35mm vastaavuus: %1mm)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="180"/>
+        <location filename="../jhead/jhead-api.cpp" line="182"/>
         <source>Digital Zoom:%1x</source>
         <translation>Digitaalizoomi:%1x</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="184"/>
+        <location filename="../jhead/jhead-api.cpp" line="186"/>
         <source>CCD Width:%1</source>
         <translation>CCD-leveys:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="190"/>
         <location filename="../jhead/jhead-api.cpp" line="192"/>
+        <location filename="../jhead/jhead-api.cpp" line="194"/>
         <source>Exposure Time:%1</source>
         <translation>Valotusaika:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="195"/>
+        <location filename="../jhead/jhead-api.cpp" line="197"/>
         <source>(1/%1)</source>
         <translation>(1/%1)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="200"/>
+        <location filename="../jhead/jhead-api.cpp" line="202"/>
         <source>Aperture:f/%1</source>
         <translation>Aukko:f/%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="204"/>
+        <location filename="../jhead/jhead-api.cpp" line="206"/>
         <source>Focus Distance:Infinite</source>
         <translation>Tarkennusetäisyys:Ääretön</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="206"/>
+        <location filename="../jhead/jhead-api.cpp" line="208"/>
         <source>Focus Distance:%1m</source>
         <translation>Tarkennusetäisyys:%1m</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="211"/>
+        <location filename="../jhead/jhead-api.cpp" line="213"/>
         <source>ISO Equivalent:%1</source>
         <translation>ISO-vastaavuus:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="217"/>
+        <location filename="../jhead/jhead-api.cpp" line="219"/>
         <source>Exposure Bias:%1</source>
         <translation>Valotuksen korjaus:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="222"/>
+        <location filename="../jhead/jhead-api.cpp" line="224"/>
         <source>White Balance:Manual</source>
         <translation>Valkotasapaino:Manuaalinen</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="225"/>
+        <location filename="../jhead/jhead-api.cpp" line="227"/>
         <source>White Balance:Auto</source>
         <translation>Valkotasapaino:Automaattinen</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="232"/>
+        <location filename="../jhead/jhead-api.cpp" line="234"/>
         <source>Light Source:Daylight</source>
         <translation>Valonlähde:Päivänvalo</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="235"/>
+        <location filename="../jhead/jhead-api.cpp" line="237"/>
         <source>Light Source:Fluorescent</source>
         <translation>Valonlähde:Loisteputki</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="238"/>
+        <location filename="../jhead/jhead-api.cpp" line="240"/>
         <source>Light Source:Incandescent</source>
         <translation>Valonlähde:Keinovalo</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="241"/>
+        <location filename="../jhead/jhead-api.cpp" line="243"/>
         <source>Light Source:Flash</source>
         <translation>Valonlähde:Salama</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="244"/>
+        <location filename="../jhead/jhead-api.cpp" line="246"/>
         <source>Light Source:Fine weather</source>
         <translation>Valonlähde:Hyvä sää</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="247"/>
+        <location filename="../jhead/jhead-api.cpp" line="249"/>
         <source>Light Source:Shade</source>
         <translation>Valonlähde:Pilvinen</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="255"/>
+        <location filename="../jhead/jhead-api.cpp" line="257"/>
         <source>Metering Mode:</source>
         <translation>Mittaustapa:</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="257"/>
+        <location filename="../jhead/jhead-api.cpp" line="259"/>
         <source>Average</source>
         <translation>Keskiarvo</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="258"/>
-        <source>Center weight</source>
-        <translation>Keskipainotettu</translation>
+        <location filename="../jhead/jhead-api.cpp" line="260"/>
+        <source>Center weighted average</source>
+        <translation>Keskustaa painottava keskiarvo</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="259"/>
+        <location filename="../jhead/jhead-api.cpp" line="261"/>
         <source>Spot</source>
         <translation>Piste</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="260"/>
+        <location filename="../jhead/jhead-api.cpp" line="262"/>
         <source>Multi spot</source>
         <translation>Monipiste</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="261"/>
+        <location filename="../jhead/jhead-api.cpp" line="263"/>
         <source>Pattern</source>
-        <translation>Kuvio</translation>
+        <translation>Arvioiva</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="262"/>
+        <location filename="../jhead/jhead-api.cpp" line="264"/>
         <source>Partial</source>
         <translation>Osittainen</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="263"/>
+        <location filename="../jhead/jhead-api.cpp" line="265"/>
         <source>Other</source>
         <translation>Muu</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="264"/>
+        <location filename="../jhead/jhead-api.cpp" line="266"/>
         <source>Unknown (%1)</source>
         <translation>Tuntematon (%1)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="270"/>
-        <source>Exposure:</source>
+        <location filename="../jhead/jhead-api.cpp" line="272"/>
+        <source>Exposure Program:</source>
         <translation>Valotusohjelma:</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="273"/>
+        <location filename="../jhead/jhead-api.cpp" line="275"/>
         <source>Manual</source>
         <translation>Manuaalinen</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="276"/>
+        <location filename="../jhead/jhead-api.cpp" line="278"/>
         <source>Program (auto)</source>
         <translation>Ohjelmoitu (auto)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="279"/>
+        <location filename="../jhead/jhead-api.cpp" line="281"/>
         <source>Aperture priority (semi-auto)</source>
         <translation>Aukko-prioriteetti (semi-auto)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="282"/>
+        <location filename="../jhead/jhead-api.cpp" line="284"/>
         <source>Shutter priority (semi-auto)</source>
         <translation>Suljin-prioriteetti (semi-auto)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="285"/>
+        <location filename="../jhead/jhead-api.cpp" line="287"/>
         <source>Creative Program (based towards depth of field)</source>
-        <translation>Creative-ohjelma (syväterävyysaluetta varten)</translation>
+        <translation>Creative-ohjelma (syvyysterävyyttä varten)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="288"/>
+        <location filename="../jhead/jhead-api.cpp" line="290"/>
         <source>Action program (based towards fast shutter speed)</source>
         <translation>Action-ohjelma (nopeaa suljinaikaa varten)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="291"/>
+        <location filename="../jhead/jhead-api.cpp" line="293"/>
         <source>Portrait mode</source>
         <translation>Muotokuvaustila</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="294"/>
+        <location filename="../jhead/jhead-api.cpp" line="296"/>
         <source>Landscape mode</source>
         <translation>Maisemakuvaustila</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="304"/>
+        <location filename="../jhead/jhead-api.cpp" line="306"/>
         <source>Exposure Mode:Manual</source>
         <translation>Valotustila:Manuaalinen</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="306"/>
+        <location filename="../jhead/jhead-api.cpp" line="308"/>
         <source>Exposure Mode:Auto bracketing</source>
         <translation>Valotustila:Autom. haarukointi</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="311"/>
+        <location filename="../jhead/jhead-api.cpp" line="313"/>
         <source>Focus Range:</source>
         <translation>Tarkennus:</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="314"/>
+        <location filename="../jhead/jhead-api.cpp" line="316"/>
         <source>Macro</source>
         <translation>Makro</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="317"/>
+        <location filename="../jhead/jhead-api.cpp" line="319"/>
         <source>Close</source>
         <translation>Lähelle</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="320"/>
+        <location filename="../jhead/jhead-api.cpp" line="322"/>
         <source>Distant</source>
         <translation>Kauas</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="335"/>
+        <location filename="../jhead/jhead-api.cpp" line="337"/>
         <source>JPEG Process:Unknown</source>
         <translation>JPEG-prosessi:Tuntematon</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="339"/>
+        <location filename="../jhead/jhead-api.cpp" line="341"/>
         <source>JPEG Process:%1</source>
         <translation>JPEG-prosessi:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="346"/>
+        <location filename="../jhead/jhead-api.cpp" line="348"/>
         <source>Latitude:%1</source>
         <translation>Leveyspiiri:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="347"/>
+        <location filename="../jhead/jhead-api.cpp" line="349"/>
         <source>Longitude:%1</source>
         <translation>Pituuspiiri:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="349"/>
+        <location filename="../jhead/jhead-api.cpp" line="351"/>
         <source>Altitude:%1</source>
         <translation>Korkeus:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="355"/>
+        <location filename="../jhead/jhead-api.cpp" line="357"/>
         <source>JPEG Quality:%1</source>
         <translation>JPEG-laatu:%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="361"/>
-        <location filename="../jhead/jhead-api.cpp" line="372"/>
+        <location filename="../jhead/jhead-api.cpp" line="363"/>
+        <location filename="../jhead/jhead-api.cpp" line="374"/>
         <source>Comment:</source>
         <translation>Kommentti:</translation>
     </message>

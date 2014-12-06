@@ -4,6 +4,8 @@
 //
 // The original files can be found at http://www.sentex.net/~mwandel/jhead/
 //
+// A good resource for exif tags is
+// http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html
 
 // Functions modified to output to a QStringList instead of stdout
 
@@ -255,7 +257,7 @@ void appendImageInfo(QStringList &metadata)
         QString m = QObject::tr("Metering Mode:");
         switch(ImageInfo.MeteringMode) {
         case 1: m += QObject::tr("Average"); break;
-        case 2: m += QObject::tr("Center weight"); break;
+        case 2: m += QObject::tr("Center weighted average"); break;
         case 3: m += QObject::tr("Spot"); break;
         case 4: m += QObject::tr("Multi spot"); break;
         case 5: m += QObject::tr("Pattern"); break;
@@ -267,7 +269,7 @@ void appendImageInfo(QStringList &metadata)
     }
 
     if (ImageInfo.ExposureProgram){ // 05-jan-2001 vcs
-        QString e = QObject::tr("Exposure:");
+        QString e = QObject::tr("Exposure Program:");
         switch(ImageInfo.ExposureProgram) {
         case 1:
             e += QObject::tr("Manual");
