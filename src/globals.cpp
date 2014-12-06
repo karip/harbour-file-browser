@@ -44,15 +44,15 @@ QString filesizeToString(qint64 filesize)
     // the usual way to display file size (like on Ubuntu)
     QLocale locale;
     if (filesize < 1000LL)
-        return locale.toString(filesize)+" bytes";
+        return QObject::tr("%1 bytes").arg(locale.toString(filesize));
 
     if (filesize < 1000000LL)
-        return locale.toString((double)filesize/1000.0, 'f', 2)+" kB";
+        return QObject::tr("%1 kB").arg(locale.toString((double)filesize/1000.0, 'f', 2));
 
     if (filesize < 1000000000LL)
-        return locale.toString((double)filesize/1000000.0, 'f', 2)+" MB";
+        return QObject::tr("%1 MB").arg(locale.toString((double)filesize/1000000.0, 'f', 2));
 
-    return locale.toString((double)filesize/1000000000.0, 'f', 2)+" GB";
+    return QObject::tr("%1 GB").arg(locale.toString((double)filesize/1000000000.0, 'f', 2));
 }
 
 QString datetimeToString(QDateTime datetime)

@@ -67,8 +67,8 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
         return permissionsToString(info.permissions());
 
     case SizeRole:
-        if (info.isSymLink() && info.isDirAtEnd()) return "dir-link";
-        if (info.isDir()) return "dir";
+        if (info.isSymLink() && info.isDirAtEnd()) return tr("dir-link");
+        if (info.isDir()) return tr("dir");
         return filesizeToString(info.size());
 
     case LastModifiedRole:

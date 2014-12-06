@@ -38,7 +38,7 @@ Page {
                                                page.file);
             } else if (exitCode === 3) {
                 notificationPanel.showTextWithTimer(qsTr("No application to open the file"),
-                                               qsTr("xdg-open found no preferred application (3)"));
+                                               qsTr("xdg-open found no preferred application"));
             } else if (exitCode === 4) {
                 notificationPanel.showTextWithTimer(qsTr("Action failed"),
                                                "xdg-open exit code 4");

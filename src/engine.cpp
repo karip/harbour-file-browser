@@ -67,7 +67,7 @@ void Engine::copyFiles(QStringList filenames)
 void Engine::pasteFiles(QString destDirectory)
 {
     if (m_clipboardFiles.isEmpty()) {
-        emit workerErrorOccurred("No files to paste", "");
+        emit workerErrorOccurred(tr("No files to paste"), "");
         return;
     }
 
@@ -209,29 +209,29 @@ QStringList Engine::readFile(QString filename)
     StatFileInfo fileInfo(filename);
     if (!fileInfo.exists()) {
         if (!fileInfo.isSymLink())
-            return makeStringList(tr("File does not exist\n%1").arg(filename));
+            return makeStringList(tr("File does not exist") + "\n" + filename);
         else
-            return makeStringList(tr("Broken symbolic link\n%1").arg(filename));
+            return makeStringList(tr("Broken symbolic link") + "\n" + filename);
     }
 
     // don't read unsafe system files
     if (!fileInfo.isSafeToRead()) {
-        return makeStringList(tr("Can't read this type of file\n%1").arg(filename));
+        return makeStringList(tr("Can't read this type of file") + "\n" + filename);
     }
 
     // check permissions
     if (access(filename, R_OK) == -1)
-        return makeStringList(tr("No permission to read the file\n%1").arg(filename));
+        return makeStringList(tr("No permission to read the file") + "\n" + filename);
 
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly))
-        return makeStringList(tr("Error reading file\n%1").arg(filename));
+        return makeStringList(tr("Error reading file") + "\n" + filename);
 
     // read start of file
     char buffer[maxSize+1];
     qint64 readSize = file.read(buffer, maxSize);
     if (readSize < 0)
-        return makeStringList(tr("Error reading file\n%1").arg(filename));
+        return makeStringList(tr("Error reading file") + "\n" + filename);
 
     if (readSize == 0)
         return makeStringList(tr("Empty file"));
@@ -293,7 +293,7 @@ QString Engine::mkdir(QString path, QString name)
 
     if (!dir.mkdir(name)) {
         if (access(dir.absolutePath(), W_OK) == -1)
-            return tr("Cannot create folder %1\nPermission denied").arg(name);
+            return tr("No permissions to create %1").arg(name);
 
         return tr("Cannot create folder %1").arg(name);
     }
@@ -311,7 +311,7 @@ QStringList Engine::rename(QString fullOldFilename, QString newName)
     QString errorMessage;
     if (!file.rename(fullNewFilename)) {
         QString oldName = fileInfo.fileName();
-        errorMessage = tr("Cannot rename %1\n%2").arg(oldName).arg(file.errorString());
+        errorMessage = tr("Cannot rename %1").arg(oldName) + "\n" + file.errorString();
     }
 
     return QStringList() << fullNewFilename << errorMessage;
@@ -334,7 +334,7 @@ QString Engine::chmod(QString path,
     if (othersWrite) p |= QFileDevice::WriteOther;
     if (othersExecute) p |= QFileDevice::ExeOther;
     if (!file.setPermissions(p))
-        return tr("Cannot change permissions\n%1").arg(file.errorString());
+        return tr("Cannot change permissions") + "\n" + file.errorString();
 
     return QString();
 }

@@ -13,12 +13,14 @@ SOURCES += jhead/jhead-api.cpp jhead/exif.c jhead/gpsinfo.c jhead/iptc.c jhead/j
 HEADERS += jhead/jhead-api.h jhead/jhead.h
 
 i18n.path = /usr/share/harbour-file-browser/i18n
-i18n.files = i18n/file-browser_de.qm
+i18n.files = i18n/file-browser_de.qm \
+             i18n/file-browser_fi.qm
 
 INSTALLS += i18n
 
 TRANSLATIONS = \
-    i18n/file-browser_de.ts
+    i18n/file-browser_de.ts \
+    i18n/file-browser_fi.ts
 
 lupdate_only {
 SOURCES += \
@@ -57,6 +59,7 @@ OTHER_FILES = \
     qml/components/SelectionPanel.qml \
     qml/main.qml \
     qml/functions.js \
+    i18n/file-browser_de.ts \
     i18n/file-browser_de.ts
 
 INCLUDEPATH += $$PWD

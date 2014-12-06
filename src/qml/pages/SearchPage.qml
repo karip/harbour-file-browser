@@ -337,7 +337,7 @@ Page {
         onDeleteTriggered: {
             var files = selectedFiles();
             remorsePopupActive = true;
-            remorsePopup.execute("Deleting", function() {
+            remorsePopup.execute(qsTr("Deleting"), function() {
                 clearSelectedFiles();
                 progressPanel.showText(qsTr("Deleting"));
                 engine.deleteFiles(files);
