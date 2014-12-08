@@ -29,6 +29,12 @@ function startsWith(s1, s2)
     return start === s2;
 }
 
+// trims a string from left and right
+function trim(s)
+{
+    return s.replace(/^\s+|\s+$/g, "");
+}
+
 function goToFolder(folder)
 {
     // first, go to root so that the page stack has only one page

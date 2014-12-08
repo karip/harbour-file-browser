@@ -30,13 +30,13 @@ int main(int argc, char *argv[])
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
-    QTranslator* translator = new QTranslator;
+    QTranslator translator;
     QString locale = QLocale::system().name();
     //locale="de"; // for testing purposes only
-    if(!translator->load("file-browser_" + locale, SailfishApp::pathTo("i18n").toLocalFile())) {
+    if(!translator.load("file-browser_" + locale, SailfishApp::pathTo("i18n").toLocalFile())) {
         qDebug() << "Couldn't load translation for locale "+locale + " from " + SailfishApp::pathTo("i18n").toLocalFile();
     }
-    app->installTranslator(translator);
+    app->installTranslator(&translator);
 
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 

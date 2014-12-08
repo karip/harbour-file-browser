@@ -62,7 +62,7 @@ Dialog {
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
-                text: qsTr("Change permissions for\n%1").arg(path)
+                text: qsTr("Change permissions for") + "\n" + path
                 color: Theme.secondaryColor
                 wrapMode: Text.Wrap
             }

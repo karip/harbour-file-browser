@@ -4,6 +4,8 @@
 //
 // The original files can be found at http://www.sentex.net/~mwandel/jhead/
 //
+// A good resource for exif tags is
+// http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html
 
 // Functions modified to output to a QStringList instead of stdout
 
@@ -141,13 +143,13 @@ void appendImageInfo(QStringList &metadata)
                 case 0x7: flash = QObject::tr("(Strobe light detected) "); break;
                 case 0x9: flash = QObject::tr("(Manual)"); break;
                 case 0xd: flash = QObject::tr("(Manual, return light not detected)"); break;
-                case 0xf: flash = QObject::tr("(Manual, return light  detected)"); break;
+                case 0xf: flash = QObject::tr("(Manual, return light detected)"); break;
                 case 0x19:flash = QObject::tr("(Auto)"); break;
                 case 0x1d:flash = QObject::tr("(Auto, return light not detected)"); break;
                 case 0x1f:flash = QObject::tr("(Auto, return light detected)"); break;
                 case 0x41:flash = QObject::tr("(Red eye reduction mode)"); break;
                 case 0x45:flash = QObject::tr("(Red eye reduction mode return light not detected)"); break;
-                case 0x47:flash = QObject::tr("(Red eye reduction mode return light  detected)"); break;
+                case 0x47:flash = QObject::tr("(Red eye reduction mode return light detected)"); break;
                 case 0x49:flash = QObject::tr("(Manual, red eye reduction mode)"); break;
                 case 0x4d:flash = QObject::tr("(Manual, red eye reduction mode, return light not detected)"); break;
                 case 0x4f:flash = QObject::tr("(Red eye reduction mode, return light detected)"); break;
@@ -255,7 +257,7 @@ void appendImageInfo(QStringList &metadata)
         QString m = QObject::tr("Metering Mode:");
         switch(ImageInfo.MeteringMode) {
         case 1: m += QObject::tr("Average"); break;
-        case 2: m += QObject::tr("Center weight"); break;
+        case 2: m += QObject::tr("Center weighted average"); break;
         case 3: m += QObject::tr("Spot"); break;
         case 4: m += QObject::tr("Multi spot"); break;
         case 5: m += QObject::tr("Pattern"); break;
@@ -267,7 +269,7 @@ void appendImageInfo(QStringList &metadata)
     }
 
     if (ImageInfo.ExposureProgram){ // 05-jan-2001 vcs
-        QString e = QObject::tr("Exposure:");
+        QString e = QObject::tr("Exposure Program:");
         switch(ImageInfo.ExposureProgram) {
         case 1:
             e += QObject::tr("Manual");
@@ -343,10 +345,10 @@ void appendImageInfo(QStringList &metadata)
     }
 
     if (ImageInfo.GpsInfoPresent){
-        metadata.append(QObject::tr("GPS Latitude:%1").arg(QString::fromUtf8(ImageInfo.GpsLat)));
-        metadata.append(QObject::tr("GPS Longitude:%1").arg(QString::fromUtf8(ImageInfo.GpsLong)));
+        metadata.append(QObject::tr("Latitude:%1").arg(QString::fromUtf8(ImageInfo.GpsLat)));
+        metadata.append(QObject::tr("Longitude:%1").arg(QString::fromUtf8(ImageInfo.GpsLong)));
         if (ImageInfo.GpsAlt[0]) {
-            metadata.append(QObject::tr("GPS Altitude:%1").arg(QString::fromUtf8(ImageInfo.GpsAlt)));
+            metadata.append(QObject::tr("Altitude:%1").arg(QString::fromUtf8(ImageInfo.GpsAlt)));
         }
 
     }

@@ -73,8 +73,8 @@ Page {
                     anchors.right: parent.right
                     anchors.leftMargin: Theme.paddingLarge
                     anchors.rightMargin: Theme.paddingLarge
-                    text: "File Browser is free and unencumbered software released "+
-                          "into the public domain.\nRead full text >>"
+                    text: qsTr("File Browser is free and unencumbered software released "+
+                          "into the public domain.") + "\n" + qsTr("Read full text >>")
                     wrapMode: Text.Wrap
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: pdItem.highlighted ? Theme.highlightColor : Theme.primaryColor
@@ -87,7 +87,7 @@ Page {
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingLarge
                 anchors.rightMargin: Theme.paddingLarge
-                text: qsTr("The source code is available at\nhttps://github.com/karip/harbour-file-browser")
+                text: qsTr("The source code is available at") + "\nhttps://github.com/karip/harbour-file-browser"
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeTiny
                 color: Theme.secondaryColor
