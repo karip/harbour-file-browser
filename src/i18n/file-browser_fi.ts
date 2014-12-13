@@ -607,7 +607,7 @@
     <message>
         <location filename="../jhead/jhead-api.cpp" line="130"/>
         <source>Orientation:%1</source>
-        <translation>Asento:%1</translation>
+        <translation>Suunta:%1</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="135"/>
@@ -929,12 +929,12 @@
     <message>
         <location filename="../jhead/jhead-api.cpp" line="337"/>
         <source>JPEG Process:Unknown</source>
-        <translation>JPEG-prosessi:Tuntematon</translation>
+        <translation>JPEG-prosessointi:Tuntematon</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="341"/>
         <source>JPEG Process:%1</source>
-        <translation>JPEG-prosessi:%1</translation>
+        <translation>JPEG-prosessointi:%1</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="348"/>

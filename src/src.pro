@@ -60,6 +60,6 @@ OTHER_FILES = \
     qml/main.qml \
     qml/functions.js \
     i18n/file-browser_de.ts \
-    i18n/file-browser_de.ts
+    i18n/file-browser_fi.ts
 
 INCLUDEPATH += $$PWD
