@@ -41,9 +41,8 @@
     </message>
     <message>
         <location filename="../qml/pages/CreateFolderDialog.qml" line="39"/>
-        <source>Create a new folder under
-%1</source>
-        <translation>Neuen Ordner unter %1 erstellen</translation>
+        <source>Create a new folder under</source>
+        <translation>Neuen Ordner erstellen unter</translation>
     </message>
     <message>
         <location filename="../qml/pages/CreateFolderDialog.qml" line="51"/>
@@ -130,6 +129,7 @@
     <message>
         <location filename="../qml/pages/DirectoryPage.qml" line="178"/>
         <location filename="../qml/pages/DirectoryPage.qml" line="179"/>
+        <location filename="../qml/pages/DirectoryPage.qml" line="258"/>
         <location filename="../qml/pages/DirectoryPage.qml" line="260"/>
         <source>Deleting</source>
         <translation>Lösche</translation>
@@ -188,35 +188,35 @@
         <translation>Kann nicht in sich selbst verschoben/kopiert werden</translation>
     </message>
     <message>
+        <location filename="../engine.cpp" line="70"/>
+        <source>No files to paste</source>
+        <translation>Keine Dateien zum Einfügen</translation>
+    </message>
+    <message>
         <location filename="../engine.cpp" line="212"/>
-        <source>File does not exist
-%1</source>
-        <translation>Datei existiert nicht %1</translation>
+        <source>File does not exist</source>
+        <translation>Datei existiert nicht</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="214"/>
-        <source>Broken symbolic link
-%1</source>
-        <translation>Symbolische Verknüpfung defekt %1</translation>
+        <source>Broken symbolic link</source>
+        <translation>Symbolische Verknüpfung defekt</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="219"/>
-        <source>Can&apos;t read this type of file
-%1</source>
-        <translation>Kann dieses Dateiformat nicht lesen %1</translation>
+        <source>Can&apos;t read this type of file</source>
+        <translation>Kann dieses Dateiformat nicht lesen</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="224"/>
-        <source>No permission to read the file
-%1</source>
-        <translation>Keine Berechtigung zum Lesen der Datei %1</translation>
+        <source>No permission to read the file</source>
+        <translation>Keine Berechtigung zum Lesen der Datei</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="228"/>
         <location filename="../engine.cpp" line="234"/>
-        <source>Error reading file
-%1</source>
-        <translation>Fehler beim Lesen der Datei %1</translation>
+        <source>Error reading file</source>
+        <translation>Fehler beim Lesen der Datei</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="237"/>
@@ -241,26 +241,23 @@
     </message>
     <message>
         <location filename="../engine.cpp" line="296"/>
-        <source>Cannot create folder %1
-Permission denied</source>
-        <translation>Kann Verzeichnis %1 nicht erstellen, keine Berechtigung</translation>
+        <source>No permissions to create %1</source>
+        <translation>Keine Berechtigung zum Erstellen von %1</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="314"/>
+        <source>Cannot rename %1</source>
+        <translation>Kann %1 nicht umbenennen</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="337"/>
+        <source>Cannot change permissions</source>
+        <translation>Kann Berechtigungen nicht anpassen</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="298"/>
         <source>Cannot create folder %1</source>
         <translation>Kann Verzeichnis %1 nicht erstellen</translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="314"/>
-        <source>Cannot rename %1
-%2</source>
-        <translation>Kann %1 nicht in %2 umbenennen</translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="337"/>
-        <source>Cannot change permissions
-%1</source>
-        <translation>Kann Berechtgiungen nicht anpassen %1</translation>
     </message>
 </context>
 <context>
@@ -308,6 +305,16 @@ Permission denied</source>
 </context>
 <context>
     <name>FileModel</name>
+    <message>
+        <location filename="../filemodel.cpp" line="70"/>
+        <source>dir-link</source>
+        <translation>dir-link</translation>
+    </message>
+    <message>
+        <location filename="../filemodel.cpp" line="71"/>
+        <source>dir</source>
+        <translation>dir</translation>
+    </message>
     <message>
         <location filename="../filemodel.cpp" line="299"/>
         <location filename="../filemodel.cpp" line="337"/>
@@ -360,8 +367,8 @@ Permission denied</source>
     </message>
     <message>
         <location filename="../qml/pages/FilePage.qml" line="41"/>
-        <source>xdg-open found no preferred application (3)</source>
-        <translation>xdg-open konnte keine bevorzugte Anwendung finden (3)</translation>
+        <source>xdg-open found no preferred application</source>
+        <translation>xdg-open konnte keine bevorzugte Anwendung finden</translation>
     </message>
     <message>
         <location filename="../qml/pages/FilePage.qml" line="43"/>
@@ -526,9 +533,8 @@ Permission denied</source>
     </message>
     <message>
         <location filename="../qml/pages/PermissionsDialog.qml" line="65"/>
-        <source>Change permissions for
-%1</source>
-        <translation>Berechtigungen für %1 ändern</translation>
+        <source>Change permissions for</source>
+        <translation>Berechtigungen ändern für</translation>
     </message>
     <message>
         <location filename="../qml/pages/PermissionsDialog.qml" line="85"/>
@@ -567,377 +573,397 @@ Permission denied</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="117"/>
+        <location filename="../jhead/jhead-api.cpp" line="119"/>
         <source>Make:%1</source>
         <translation>Hersteller: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="118"/>
+        <location filename="../jhead/jhead-api.cpp" line="120"/>
         <source>Model:%1</source>
         <translation>Modell: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="121"/>
+        <location filename="../jhead/jhead-api.cpp" line="123"/>
         <source>Date/Time:%1</source>
         <translation>Datum/Zeit: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="128"/>
+        <location filename="../jhead/jhead-api.cpp" line="130"/>
         <source>Orientation:%1</source>
         <translation>Ausrichtung: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="133"/>
+        <location filename="../jhead/jhead-api.cpp" line="135"/>
         <source>Color/BW:Black and White</source>
         <translation>Farbe/SW:Schwarz und weiß</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="140"/>
+        <location filename="../jhead/jhead-api.cpp" line="142"/>
         <source>(Strobe light not detected)</source>
         <translation>(Blitzlicht nicht erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="141"/>
+        <location filename="../jhead/jhead-api.cpp" line="143"/>
         <source>(Strobe light detected) </source>
         <translation>(Blitzlicht erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="142"/>
+        <location filename="../jhead/jhead-api.cpp" line="144"/>
         <source>(Manual)</source>
         <translation>(Manuell)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="143"/>
+        <location filename="../jhead/jhead-api.cpp" line="145"/>
         <source>(Manual, return light not detected)</source>
         <translation>(Manuell, Quittungslampe nicht erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="144"/>
-        <source>(Manual, return light  detected)</source>
-        <translation>(Manuell, Quittungslampe erkannt)</translation>
-    </message>
-    <message>
-        <location filename="../jhead/jhead-api.cpp" line="145"/>
-        <location filename="../jhead/jhead-api.cpp" line="163"/>
+        <location filename="../jhead/jhead-api.cpp" line="147"/>
+        <location filename="../jhead/jhead-api.cpp" line="165"/>
         <source>(Auto)</source>
         <translation>(Auto)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="146"/>
+        <location filename="../jhead/jhead-api.cpp" line="148"/>
         <source>(Auto, return light not detected)</source>
         <translation>(Auto, Quittungslampe nicht erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="147"/>
+        <location filename="../jhead/jhead-api.cpp" line="149"/>
         <source>(Auto, return light detected)</source>
         <translation>(Auto, Quittungslampe erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="148"/>
+        <location filename="../jhead/jhead-api.cpp" line="150"/>
         <source>(Red eye reduction mode)</source>
         <translation>(Rote-Augen-Reduzierung)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="149"/>
+        <location filename="../jhead/jhead-api.cpp" line="151"/>
         <source>(Red eye reduction mode return light not detected)</source>
         <translation>(Rote-Augen-Reduzierung, Quittungslampe nicht erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="150"/>
-        <source>(Red eye reduction mode return light  detected)</source>
+        <location filename="../jhead/jhead-api.cpp" line="146"/>
+        <source>(Manual, return light detected)</source>
+        <translation>(Manuell, Quittungslampe erkannt)</translation>
+    </message>
+    <message>
+        <location filename="../jhead/jhead-api.cpp" line="152"/>
+        <source>(Red eye reduction mode return light detected)</source>
         <translation>(Rote-Augen-Reduzierung, Quittungslampe erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="151"/>
+        <location filename="../jhead/jhead-api.cpp" line="153"/>
         <source>(Manual, red eye reduction mode)</source>
         <translation>(Manuell, Rote-Augen-Reduzierung)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="152"/>
+        <location filename="../jhead/jhead-api.cpp" line="154"/>
         <source>(Manual, red eye reduction mode, return light not detected)</source>
         <translation>(Manuell, Rote-Augen-Reduzierung, Quittungslampe nicht erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="153"/>
+        <location filename="../jhead/jhead-api.cpp" line="155"/>
         <source>(Red eye reduction mode, return light detected)</source>
         <translation>(Rote-Augen-Reduzierung, Quittungslampe erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="154"/>
+        <location filename="../jhead/jhead-api.cpp" line="156"/>
         <source>(Auto, red eye reduction mode)</source>
         <translation>(Auto, Rote-Auge-Reduzierung)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="155"/>
+        <location filename="../jhead/jhead-api.cpp" line="157"/>
         <source>(Auto, red eye reduction mode, return light not detected)</source>
         <translation>(Auto, Rote-Augen-Reduzierung, Quittungslampe nicht erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="156"/>
+        <location filename="../jhead/jhead-api.cpp" line="158"/>
         <source>(Auto, red eye reduction mode, return light detected)</source>
         <translation>(Auto, Rote-Augen-Reduzierung, Quittungslampe erkannt)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="158"/>
+        <location filename="../jhead/jhead-api.cpp" line="160"/>
         <source>Flash:Yes</source>
         <translation>Blitz:ja</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="165"/>
+        <location filename="../jhead/jhead-api.cpp" line="167"/>
         <source>Flash:No</source>
         <translation>Blitz:nein</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="171"/>
+        <location filename="../jhead/jhead-api.cpp" line="173"/>
         <source>Focal Length:%1mm</source>
         <translation>Brennweite: %1mm</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="173"/>
+        <location filename="../jhead/jhead-api.cpp" line="175"/>
         <source>(35mm equivalent: %1mm)</source>
         <translation>(35mm Äquivalent: %1mm)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="180"/>
+        <location filename="../jhead/jhead-api.cpp" line="182"/>
         <source>Digital Zoom:%1x</source>
         <translation>Digitaler Zoom: %1x</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="184"/>
+        <location filename="../jhead/jhead-api.cpp" line="186"/>
         <source>CCD Width:%1</source>
         <translation>CCD-Breite: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="190"/>
         <location filename="../jhead/jhead-api.cpp" line="192"/>
+        <location filename="../jhead/jhead-api.cpp" line="194"/>
         <source>Exposure Time:%1</source>
         <translation>Belichtungszeit: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="195"/>
+        <location filename="../jhead/jhead-api.cpp" line="197"/>
         <source>(1/%1)</source>
         <translation>(1/%1)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="200"/>
+        <location filename="../jhead/jhead-api.cpp" line="202"/>
         <source>Aperture:f/%1</source>
         <translation>Blende: f/%1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="204"/>
+        <location filename="../jhead/jhead-api.cpp" line="206"/>
         <source>Focus Distance:Infinite</source>
         <translation>Fokusabstand: unendlich</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="206"/>
+        <location filename="../jhead/jhead-api.cpp" line="208"/>
         <source>Focus Distance:%1m</source>
         <translation>Fokusabstand: %1m</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="211"/>
+        <location filename="../jhead/jhead-api.cpp" line="213"/>
         <source>ISO Equivalent:%1</source>
         <translation>ISO-Äquivalent: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="217"/>
+        <location filename="../jhead/jhead-api.cpp" line="219"/>
         <source>Exposure Bias:%1</source>
         <translation>Blendenöffnung: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="222"/>
+        <location filename="../jhead/jhead-api.cpp" line="224"/>
         <source>White Balance:Manual</source>
         <translation>Weißabgleich: manuell</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="225"/>
+        <location filename="../jhead/jhead-api.cpp" line="227"/>
         <source>White Balance:Auto</source>
         <translation>Weißabgleich: auto</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="232"/>
+        <location filename="../jhead/jhead-api.cpp" line="234"/>
         <source>Light Source:Daylight</source>
         <translation>Lichtquelle: Tageslicht</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="235"/>
+        <location filename="../jhead/jhead-api.cpp" line="237"/>
         <source>Light Source:Fluorescent</source>
         <translation>Lichtquelle: Leuchtstofflampe</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="238"/>
+        <location filename="../jhead/jhead-api.cpp" line="240"/>
         <source>Light Source:Incandescent</source>
         <translation>Lichtquelle: Glühlampe</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="241"/>
+        <location filename="../jhead/jhead-api.cpp" line="243"/>
         <source>Light Source:Flash</source>
         <translation>Lichtquelle: Blitz</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="244"/>
+        <location filename="../jhead/jhead-api.cpp" line="246"/>
         <source>Light Source:Fine weather</source>
         <translation>Lichtquelle: schönes Wetter</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="247"/>
+        <location filename="../jhead/jhead-api.cpp" line="249"/>
         <source>Light Source:Shade</source>
         <translation>Blendschirm</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="255"/>
+        <location filename="../jhead/jhead-api.cpp" line="257"/>
         <source>Metering Mode:</source>
         <translation>Messmodus:</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="257"/>
+        <location filename="../jhead/jhead-api.cpp" line="259"/>
         <source>Average</source>
         <translation>Durchschnitt</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="258"/>
-        <source>Center weight</source>
-        <translation>Gewichtung Mitte</translation>
+        <location filename="../jhead/jhead-api.cpp" line="260"/>
+        <source>Center weighted average</source>
+        <translation>Gewichteter Mittelwert</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="259"/>
+        <location filename="../jhead/jhead-api.cpp" line="272"/>
+        <source>Exposure Program:</source>
+        <translation>Belichtungsprogramm</translation>
+    </message>
+    <message>
+        <location filename="../jhead/jhead-api.cpp" line="348"/>
+        <source>Latitude:%1</source>
+        <translation>Breitengrad: %1</translation>
+    </message>
+    <message>
+        <location filename="../jhead/jhead-api.cpp" line="349"/>
+        <source>Longitude:%1</source>
+        <translation>Längengrad: %1</translation>
+    </message>
+    <message>
+        <location filename="../jhead/jhead-api.cpp" line="351"/>
+        <source>Altitude:%1</source>
+        <translation>Höhe: %1</translation>
+    </message>
+    <message>
+        <location filename="../jhead/jhead-api.cpp" line="261"/>
         <source>Spot</source>
         <translation>Spot</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="260"/>
+        <location filename="../jhead/jhead-api.cpp" line="262"/>
         <source>Multi spot</source>
         <translation>Multispot</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="261"/>
+        <location filename="../jhead/jhead-api.cpp" line="263"/>
         <source>Pattern</source>
         <translation>Muster</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="262"/>
+        <location filename="../jhead/jhead-api.cpp" line="264"/>
         <source>Partial</source>
         <translation>Teilweise</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="263"/>
+        <location filename="../jhead/jhead-api.cpp" line="265"/>
         <source>Other</source>
         <translation>Sonstiges</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="264"/>
+        <location filename="../jhead/jhead-api.cpp" line="266"/>
         <source>Unknown (%1)</source>
         <translation>Unbekannt (%1)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="270"/>
-        <source>Exposure:</source>
-        <translation>Belichtung:</translation>
-    </message>
-    <message>
-        <location filename="../jhead/jhead-api.cpp" line="273"/>
+        <location filename="../jhead/jhead-api.cpp" line="275"/>
         <source>Manual</source>
         <translation>Manuell</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="276"/>
+        <location filename="../jhead/jhead-api.cpp" line="278"/>
         <source>Program (auto)</source>
         <translation>Programm (auto)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="279"/>
+        <location filename="../jhead/jhead-api.cpp" line="281"/>
         <source>Aperture priority (semi-auto)</source>
         <translation>Zeitautomatik (halbautomatisch)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="282"/>
+        <location filename="../jhead/jhead-api.cpp" line="284"/>
         <source>Shutter priority (semi-auto)</source>
         <translation>Blendenautomatik (halbautomatisch)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="285"/>
+        <location filename="../jhead/jhead-api.cpp" line="287"/>
         <source>Creative Program (based towards depth of field)</source>
         <translation>Kreativ-Programm (auf Tiefenschärfe ausgerichtet)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="288"/>
+        <location filename="../jhead/jhead-api.cpp" line="290"/>
         <source>Action program (based towards fast shutter speed)</source>
         <translation>Action-Programm (auf kurze Vershlusszeit ausgerichtet)</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="291"/>
+        <location filename="../jhead/jhead-api.cpp" line="293"/>
         <source>Portrait mode</source>
         <translation>Hochformat</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="294"/>
+        <location filename="../jhead/jhead-api.cpp" line="296"/>
         <source>Landscape mode</source>
         <translation>Querformat</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="304"/>
+        <location filename="../jhead/jhead-api.cpp" line="306"/>
         <source>Exposure Mode:Manual</source>
         <translation>Belichtungsmodus: manuell</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="306"/>
+        <location filename="../jhead/jhead-api.cpp" line="308"/>
         <source>Exposure Mode:Auto bracketing</source>
         <translation>Belichtungsmodus: Belichtungsreihe</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="311"/>
+        <location filename="../jhead/jhead-api.cpp" line="313"/>
         <source>Focus Range:</source>
         <translation>Fokusbereich:</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="314"/>
+        <location filename="../jhead/jhead-api.cpp" line="316"/>
         <source>Macro</source>
         <translation>Makro</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="317"/>
+        <location filename="../jhead/jhead-api.cpp" line="319"/>
         <source>Close</source>
         <translation>Nah</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="320"/>
+        <location filename="../jhead/jhead-api.cpp" line="322"/>
         <source>Distant</source>
         <translation>Fern</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="335"/>
+        <location filename="../jhead/jhead-api.cpp" line="337"/>
         <source>JPEG Process:Unknown</source>
         <translation>JPEG-Prozess: unbekannt</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="339"/>
+        <location filename="../jhead/jhead-api.cpp" line="341"/>
         <source>JPEG Process:%1</source>
         <translation>JPEG-Prozess: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="346"/>
-        <source>GPS Latitude:%1</source>
-        <translation>GPS-Breitengrad: %1</translation>
-    </message>
-    <message>
-        <location filename="../jhead/jhead-api.cpp" line="347"/>
-        <source>GPS Longitude:%1</source>
-        <translation>GPS-Längengrad: %1</translation>
-    </message>
-    <message>
-        <location filename="../jhead/jhead-api.cpp" line="349"/>
-        <source>GPS Altitude:%1</source>
-        <translation>GPS-Höhe: %1</translation>
-    </message>
-    <message>
-        <location filename="../jhead/jhead-api.cpp" line="355"/>
+        <location filename="../jhead/jhead-api.cpp" line="357"/>
         <source>JPEG Quality:%1</source>
         <translation>JPEG-Qualität: %1</translation>
     </message>
     <message>
-        <location filename="../jhead/jhead-api.cpp" line="361"/>
-        <location filename="../jhead/jhead-api.cpp" line="372"/>
+        <location filename="../jhead/jhead-api.cpp" line="363"/>
+        <location filename="../jhead/jhead-api.cpp" line="374"/>
         <source>Comment:</source>
         <translation>Kommentar:</translation>
+    </message>
+    <message>
+        <location filename="../globals.cpp" line="47"/>
+        <source>%1 bytes</source>
+        <translation>%1 Bytes</translation>
+    </message>
+    <message>
+        <location filename="../globals.cpp" line="50"/>
+        <source>%1 kB</source>
+        <translation>%1 kB</translation>
+    </message>
+    <message>
+        <location filename="../globals.cpp" line="53"/>
+        <source>%1 MB</source>
+        <translation>%1 MB</translation>
+    </message>
+    <message>
+        <location filename="../globals.cpp" line="55"/>
+        <source>%1 GB</source>
+        <translation>%1 GB</translation>
     </message>
 </context>
 <context>
@@ -950,9 +976,8 @@ Permission denied</source>
     </message>
     <message>
         <location filename="../qml/pages/RenameDialog.qml" line="49"/>
-        <source>Give a new name for
-%1</source>
-        <translation>Neuen Namen für %1 eingeben</translation>
+        <source>Give a new name for</source>
+        <translation>Neuen Namen eingeben für</translation>
     </message>
     <message>
         <location filename="../qml/pages/RenameDialog.qml" line="61"/>
@@ -986,6 +1011,7 @@ Permission denied</source>
     <message>
         <location filename="../qml/pages/SearchPage.qml" line="260"/>
         <location filename="../qml/pages/SearchPage.qml" line="261"/>
+        <location filename="../qml/pages/SearchPage.qml" line="340"/>
         <location filename="../qml/pages/SearchPage.qml" line="342"/>
         <source>Deleting</source>
         <translation>Lösche</translation>
@@ -1079,11 +1105,19 @@ Permission denied</source>
         <translation>Version</translation>
     </message>
     <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="76"/>
+        <source>File Browser is free and unencumbered software released into the public domain.</source>
+        <translation>File Browser wurde lizenzfrei veröffentlich, und ist frei und unbeschränkt.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="77"/>
+        <source>Read full text &gt;&gt;</source>
+        <translation>Vollständigen Text lesen &gt;&gt;</translation>
+    </message>
+    <message>
         <location filename="../qml/pages/SettingsPage.qml" line="90"/>
-        <source>The source code is available at
-https://github.com/karip/harbour-file-browser</source>
-        <translation>Der Quellcode ist verfügbar unter
-https://github.com/karip/harbour-file-browser</translation>
+        <source>The source code is available at</source>
+        <translation>Der Quelltext ist verfügbar unter</translation>
     </message>
 </context>
 </TS>
