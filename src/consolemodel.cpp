@@ -8,6 +8,7 @@ enum {
 ConsoleModel::ConsoleModel(QObject *parent) :
     QAbstractListModel(parent)
 {
+    m_process = new QProcess(this);
 }
 
 ConsoleModel::~ConsoleModel()
@@ -66,9 +67,11 @@ void ConsoleModel::appendLine(QString line)
 
 void ConsoleModel::executeCommand(QString command, QStringList arguments)
 {
-    setLines(QStringList());
-
     // process is killed when Page is closed - should run this in bg thread to allow command finish(?)
+    if(m_process->state()!=QProcess::NotRunning) //the process is still busy
+        if(!m_process->waitForFinished(500)) //wait for it to finish
+            return;
+    setLines(QStringList());
     m_process = new QProcess(this);
     m_process->setReadChannel(QProcess::StandardOutput);
     m_process->setProcessChannelMode(QProcess::MergedChannels); // merged stderr channel with stdout channel
