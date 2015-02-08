@@ -4,8 +4,7 @@
 ### What is File Browser?
 
 File Browser is a simple tool to access file system without 
-enabling developer mode or registering to Yandex and installing
-a file manager from there.
+enabling the developer mode.
 
 ### Why copying files gives an error message 'Failure to write block'?
 
@@ -50,9 +49,14 @@ Sorry.
 ### Are there any alternative apps?
 
 There is the wonderful Cargo Dock file manager in the Jolla store.
+
+OpenRepos contains a very powerful native file manager called 
+[Filetug](https://openrepos.net/content/matoking/filetug).
+
 You can also try the Jolla's own file manager called Files,
 which can be installed with 'pkcon install jolla-fileman' 
 in Terminal (requires Developer Mode).
 
-For best access to Android storage, try ES File Explorer in Yandex store.
-It can access Android storage and Jolla file system.
+You can also try one of the Android file managers. They
+can access the Jolla file system.
+

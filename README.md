@@ -45,6 +45,9 @@ which is a public domain Exif manipulation tool.
 There is a very handy two-paned file manager called Cargo Dock
 in the Jolla Store. Give it a try if you are moving a lot of files.
 
+OpenRepos has a powerful file manager called
+[Filetug](https://openrepos.net/content/matoking/filetug).
+
 The Jolla phone also ships with its own file manager called Files.
 It is not installed by default. You can install it by typing the 
 following command in Terminal (requires Developer Mode).
@@ -57,10 +60,15 @@ which are good when accessing Android storage.
 ## Building
 
 1. Get the source code
-2. Open the harbour-file-browser.pro in Sailfish OS IDE 
+2. Convert translation source files into qm files, run these on command line
+
+    lrelease src/i18n/file-browser_fi.ts -qm src/i18n/file-browser_fi.qm
+    lrelease src/i18n/file-browser_de.ts -qm src/i18n/file-browser_de.qm
+
+3. Open the harbour-file-browser.pro in Sailfish OS IDE 
    (Qt Creator for Sailfish)
-3. To run on emulator, select the i486 target and press the run button
-4. To build for the device, select the armv7hl target and deploy all, 
+4. To run on emulator, select the i486 target and press the run button
+5. To build for the device, select the armv7hl target and deploy all, 
    the rpm packages will be in the RPMS folder
 
 ## License
