@@ -29,7 +29,7 @@ public:
 
     void appendLine(QString line);
 
-    Q_INVOKABLE void executeCommand(QString command, QStringList arguments);
+    Q_INVOKABLE bool executeCommand(QString command, QStringList arguments);
 
 signals:
     void linesChanged();

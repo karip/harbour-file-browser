@@ -6,9 +6,8 @@ enum {
 };
 
 ConsoleModel::ConsoleModel(QObject *parent) :
-    QAbstractListModel(parent)
+    QAbstractListModel(parent), m_process(0)
 {
-    m_process = new QProcess(this);
 }
 
 ConsoleModel::~ConsoleModel()
@@ -65,12 +64,14 @@ void ConsoleModel::appendLine(QString line)
     endInsertRows();
 }
 
-void ConsoleModel::executeCommand(QString command, QStringList arguments)
+bool ConsoleModel::executeCommand(QString command, QStringList arguments)
 {
-    // process is killed when Page is closed - should run this in bg thread to allow command finish(?)
-    if(m_process->state()!=QProcess::NotRunning) //the process is still busy
-        if(!m_process->waitForFinished(500)) //wait for it to finish
-            return;
+    // don't execute the command if an old command is still running
+    if (m_process && m_process->state() != QProcess::NotRunning) {
+        // if the old process doesn't stop in 1/2 secs, then don't run the new command
+        if (!m_process->waitForFinished(500))
+            return false;
+    }
     setLines(QStringList());
     m_process = new QProcess(this);
     m_process->setReadChannel(QProcess::StandardOutput);
@@ -79,6 +80,10 @@ void ConsoleModel::executeCommand(QString command, QStringList arguments)
     connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(handleProcessFinish(int, QProcess::ExitStatus)));
     connect(m_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(handleProcessError(QProcess::ProcessError)));
     m_process->start(command, arguments);
+    // the process is killed when ConsoleModel is destroyed (usually when Page is closed)
+    // should we run the process in bg thread to allow the command to finish(?)
+
+    return true;
 }
 
 void ConsoleModel::readProcessChannels()
