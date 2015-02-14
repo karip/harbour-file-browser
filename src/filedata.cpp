@@ -222,5 +222,14 @@ QStringList FileData::readExifData(QString filename)
     QByteArray ba = filename.toUtf8();
     const char *f = ba.data();
     bool error = false;
-    return jhead_readJpegFile(f, &error);
+    QStringList list = jhead_readJpegFile(f, &error);
+
+    // replace unicode 'fullwidth colon' with normal colon for chinese translation
+    QStringList data;
+    foreach (QString s, list) {
+        s.replace(QChar(0xff1a), QChar(':'));
+        data.append(s);
+    }
+
+    return data;
 }
