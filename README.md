@@ -62,9 +62,9 @@ which are good when accessing Android storage.
 1. Get the source code
 2. Convert translation source files into qm files, run these on command line
 
-    lrelease src/i18n/file-browser_fi.ts -qm src/i18n/file-browser_fi.qm
-    lrelease src/i18n/file-browser_de.ts -qm src/i18n/file-browser_de.qm
-    lrelease src/i18n/file-browser_zh_CN.ts -qm src/i18n/file-browser_zh_CN.qm
+        lrelease src/i18n/file-browser_fi.ts -qm src/i18n/file-browser_fi.qm
+        lrelease src/i18n/file-browser_de.ts -qm src/i18n/file-browser_de.qm
+        lrelease src/i18n/file-browser_zh_CN.ts -qm src/i18n/file-browser_zh_CN.qm
 
 3. Open the harbour-file-browser.pro in Sailfish OS IDE 
    (Qt Creator for Sailfish)
