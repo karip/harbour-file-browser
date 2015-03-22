@@ -7,9 +7,11 @@ import "../components"
 Page {
     id: page
     allowedOrientations: Orientation.All
-    showNavigationIndicator: false // hide back indicator because it would be on top of search field
-    property string dir: "/"
-    property string currentDirectory: ""
+
+    property string dir: "/" // holds the top directory where all searches will be made
+    property string currentDirectory: "" // holds the directory which is being searched by SearchEngine
+
+    // used to disable SelectionPanel while remorse timer is active
     property bool remorsePopupActive: false // set to true when remorsePopup is active (at top of page)
     property bool remorseItemActive: false // set to true when remorseItem is active (item level)
 
@@ -20,6 +22,7 @@ Page {
         id: searchEngine
         dir: page.dir
 
+        // react on signals from SearchEngine
         onProgressChanged: page.currentDirectory = directory
         onMatchFound: listModel.append({ fullname: fullname, filename: filename,
                                          absoluteDir: absoluteDir,
@@ -48,6 +51,8 @@ Page {
         model: ListModel {
             id: listModel
 
+            // updates the model by clearing all data and starting searchEngine search() method async
+            // using the given txt as the search string
             function update(txt) {
                 if (txt === "")
                     searchEngine.cancel();
@@ -80,6 +85,8 @@ Page {
                 id: searchField
                 anchors.left: parent.left
                 anchors.right: cancelSearchButton.left
+                anchors.top: parent.top
+                anchors.topMargin: 6
                 placeholderText: qsTr("Search %1").arg(Functions.formatPathForSearch(page.dir))
                 inputMethodHints: Qt.ImhNoAutoUppercase
 
