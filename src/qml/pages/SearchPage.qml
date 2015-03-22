@@ -313,9 +313,10 @@ Page {
     }
     function clearSelectedFiles() {
         for (var i = 0; i < listModel.count; ++i) {
+            // get returns a reference to the item
+            // changing the item properties changes its properties in the list
             var item = listModel.get(i);
             item.isSelected = false;
-            listModel.set(i, item);
         }
         _selectedFileCount = 0;
         selectionPanel.open = false;
@@ -323,9 +324,10 @@ Page {
     }
     function selectAllFiles() {
         for (var i = 0; i < listModel.count; ++i) {
+            // get returns a reference to the item
+            // changing the item properties changes its properties in the list
             var item = listModel.get(i);
             item.isSelected = true;
-            listModel.set(i, item);
         }
         _selectedFileCount = listModel.count;
         selectionPanel.open = true;
