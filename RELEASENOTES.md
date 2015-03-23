@@ -1,11 +1,18 @@
 
 # File Browser Release Notes
 
+## Version 1.6 (2015-03-22)
+
+Published in Jolla store on 2015-03-23.
+
+ * Add translations for Finnish, German and Simplified Chinese languages
+ * Fix occasional search page hangup
+
 ## Version 1.5 (2014-09-01)
 
 Published in Jolla store on 2014-09-02.
 
- * Add multiple file selections
+ * Multiple file selections
  * View contents of tar files
  * Display image size, exif and other metadata
  * Displays broken symbolic links

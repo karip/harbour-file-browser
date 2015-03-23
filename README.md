@@ -22,12 +22,13 @@ responsibility if that happens. So, be careful.
  * Install Android APK and Sailfish RPM packages
  * View contents of APK, RPM, ZIP and TAR packages
  * View contents of text and binary files
+ * Select multiple files (by tapping the file icons)
  * Cut, copy and paste files (move/copy files) (by long pressing an 
-   item or tapping the file icon in a list)
+   item or tapping the file icons)
  * Rename files and folders
  * Create new folders
  * Delete files and folders (by long pressing an item or tapping 
-   its file icon in a list)
+   the file icons)
  * Show hidden files (filenames starting with a dot)
  * Change permissions
 
