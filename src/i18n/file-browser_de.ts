@@ -1092,7 +1092,7 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="30"/>
         <source>Show hidden files</source>
-        <translation>Dateien zuerst zeigen</translation>
+        <translation>Versteckte Dateien anzeigen</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="37"/>
