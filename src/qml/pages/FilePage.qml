@@ -261,14 +261,10 @@ Page {
                     label: qsTr("Last modified")
                     value: fileData.modified
                 }
-                CenteredField {
-                    label: qsTr("Created")
-                    value: fileData.created
-                }
                 Spacer {
                     height: 10
                 }
-                // Display metadata with priotity >= 5
+                // Display metadata with priority >= 5
                 Repeater {
                     model: fileData.metaData
                     // first char is priority (0-9), labels and values are delimited with ':'
