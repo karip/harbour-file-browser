@@ -66,6 +66,7 @@ which are good when accessing Android storage.
         lrelease src/i18n/file-browser_fi.ts -qm src/i18n/file-browser_fi.qm
         lrelease src/i18n/file-browser_de.ts -qm src/i18n/file-browser_de.qm
         lrelease src/i18n/file-browser_zh_CN.ts -qm src/i18n/file-browser_zh_CN.qm
+        lrelease src/i18n/file-browser_ru_RU.ts -qm src/i18n/file-browser_ru_RU.qm
 
 3. Open the harbour-file-browser.pro in Sailfish OS IDE 
    (Qt Creator for Sailfish)
