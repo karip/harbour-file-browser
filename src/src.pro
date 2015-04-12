@@ -15,6 +15,7 @@ HEADERS += jhead/jhead-api.h jhead/jhead.h
 i18n.path = /usr/share/harbour-file-browser/i18n
 i18n.files = i18n/file-browser_de.qm \
              i18n/file-browser_fi.qm \
+             i18n/file-browser_ru_RU.qm \
              i18n/file-browser_zh_CN.qm
 
 INSTALLS += i18n
@@ -22,6 +23,7 @@ INSTALLS += i18n
 TRANSLATIONS = \
     i18n/file-browser_de.ts \
     i18n/file-browser_fi.ts \
+    i18n/file-browser_ru_RU.ts \
     i18n/file-browser_zh_CN.ts
 
 lupdate_only {
@@ -63,6 +65,7 @@ OTHER_FILES = \
     qml/functions.js \
     i18n/file-browser_de.ts \
     i18n/file-browser_fi.ts \
+    i18n/file-browser_ru_RU.ts \
     i18n/file-browser_zh_CN.ts
 
 INCLUDEPATH += $$PWD
