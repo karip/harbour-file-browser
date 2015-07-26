@@ -21,6 +21,9 @@ i18n.files = i18n/file-browser_de.qm \
 
 INSTALLS += i18n
 
+# automatic generation of the translation .qm files from .ts files
+system(lrelease $$PWD/i18n/*.ts)
+
 TRANSLATIONS = \
     i18n/file-browser_de.ts \
     i18n/file-browser_fi.ts \

@@ -61,18 +61,10 @@ which are good when accessing Android storage.
 ## Building
 
 1. Get the source code
-2. Convert translation source files into qm files, run these on command line
-
-        lrelease src/i18n/file-browser_de.ts -qm src/i18n/file-browser_de.qm
-        lrelease src/i18n/file-browser_fi.ts -qm src/i18n/file-browser_fi.qm
-        lrelease src/i18n/file-browser_ru_RU.ts -qm src/i18n/file-browser_ru_RU.qm
-        lrelease src/i18n/file-browser_sv.ts -qm src/i18n/file-browser_sv.qm
-        lrelease src/i18n/file-browser_zh_CN.ts -qm src/i18n/file-browser_zh_CN.qm
-
-3. Open the harbour-file-browser.pro in Sailfish OS IDE 
+2. Open the harbour-file-browser.pro in Sailfish OS IDE 
    (Qt Creator for Sailfish)
-4. To run on emulator, select the i486 target and press the run button
-5. To build for the device, select the armv7hl target and deploy all, 
+3. To run on emulator, select the i486 target and press the run button
+4. To build for the device, select the armv7hl target and deploy all, 
    the rpm packages will be in the RPMS folder
 
 ## License
