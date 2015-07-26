@@ -67,7 +67,6 @@ desktop-file-install --delete-original       \
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/qml
-#{_datadir}/%{name}/i18n
 %attr(755,root,root) %{_bindir}/%{name}
 # >> files
 # << files
