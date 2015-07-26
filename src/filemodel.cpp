@@ -2,6 +2,7 @@
 #include <QDateTime>
 #include <QSettings>
 #include <QGuiApplication>
+#include <unistd.h>
 #include "engine.h"
 #include "globals.h"
 
