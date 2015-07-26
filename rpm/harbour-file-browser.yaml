@@ -2,6 +2,7 @@ Name: harbour-file-browser
 Summary: File Browser for Sailfish OS
 Version: 1.6
 Release: 0
+URL: https://github.com/alinelena/harbour-file-browser
 Group: Qt/Qt
 License: Public domain
 Sources:
@@ -26,7 +27,6 @@ Files:
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
 - '%{_datadir}/applications/%{name}.desktop'
 - '%{_datadir}/%{name}/qml'
-- '%{_datadir}/%{name}/i18n'
 - '%attr(755,root,root) %{_bindir}/%{name}' # permission to run the exeutable
 
 PkgBR: []
