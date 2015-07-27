@@ -3,6 +3,7 @@ Summary: File Browser for Sailfish OS
 Version: 1.6
 Release: 0
 Group: Qt/Qt
+URL: https://github.com/karip/harbour-file-browser
 License: Public domain
 Sources:
 - '%{name}-%{version}.tar.bz2'
@@ -15,11 +16,10 @@ PkgConfigBR:
 - Qt5Qml
 - Qt5Quick
 - sailfishapp
-- qt5-qttools-linguist 
 
 NoAutoReqProv: yes
 Requires:
-- libsailfishapp
+- sailfishapp
 Files:
 # Do not include whole %{_datadir}/applications as that would include tests too
 # the following defattr will cause two defattrs in .spec file, how to get only one?
@@ -30,4 +30,5 @@ Files:
 - '%{_datadir}/%{name}/i18n'
 - '%attr(755,root,root) %{_bindir}/%{name}' # permission to run the exeutable
 
-PkgBR: []
+PkgBR:
+- qt5-qttools-linguist 
