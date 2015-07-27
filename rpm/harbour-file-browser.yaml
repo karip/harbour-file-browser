@@ -19,7 +19,7 @@ PkgConfigBR:
 
 NoAutoReqProv: yes
 Requires:
-- sailfishapp
+- libsailfishapp
 Files:
 # Do not include whole %{_datadir}/applications as that would include tests too
 # the following defattr will cause two defattrs in .spec file, how to get only one?

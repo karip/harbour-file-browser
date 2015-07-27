@@ -21,7 +21,7 @@ URL:        https://github.com/karip/harbour-file-browser
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-file-browser.yaml
 AutoReqProv:    0
-Requires:   sailfishapp
+Requires:   libsailfishapp
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
