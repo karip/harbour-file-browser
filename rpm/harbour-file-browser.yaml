@@ -15,6 +15,7 @@ PkgConfigBR:
 - Qt5Qml
 - Qt5Quick
 - sailfishapp
+- qt5-qttools-linguist 
 
 NoAutoReqProv: yes
 Requires:
