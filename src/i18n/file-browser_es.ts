@@ -308,12 +308,12 @@
     <message>
         <location filename="../filemodel.cpp" line="70"/>
         <source>dir-link</source>
-        <translation>Vínculo del directorio</translation>
+        <translation>dir-link</translation>
     </message>
     <message>
         <location filename="../filemodel.cpp" line="71"/>
         <source>dir</source>
-        <translation>directorio</translation>
+        <translation>dir</translation>
     </message>
     <message>
         <location filename="../filemodel.cpp" line="299"/>
