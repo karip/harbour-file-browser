@@ -132,10 +132,8 @@ Page {
             // file info texts, visible if error is not set
             Column {
                 visible: fileData.errorMessage === ""
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
 
                 IconButton {
                     id: playButton
@@ -150,7 +148,7 @@ Page {
                         source: ""
                     }
                 }
-                Spacer { height: 10; visible: playButton.visible } // fix to playButton height
+                Spacer { height: Theme.paddingMedium; visible: playButton.visible } // fix to playButton height
                 // clickable icon and filename
                 BackgroundItem {
                     id: openButton
@@ -175,7 +173,6 @@ Page {
                         }
                         Image {
                             id: icon
-                            anchors.topMargin: 6
                             anchors.horizontalCenter: parent.horizontalCenter
                             source: "../images/large-"+fileData.icon+".png"
                             visible: !imagePreview.visible && !playButton.visible
@@ -206,10 +203,10 @@ Page {
                                     (openButton.highlighted ? Theme.highlightColor
                                                             : Theme.primaryColor)
                         }
-                        Spacer { height: 20 }
+                        Spacer { height: Theme.paddingLarge }
                     }
                 }
-                Spacer { height: 10 }
+                Spacer { height: Theme.paddingMedium }
 
                 // Display metadata with priotity < 5
                 Repeater {
@@ -222,7 +219,7 @@ Page {
                     }
                 }
                 Spacer {
-                    height: 10
+                    height: Theme.paddingMedium
                 }
 
                 CenteredField {
@@ -262,7 +259,7 @@ Page {
                     value: fileData.modified
                 }
                 Spacer {
-                    height: 10
+                    height: Theme.paddingMedium
                 }
                 // Display metadata with priority >= 5
                 Repeater {
@@ -275,7 +272,7 @@ Page {
                     }
                 }
                 Spacer {
-                    height: 10
+                    height: Theme.paddingMedium
                 }
             }
 
@@ -302,7 +299,7 @@ Page {
     DirPopup {
         id: dirPopup
         anchors.fill: parent
-        menuTop: 100
+        menuTop: Theme.itemSizeMedium
     }
 
     NotificationPanel {

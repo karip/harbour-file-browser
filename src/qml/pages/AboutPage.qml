@@ -13,10 +13,8 @@ Page {
 
         Column {
             id: column
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
+            x: Theme.horizontalPageMargin
+            width: parent.width - 2*x
 
             PageHeader { title: qsTr("Public Domain") }
 

@@ -16,10 +16,8 @@ Page {
 
         Column {
             id: column
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
+            x: Theme.horizontalPageMargin
+            width: parent.width - 2*x
 
             PageHeader { title: Functions.lastPartOfPath(page.path) }
 
@@ -46,7 +44,7 @@ Page {
                          page.orientation === Orientation.LandscapeInverted
             }
             Spacer {
-                height: 40
+                height: 2*Theme.paddingLarge
                 visible: message.text !== ""
             }
             Label {
@@ -61,7 +59,7 @@ Page {
                 visible: message.text !== ""
             }
             Spacer {
-                height: 40
+                height: 2*Theme.paddingLarge
                 visible: message.text !== ""
             }
         }

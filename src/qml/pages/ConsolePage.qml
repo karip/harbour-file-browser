@@ -40,11 +40,9 @@ Page {
 
             Text {
                 id: listLabel
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
-                anchors.top: parent.top
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
+
                 text: modelData
                 textFormat: Text.PlainText
                 color: page.consoleColor

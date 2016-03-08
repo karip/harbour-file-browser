@@ -31,7 +31,7 @@ Page {
                 onCheckedChanged: engine.writeSetting("show-hidden-files", showHiddenFiles.checked.toString())
             }
 
-            Spacer { height: 40 }
+            Spacer { height: 2*Theme.paddingLarge }
 
             Label {
                 text: qsTr("About File Browser")
@@ -41,12 +41,10 @@ Page {
                 horizontalAlignment: Text.AlignRight
                 color: Theme.highlightColor
             }
-            Spacer { height: 20 }
+            Spacer { height: Theme.paddingLarge }
             Row {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
                 Label {
                     id: version
                     text: qsTr("Version")+" "
@@ -59,7 +57,7 @@ Page {
                     color: Theme.highlightColor
                 }
             }
-            Spacer { height: 20 }
+            Spacer { height: Theme.paddingLarge }
             BackgroundItem {
                 id: pdItem
                 anchors.left: parent.left
@@ -69,10 +67,8 @@ Page {
 
                 Label {
                     id: pdLabel
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: Theme.paddingLarge
-                    anchors.rightMargin: Theme.paddingLarge
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
                     text: qsTr("File Browser is free and unencumbered software released "+
                           "into the public domain.") + "\n" + qsTr("Read full text >>")
                     wrapMode: Text.Wrap
@@ -81,12 +77,10 @@ Page {
                 }
             }
 
-            Spacer { height: 20 }
+            Spacer { height: Theme.paddingLarge }
             Label {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
                 text: qsTr("The source code is available at") + "\nhttps://github.com/karip/harbour-file-browser"
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeTiny

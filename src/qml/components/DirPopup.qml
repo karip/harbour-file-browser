@@ -5,7 +5,7 @@ import "../pages/functions.js" as Functions
 // This component displays a list of dir options on top of a page
 Item {
     id: item
-    property int menuTop: 100
+    property int menuTop: Theme.itemSizeMedium
 
     property string _selectedMenu: ""
     property Item _contextMenu
