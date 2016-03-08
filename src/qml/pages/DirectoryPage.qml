@@ -213,15 +213,9 @@ Page {
         }
 
         // text if no files or error message
-        Text {
-            width: parent.width
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            horizontalAlignment: Qt.AlignHCenter
-            y: -fileList.contentY + Theme.itemSizeMedium
-            visible: fileModel.fileCount === 0 || fileModel.errorMessage !== ""
+        ViewPlaceholder {
+            enabled: fileModel.fileCount === 0 || fileModel.errorMessage !== ""
             text: fileModel.errorMessage !== "" ? fileModel.errorMessage : qsTr("No files")
-            color: Theme.highlightColor
         }
     }
 
