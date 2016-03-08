@@ -98,7 +98,7 @@ Page {
     onStatusChanged: {
         // update cover
         if (status === PageStatus.Activating)
-            coverPlaceholder.text = qsTr("Settings");
+            coverText = qsTr("Settings");
 
         // read settings
         if (status === PageStatus.Activating) {

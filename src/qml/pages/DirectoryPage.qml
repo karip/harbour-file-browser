@@ -273,7 +273,7 @@ Page {
 
         // update cover
         if (status === PageStatus.Activating) {
-            coverPlaceholder.text = Functions.lastPartOfPath(page.dir)+"/";
+            coverText = Functions.lastPartOfPath(page.dir)+"/";
 
             // go to Home on startup
             if (page.initial) {

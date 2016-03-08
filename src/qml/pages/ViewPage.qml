@@ -70,7 +70,7 @@ Page {
     // update cover
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            coverPlaceholder.text = Functions.lastPartOfPath(page.path);
+            coverText = Functions.lastPartOfPath(page.path);
             // reading file returns three texts, message, portrait and landscape texts
             var txts = engine.readFile(page.path);
             message.text = txts[0];

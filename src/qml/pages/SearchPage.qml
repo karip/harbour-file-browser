@@ -61,7 +61,7 @@ Page {
                 clearSelectedFiles();
                 if (txt !== "") {
                     searchEngine.search(txt);
-                    coverPlaceholder.text = qsTr("Searching")+"\n"+txt;
+                    coverText = qsTr("Searching")+"\n"+txt;
                 }
             }
 
@@ -404,7 +404,7 @@ Page {
     }
 
     function clearCover() {
-        coverPlaceholder.text = qsTr("Search");
+        coverText = qsTr("Search");
     }
 }
 

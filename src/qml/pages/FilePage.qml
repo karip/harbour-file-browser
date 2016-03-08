@@ -295,7 +295,7 @@ Page {
     // update cover
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            coverPlaceholder.text = Functions.lastPartOfPath(page.file);
+            coverText = Functions.lastPartOfPath(page.file);
         }
     }
 
