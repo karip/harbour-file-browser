@@ -49,7 +49,7 @@ Page {
                     id: version
                     text: qsTr("Version")+" "
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    color: Theme.secondaryColor
+                    color: Theme.highlightColor
                 }
                 Label {
                     text: "1.6.0" // Version number must be changed manually!
@@ -69,11 +69,15 @@ Page {
                     id: pdLabel
                     x: Theme.horizontalPageMargin
                     width: parent.width - 2*x
+                    color: Theme.highlightColor
+                    textFormat: Text.StyledText
+                    linkColor: Theme.primaryColor
+
                     text: qsTr("File Browser is free and unencumbered software released "+
-                          "into the public domain.") + "\n" + qsTr("Read full text >>")
+                          "into the public domain.") + "<a href='dummy'>" + "\n" + qsTr("Read full text >>") + "</a>"
                     wrapMode: Text.Wrap
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    color: pdItem.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    onLinkActivated: pdItem.clicked(undefined)
                 }
             }
 
@@ -84,7 +88,7 @@ Page {
                 text: qsTr("The source code is available at") + "\nhttps://github.com/karip/harbour-file-browser"
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeTiny
-                color: Theme.secondaryColor
+                color: Theme.highlightColor
             }
         }
     }

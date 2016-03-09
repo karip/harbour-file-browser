@@ -35,7 +35,7 @@ Dialog {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2*x
                 text: qsTr("Create a new folder under") + "\n" + path
-                color: Theme.secondaryColor
+                color: Theme.highlightColor
                 wrapMode: Text.Wrap
             }
 
