@@ -222,39 +222,36 @@ Page {
                     height: Theme.paddingMedium
                 }
 
-                CenteredField {
+                DetailItem {
                     label: qsTr("Location")
                     value: fileData.absolutePath
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Type")
                     value: fileData.isSymLink ? qsTr("Link to %1").arg(fileData.mimeTypeComment) :
                                                 fileData.mimeTypeComment
                 }
-                CenteredField {
+                DetailItem {
                     label: "" // blank label
                     value: "("+fileData.mimeType+")"
-                    valueElide: (page.orientation === Orientation.Portrait ||
-                                 page.orientation === Orientation.PortraitInverted)
-                                ? Text.ElideMiddle : Text.ElideNone
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Size")
                     value: fileData.size
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Permissions")
                     value: fileData.permissions
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Owner")
                     value: fileData.owner
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Group")
                     value: fileData.group
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Last modified")
                     value: fileData.modified
                 }
@@ -265,7 +262,7 @@ Page {
                 Repeater {
                     model: fileData.metaData
                     // first char is priority (0-9), labels and values are delimited with ':'
-                    CenteredField {
+                    DetailItem {
                         visible: modelData.charAt(0) >= '5'
                         label: modelData.substring(1, modelData.indexOf(":"))
                         value: Functions.trim(modelData.substring(modelData.indexOf(":")+1))
