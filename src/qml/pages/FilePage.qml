@@ -212,7 +212,7 @@ Page {
                 Repeater {
                     model: fileData.metaData
                     // first char is priority (0-9), labels and values are delimited with ':'
-                    CenteredField {
+                    DetailItem {
                         visible: modelData.charAt(0) < '5'
                         label: modelData.substring(1, modelData.indexOf(":"))
                         value: Functions.trim(modelData.substring(modelData.indexOf(":")+1))
