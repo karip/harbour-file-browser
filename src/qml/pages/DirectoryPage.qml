@@ -93,19 +93,16 @@ Page {
 
             Image {
                 id: listIcon
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.top: parent.top
-                anchors.topMargin: 11
+                x: Theme.paddingLarge
+                y: Theme.paddingMedium
                 source: "../images/small-"+fileIcon+".png"
             }
             // circle shown when item is selected
             Label {
                 visible: isSelected
                 anchors.left: parent.left
-                anchors.leftMargin: Theme.paddingLarge-4
-                anchors.top: parent.top
-                anchors.topMargin: 3
+                anchors.leftMargin: Theme.paddingLarge - Theme.paddingSmall
+                y: Theme.paddingSmall
                 text: "\u25cb"
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeLarge
@@ -113,11 +110,10 @@ Page {
             Label {
                 id: listLabel
                 anchors.left: listIcon.right
-                anchors.leftMargin: 10
+                anchors.leftMargin: Theme.paddingMedium
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.paddingLarge
-                anchors.top: parent.top
-                anchors.topMargin: 5
+                y: Theme.paddingSmall
                 text: filename
                 elide: Text.ElideRight
                 color: fileItem.highlighted || isSelected ? Theme.highlightColor : Theme.primaryColor
@@ -125,7 +121,7 @@ Page {
             Label {
                 id: listSize
                 anchors.left: listIcon.right
-                anchors.leftMargin: 10
+                anchors.leftMargin: Theme.paddingMedium
                 anchors.top: listLabel.bottom
                 text: !(isLink && isDir) ? size : Functions.unicodeArrow()+" "+symLinkTarget
                 color: fileItem.highlighted || isSelected ? Theme.secondaryHighlightColor : Theme.secondaryColor
@@ -157,7 +153,7 @@ Page {
                                    { file: fileModel.appendPath(listLabel.text) });
             }
             MouseArea {
-                width: 90
+                width: Theme.itemSizeSmall
                 height: parent.height
                 onClicked: {
                     fileModel.toggleSelectedFile(index);
@@ -217,15 +213,9 @@ Page {
         }
 
         // text if no files or error message
-        Text {
-            width: parent.width
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-            horizontalAlignment: Qt.AlignHCenter
-            y: -fileList.contentY + 100
-            visible: fileModel.fileCount === 0 || fileModel.errorMessage !== ""
+        ViewPlaceholder {
+            enabled: fileModel.fileCount === 0 || fileModel.errorMessage !== ""
             text: fileModel.errorMessage !== "" ? fileModel.errorMessage : qsTr("No files")
-            color: Theme.highlightColor
         }
     }
 
@@ -273,7 +263,7 @@ Page {
 
         // update cover
         if (status === PageStatus.Activating) {
-            coverPlaceholder.text = Functions.lastPartOfPath(page.dir)+"/";
+            coverText = Functions.lastPartOfPath(page.dir)+"/";
 
             // go to Home on startup
             if (page.initial) {
@@ -286,7 +276,7 @@ Page {
     DirPopup {
         id: dirPopup
         anchors.fill: parent
-        menuTop: 100
+        menuTop: Theme.itemSizeMedium
     }
 
     // connect signals from engine to panels

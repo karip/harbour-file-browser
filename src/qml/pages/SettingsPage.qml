@@ -31,7 +31,7 @@ Page {
                 onCheckedChanged: engine.writeSetting("show-hidden-files", showHiddenFiles.checked.toString())
             }
 
-            Spacer { height: 40 }
+            Spacer { height: 2*Theme.paddingLarge }
 
             Label {
                 text: qsTr("About File Browser")
@@ -41,17 +41,15 @@ Page {
                 horizontalAlignment: Text.AlignRight
                 color: Theme.highlightColor
             }
-            Spacer { height: 20 }
+            Spacer { height: Theme.paddingLarge }
             Row {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
                 Label {
                     id: version
                     text: qsTr("Version")+" "
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    color: Theme.secondaryColor
+                    color: Theme.highlightColor
                 }
                 Label {
                     text: "1.6.0" // Version number must be changed manually!
@@ -59,7 +57,7 @@ Page {
                     color: Theme.highlightColor
                 }
             }
-            Spacer { height: 20 }
+            Spacer { height: Theme.paddingLarge }
             BackgroundItem {
                 id: pdItem
                 anchors.left: parent.left
@@ -69,28 +67,28 @@ Page {
 
                 Label {
                     id: pdLabel
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: Theme.paddingLarge
-                    anchors.rightMargin: Theme.paddingLarge
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    color: Theme.highlightColor
+                    textFormat: Text.StyledText
+                    linkColor: Theme.primaryColor
+
                     text: qsTr("File Browser is free and unencumbered software released "+
-                          "into the public domain.") + "\n" + qsTr("Read full text >>")
+                          "into the public domain.") + "<a href='dummy'>" + "\n" + qsTr("Read full text >>") + "</a>"
                     wrapMode: Text.Wrap
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    color: pdItem.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    onLinkActivated: pdItem.clicked(undefined)
                 }
             }
 
-            Spacer { height: 20 }
+            Spacer { height: Theme.paddingLarge }
             Label {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
                 text: qsTr("The source code is available at") + "\nhttps://github.com/karip/harbour-file-browser"
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeTiny
-                color: Theme.secondaryColor
+                color: Theme.highlightColor
             }
         }
     }
@@ -98,7 +96,7 @@ Page {
     onStatusChanged: {
         // update cover
         if (status === PageStatus.Activating)
-            coverPlaceholder.text = qsTr("Settings");
+            coverText = qsTr("Settings");
 
         // read settings
         if (status === PageStatus.Activating) {

@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 // This component displays a label and a value as a row
 Row {
-    spacing: 10
+    spacing: Theme.itemSizeMedium
     width: parent.width
 
     // label text

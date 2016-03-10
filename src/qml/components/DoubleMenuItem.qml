@@ -9,7 +9,7 @@ MenuItem {
         visible: subtext !== ""
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 2
+        anchors.bottomMargin: Math.round(Theme.paddingSmall/3)
         text: subtext
         color: Theme.secondaryColor
         font.pixelSize: Theme.fontSizeTiny

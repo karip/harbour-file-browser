@@ -50,7 +50,7 @@ DockedPanel {
         }
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 20
+            spacing: Theme.paddingLarge
             IconButton {
                 enabled: dockPanel.enabled
                 icon.source: displayClose ? "image://theme/icon-m-close"
@@ -94,10 +94,10 @@ DockedPanel {
                  dockPanel.orientation === Orientation.LandscapeInverted
         anchors.horizontalCenter: parent.horizontalCenter
         height: cutButton.height + Theme.paddingLarge*2
-        spacing: 20
+        spacing: Theme.paddingLarge
         Spacer { width: Theme.paddingLarge; height: parent.height }
         Label {
-            width: 220
+            width: 2*Theme.itemSizeLarge
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
             text: dockPanel.overrideText === "" ? qsTr("%1 selected").arg(dockPanel.selectedCount)
@@ -105,7 +105,7 @@ DockedPanel {
             color: dockPanel.enabled ? Theme.highlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeExtraSmall
         }
-        Spacer { width: 20; height: parent.height }
+        Spacer { width: Theme.paddingLarge; height: parent.height }
         IconButton {
             enabled: dockPanel.enabled
             anchors.verticalCenter: parent.verticalCenter

@@ -132,10 +132,8 @@ Page {
             // file info texts, visible if error is not set
             Column {
                 visible: fileData.errorMessage === ""
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
 
                 IconButton {
                     id: playButton
@@ -150,7 +148,7 @@ Page {
                         source: ""
                     }
                 }
-                Spacer { height: 10; visible: playButton.visible } // fix to playButton height
+                Spacer { height: Theme.paddingMedium; visible: playButton.visible } // fix to playButton height
                 // clickable icon and filename
                 BackgroundItem {
                     id: openButton
@@ -175,7 +173,6 @@ Page {
                         }
                         Image {
                             id: icon
-                            anchors.topMargin: 6
                             anchors.horizontalCenter: parent.horizontalCenter
                             source: "../images/large-"+fileData.icon+".png"
                             visible: !imagePreview.visible && !playButton.visible
@@ -206,10 +203,10 @@ Page {
                                     (openButton.highlighted ? Theme.highlightColor
                                                             : Theme.primaryColor)
                         }
-                        Spacer { height: 20 }
+                        Spacer { height: Theme.paddingLarge }
                     }
                 }
-                Spacer { height: 10 }
+                Spacer { height: Theme.paddingMedium }
 
                 // Display metadata with priotity < 5
                 Repeater {
@@ -222,60 +219,57 @@ Page {
                     }
                 }
                 Spacer {
-                    height: 10
+                    height: Theme.paddingMedium
                 }
 
-                CenteredField {
+                DetailItem {
                     label: qsTr("Location")
                     value: fileData.absolutePath
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Type")
                     value: fileData.isSymLink ? qsTr("Link to %1").arg(fileData.mimeTypeComment) :
                                                 fileData.mimeTypeComment
                 }
-                CenteredField {
+                DetailItem {
                     label: "" // blank label
                     value: "("+fileData.mimeType+")"
-                    valueElide: (page.orientation === Orientation.Portrait ||
-                                 page.orientation === Orientation.PortraitInverted)
-                                ? Text.ElideMiddle : Text.ElideNone
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Size")
                     value: fileData.size
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Permissions")
                     value: fileData.permissions
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Owner")
                     value: fileData.owner
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Group")
                     value: fileData.group
                 }
-                CenteredField {
+                DetailItem {
                     label: qsTr("Last modified")
                     value: fileData.modified
                 }
                 Spacer {
-                    height: 10
+                    height: Theme.paddingMedium
                 }
                 // Display metadata with priority >= 5
                 Repeater {
                     model: fileData.metaData
                     // first char is priority (0-9), labels and values are delimited with ':'
-                    CenteredField {
+                    DetailItem {
                         visible: modelData.charAt(0) >= '5'
                         label: modelData.substring(1, modelData.indexOf(":"))
                         value: Functions.trim(modelData.substring(modelData.indexOf(":")+1))
                     }
                 }
                 Spacer {
-                    height: 10
+                    height: Theme.paddingMedium
                 }
             }
 
@@ -295,14 +289,14 @@ Page {
     // update cover
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            coverPlaceholder.text = Functions.lastPartOfPath(page.file);
+            coverText = Functions.lastPartOfPath(page.file);
         }
     }
 
     DirPopup {
         id: dirPopup
         anchors.fill: parent
-        menuTop: 100
+        menuTop: Theme.itemSizeMedium
     }
 
     NotificationPanel {

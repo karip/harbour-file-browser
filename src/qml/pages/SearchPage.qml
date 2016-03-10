@@ -61,7 +61,7 @@ Page {
                 clearSelectedFiles();
                 if (txt !== "") {
                     searchEngine.search(txt);
-                    coverPlaceholder.text = qsTr("Searching")+"\n"+txt;
+                    coverText = qsTr("Searching")+"\n"+txt;
                 }
             }
 
@@ -79,22 +79,23 @@ Page {
 
         header: Item {
             width: parent.width
-            height: 110
+            height: Theme.itemSizeLarge
 
             SearchField {
                 id: searchField
                 anchors.left: parent.left
                 anchors.right: cancelSearchButton.left
-                anchors.top: parent.top
-                anchors.topMargin: 6
+                y: Theme.paddingSmall
                 placeholderText: qsTr("Search %1").arg(Functions.formatPathForSearch(page.dir))
-                inputMethodHints: Qt.ImhNoAutoUppercase
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
                 // get focus when page is shown for the first time
                 Component.onCompleted: forceActiveFocus()
 
+
                 // return key on virtual keyboard starts or restarts search
                 EnterKey.enabled: true
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                 EnterKey.onClicked: {
                     notificationPanel.hide();
                     listModel.update(searchField.text);
@@ -103,17 +104,13 @@ Page {
                 }
             }
             // our own "IconButton" to make the mouse area large and easier to tap
-            Rectangle {
+            IconButton {
                 id: cancelSearchButton
                 anchors.right: parent.right
                 anchors.top: searchField.top
                 width: Theme.iconSizeMedium+Theme.paddingLarge
                 height: searchField.height
-                color: cancelSearchMouseArea.pressed ? Theme.secondaryHighlightColor : "transparent"
-                MouseArea {
-                    id: cancelSearchMouseArea
-                    anchors.fill: parent
-                    onClicked: {
+                onClicked: {
                         if (!searchEngine.running) {
                             listModel.update(searchField.text);
                             foundText.visible = true;
@@ -121,41 +118,34 @@ Page {
                             searchEngine.cancel()
                         }
                     }
-                    enabled: true
-                    Image {
-                        id: cancelSearchButtonImage
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.paddingLarge
-                        source: searchEngine.running ? "image://theme/icon-m-clear" :
+                icon.source: searchEngine.running ? "image://theme/icon-m-clear" :
                                                        "image://theme/icon-m-right"
-                    }
-                    BusyIndicator {
-                        id: searchBusy
-                        anchors.centerIn: cancelSearchButtonImage
-                        running: searchEngine.running
-                        size: BusyIndicatorSize.Small
-                    }
-                }
             }
+            BusyIndicator {
+                id: searchBusy
+                anchors.centerIn: cancelSearchButton
+                running: searchEngine.running
+                size: BusyIndicatorSize.Small
+            }
+
             Label {
                 id: foundText
                 visible: false
                 anchors.left: parent.left
                 anchors.leftMargin: searchField.textLeftMargin
                 anchors.top: searchField.bottom
-                anchors.topMargin: -26
+                anchors.topMargin: -Theme.paddingLarge
                 text: qsTr("%1 hits").arg(listModel.count)
                 font.pixelSize: Theme.fontSizeTiny
-                color: Theme.secondaryColor
+                color: searchField.placeholderColor
             }
             Label {
                 anchors.left: parent.left
-                anchors.leftMargin: 240
+                anchors.leftMargin: 3*Theme.itemSizeSmall
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.paddingLarge
                 anchors.top: searchField.bottom
-                anchors.topMargin: -26
+                anchors.topMargin: -Theme.paddingSmall
                 text: page.currentDirectory
                 font.pixelSize: Theme.fontSizeTiny
                 color: Theme.secondaryColor
@@ -178,31 +168,26 @@ Page {
 
             Image {
                 id: listIcon
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.top: parent.top
-                anchors.topMargin: 11
+                y: Theme.paddingMedium
+                x: Theme.paddingLarge
                 source: "../images/small-"+fileIcon+".png"
             }
             // circle shown when item is selected
             Label {
                 visible: isSelected
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.paddingLarge-4
-                anchors.top: parent.top
-                anchors.topMargin: 3
+                x: Theme.paddingLarge-Theme.paddingSmall
+                y: Theme.paddingSmall
                 text: "\u25cb"
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeLarge
             }
             Label {
                 id: listLabel
+                y: Theme.paddingSmall
                 anchors.left: listIcon.right
-                anchors.leftMargin: 10
+                anchors.leftMargin: Theme.paddingMedium
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.paddingLarge
-                anchors.top: parent.top
-                anchors.topMargin: 5
                 text: filename
                 textFormat: Text.PlainText
                 elide: Text.ElideRight
@@ -211,7 +196,7 @@ Page {
             Label {
                 id: listAbsoluteDir
                 anchors.left: listIcon.right
-                anchors.leftMargin: 10
+                anchors.leftMargin: Theme.paddingMedium
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.paddingLarge
                 anchors.top: listLabel.bottom
@@ -230,7 +215,7 @@ Page {
                                    { file: model.fullname });
             }
             MouseArea {
-                width: 90
+                width: Theme.itemSizeSmall
                 height: parent.height
                 onClicked: {
                     if (!model.isSelected) {
@@ -298,7 +283,6 @@ Page {
                  }
              }
         }
-
     }
 
     // a bit hackery: these are called from selection panel
@@ -404,7 +388,7 @@ Page {
     }
 
     function clearCover() {
-        coverPlaceholder.text = qsTr("Search");
+        coverText = qsTr("Search");
     }
 }
 
