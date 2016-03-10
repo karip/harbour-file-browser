@@ -74,7 +74,7 @@ Page {
                     linkColor: Theme.primaryColor
 
                     text: qsTr("File Browser is free and unencumbered software released "+
-                          "into the public domain.") + "<a href='dummy'>" + "\n" + qsTr("Read full text >>") + "</a>"
+                          "into the public domain.") + "<br><a href='dummy'>" + qsTr("Read full text >>") + "</a>"
                     wrapMode: Text.Wrap
                     font.pixelSize: Theme.fontSizeExtraSmall
                     onLinkActivated: pdItem.clicked(undefined)
