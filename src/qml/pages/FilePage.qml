@@ -206,7 +206,6 @@ Page {
                         Spacer { height: Theme.paddingLarge }
                     }
                 }
-                Spacer { height: Theme.paddingMedium }
 
                 // Display metadata with priotity < 5
                 Repeater {
@@ -218,9 +217,6 @@ Page {
                         value: Functions.trim(modelData.substring(modelData.indexOf(":")+1))
                     }
                 }
-                Spacer {
-                    height: Theme.paddingMedium
-                }
 
                 DetailItem {
                     label: qsTr("Location")
@@ -228,12 +224,9 @@ Page {
                 }
                 DetailItem {
                     label: qsTr("Type")
-                    value: fileData.isSymLink ? qsTr("Link to %1").arg(fileData.mimeTypeComment) :
-                                                fileData.mimeTypeComment
-                }
-                DetailItem {
-                    label: "" // blank label
-                    value: "("+fileData.mimeType+")"
+                    value: fileData.isSymLink
+                           ? qsTr("Link to %1").arg(fileData.mimeTypeComment) + "\n("+fileData.mimeType+")"
+                           : fileData.mimeTypeComment + "\n("+fileData.mimeType+")"
                 }
                 DetailItem {
                     label: qsTr("Size")
@@ -255,9 +248,6 @@ Page {
                     label: qsTr("Last modified")
                     value: fileData.modified
                 }
-                Spacer {
-                    height: Theme.paddingMedium
-                }
                 // Display metadata with priority >= 5
                 Repeater {
                     model: fileData.metaData
@@ -267,9 +257,6 @@ Page {
                         label: modelData.substring(1, modelData.indexOf(":"))
                         value: Functions.trim(modelData.substring(modelData.indexOf(":")+1))
                     }
-                }
-                Spacer {
-                    height: Theme.paddingMedium
                 }
             }
 
