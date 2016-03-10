@@ -5,6 +5,6 @@ CoverBackground {
     CoverPlaceholder {
         id: coverPlaceholder
         text: coverText
-        icon.source: "images/harbour-file-browser.png"
+        icon.source: "../images/harbour-file-browser.png"
     }
 }
