@@ -6,7 +6,7 @@ CONFIG += sailfishapp
 SOURCES += main.cpp filemodel.cpp filedata.cpp engine.cpp fileworker.cpp searchengine.cpp \
            searchworker.cpp consolemodel.cpp statfileinfo.cpp globals.cpp
 HEADERS += filemodel.h filedata.h engine.h fileworker.h searchengine.h searchworker.h \
-           consolemodel.h statfileinfo.cpp globals.h
+           consolemodel.h statfileinfo.h globals.h
 
 SOURCES += jhead/jhead-api.cpp jhead/exif.c jhead/gpsinfo.c jhead/iptc.c jhead/jpgfile.c \
            jhead/jpgqguess.c jhead/makernote.c

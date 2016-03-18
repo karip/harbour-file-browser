@@ -78,13 +78,6 @@ QString infoToIconName(const StatFileInfo &info)
     return "file";
 }
 
-int access(QString filename, int how)
-{
-    QByteArray fab = filename.toUtf8();
-    char *fn = fab.data();
-    return access(fn, how);
-}
-
 QString execute(QString command, QStringList arguments, bool mergeErrorStream)
 {
     QProcess process;

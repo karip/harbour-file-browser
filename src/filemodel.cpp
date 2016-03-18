@@ -300,7 +300,7 @@ void FileModel::readAllEntries()
         m_errorMessage = tr("Folder does not exist");
         return;
     }
-    if (access(m_dir, R_OK) == -1) {
+    if (!dir.isReadable()) {
         m_errorMessage = tr("No permission to read the folder");
         return;
     }
@@ -339,7 +339,7 @@ void FileModel::refreshEntries()
         emit errorMessageChanged();
         return;
     }
-    if (access(m_dir, R_OK) == -1) {
+    if (!dir.isReadable()) {
         clearModel();
         m_errorMessage = tr("No permission to read the folder");
         emit errorMessageChanged();
