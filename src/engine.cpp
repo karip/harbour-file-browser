@@ -29,9 +29,9 @@ Engine::Engine(QObject *parent) :
 Engine::~Engine()
 {
     // is this the way to force stop the worker thread?
-    m_fileWorker->cancel(); // stop possibly running background thread
+    m_fileWorker->quit(); // stop possibly running background thread
     m_fileWorker->wait();   // wait until thread stops
-    delete m_fileWorker;    // delete it
+    m_fileWorker->deleteLater();    // delete it
 }
 
 void Engine::deleteFiles(QStringList filenames)
@@ -221,7 +221,8 @@ QStringList Engine::readFile(QString filename)
     }
 
     // check permissions
-    if (access(filename, R_OK) == -1)
+    QFileInfo info(filename);
+    if (!info.isReadable())
         return makeStringList(tr("No permission to read the file") + "\n" + filename);
 
     QFile file(filename);
@@ -293,7 +294,7 @@ QString Engine::mkdir(QString path, QString name)
     QDir dir(path);
 
     if (!dir.mkdir(name)) {
-        if (access(dir.absolutePath(), W_OK) == -1)
+        if (!dir.isReadable())
             return tr("No permissions to create %1").arg(name);
 
         return tr("Cannot create folder %1").arg(name);

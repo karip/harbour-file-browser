@@ -15,8 +15,6 @@ QString datetimeToString(QDateTime datetime);
 
 QString infoToIconName(const StatFileInfo &info);
 
-int access(QString filename, int how);
-
 QString execute(QString command, QStringList arguments, bool mergeErrorStream);
 
 #endif // GLOBALS_H
