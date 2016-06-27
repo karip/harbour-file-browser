@@ -97,12 +97,12 @@ Page {
                 y: Theme.paddingMedium
                 source: "../images/small-"+fileIcon+".png"
             }
-            // circle shown when item is selected
+            // circle shown when item is selected - +1 and -2 to match the underlying file icon
             Label {
                 visible: isSelected
                 anchors.left: parent.left
-                anchors.leftMargin: Theme.paddingLarge - Theme.paddingSmall
-                y: Theme.paddingSmall
+                anchors.leftMargin: Theme.paddingLarge - Theme.paddingSmall +1
+                y: Theme.paddingSmall -2
                 text: "\u25cb"
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeLarge
