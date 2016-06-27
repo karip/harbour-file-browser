@@ -18,7 +18,7 @@
 #include "consolemodel.h"
 
 int main(int argc, char *argv[])
-{    
+{
     // CONFIG += sailfishapp sets up QCoreApplication::OrganizationName and ApplicationName
     // so that QSettings can access the app's config file at
     // /home/nemo/.config/harbour-file-browser/harbour-file-browser.conf
