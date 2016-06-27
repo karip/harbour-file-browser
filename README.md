@@ -49,12 +49,6 @@ in the Jolla Store. Give it a try if you are moving a lot of files.
 OpenRepos has a powerful file manager called
 [Filetug](https://openrepos.net/content/matoking/filetug).
 
-The Jolla phone also ships with its own file manager called Files.
-It is not installed by default. You can install it by typing the 
-following command in Terminal (requires Developer Mode).
-
-    pkcon install jolla-fileman
-
 Android app stores also have file managers, such as ES File Explorer,
 which are good when accessing Android storage.
 
