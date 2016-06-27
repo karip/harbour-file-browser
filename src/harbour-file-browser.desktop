@@ -4,5 +4,6 @@ X-Nemo-Application-Type=silica-qt5
 Name=File Browser
 Icon=harbour-file-browser
 Exec=harbour-file-browser
+Categories=Utility;Development;
 # Finnish (fi)
 Name[fi]=Tiedostoselain
