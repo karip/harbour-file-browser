@@ -1,6 +1,13 @@
 
 # File Browser Release Notes
 
+## Version 1.7 (2016-06-27)
+
+Published in Jolla store on 2016-06-28.
+
+ * Add translations for Italian, Russian, Spanish and Swedish
+ * Small UI improvements to match the Sailfish look
+
 ## Version 1.6 (2015-03-22)
 
 Published in Jolla store on 2015-03-23.
