@@ -18,6 +18,7 @@ i18n.path = /usr/share/harbour-file-browser/i18n
 i18n.files = i18n/file-browser_de.qm \
              i18n/file-browser_es.qm \
              i18n/file-browser_fi.qm \
+             i18n/file-browser_fr.qm \
              i18n/file-browser_it_IT.qm \
              i18n/file-browser_ru_RU.qm \
              i18n/file-browser_sv.qm \
@@ -32,6 +33,7 @@ TRANSLATIONS = \
     i18n/file-browser_de.ts \
     i18n/file-browser_es.ts \
     i18n/file-browser_fi.ts \
+    i18n/file-browser_fr.ts \
     i18n/file-browser_it_IT.ts \
     i18n/file-browser_ru_RU.ts \
     i18n/file-browser_sv.ts \
