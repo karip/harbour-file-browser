@@ -20,6 +20,7 @@ i18n.files = i18n/file-browser_de.qm \
              i18n/file-browser_fi.qm \
              i18n/file-browser_fr.qm \
              i18n/file-browser_it_IT.qm \
+             i18n/file-browser_nl.qm \
              i18n/file-browser_ru_RU.qm \
              i18n/file-browser_sv.qm \
              i18n/file-browser_zh_CN.qm
@@ -35,6 +36,7 @@ TRANSLATIONS = \
     i18n/file-browser_fi.ts \
     i18n/file-browser_fr.ts \
     i18n/file-browser_it_IT.ts \
+    i18n/file-browser_nl.ts \
     i18n/file-browser_ru_RU.ts \
     i18n/file-browser_sv.ts \
     i18n/file-browser_zh_CN.ts
