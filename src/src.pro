@@ -16,6 +16,7 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 
 i18n.path = /usr/share/harbour-file-browser/i18n
 i18n.files = i18n/file-browser_de.qm \
+             i18n/file-browser_el.qm \
              i18n/file-browser_es.qm \
              i18n/file-browser_fi.qm \
              i18n/file-browser_fr.qm \
@@ -32,6 +33,7 @@ system(lrelease $$PWD/i18n/*.ts)
 
 TRANSLATIONS = \
     i18n/file-browser_de.ts \
+    i18n/file-browser_el.ts \
     i18n/file-browser_es.ts \
     i18n/file-browser_fi.ts \
     i18n/file-browser_fr.ts \
