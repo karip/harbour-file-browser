@@ -623,7 +623,7 @@
     <message>
         <location filename="../jhead/jhead-api.cpp" line="148"/>
         <source>(Auto, return light not detected)</source>
-        <translation>(Auto, flash no detectado)</translation>
+        <translation>(Auto, flash non détecté)</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="149"/>
@@ -698,7 +698,7 @@
     <message>
         <location filename="../jhead/jhead-api.cpp" line="175"/>
         <source>(35mm equivalent: %1mm)</source>
-        <translation>(Équivalente a 35mm : %1mm)</translation>
+        <translation>(Équivalente à 35mm : %1mm)</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="182"/>
@@ -839,7 +839,7 @@
     <message>
         <location filename="../jhead/jhead-api.cpp" line="264"/>
         <source>Partial</source>
-        <translation>Partial</translation>
+        <translation>Partiel</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="265"/>
@@ -874,12 +874,12 @@
     <message>
         <location filename="../jhead/jhead-api.cpp" line="287"/>
         <source>Creative Program (based towards depth of field)</source>
-        <translation>Programme créatif (en s'appuyant sur le profondeur de champ)</translation>
+        <translation>Mode créatif (en s'appuyant sur le profondeur de champ)</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="290"/>
         <source>Action program (based towards fast shutter speed)</source>
-        <translation>Programme d'action (en s'appuyant sur la vitesse d'obturation)</translation>
+        <translation>Mode action (en s'appuyant sur la vitesse d'obturation)</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="293"/>
@@ -894,7 +894,7 @@
     <message>
         <location filename="../jhead/jhead-api.cpp" line="306"/>
         <source>Exposure Mode:Manual</source>
-        <translation>Modo d'exposition : Manuel</translation>
+        <translation>Mode d'exposition : Manuel</translation>
     </message>
     <message>
         <location filename="../jhead/jhead-api.cpp" line="308"/>
@@ -1104,7 +1104,7 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="76"/>
         <source>File Browser is free and unencumbered software released into the public domain.</source>
-        <translation>File Browser libre, ouvert et publié dans le domaine public.</translation>
+        <translation>File Browser est libre, ouvert et publié dans le domaine public.</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="77"/>
