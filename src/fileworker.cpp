@@ -69,7 +69,7 @@ void FileWorker::cancel()
     m_cancelled.storeRelease(Cancelled);
 }
 
-void FileWorker::run() Q_DECL_OVERRIDE
+void FileWorker::run()
 {
     switch (m_mode) {
     case DeleteMode:

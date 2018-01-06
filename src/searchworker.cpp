@@ -36,7 +36,7 @@ void SearchWorker::cancel()
     m_cancelled.storeRelease(Cancelled);
 }
 
-void SearchWorker::run() Q_DECL_OVERRIDE
+void SearchWorker::run()
 {
     QString errMsg = searchRecursively(m_directory, m_searchTerm.toLower());
     if (!errMsg.isEmpty())
