@@ -9,6 +9,7 @@
 
 // Functions modified to output to a QStringList instead of stdout
 
+#include <QObject>
 #include <sys/stat.h>
 #include "jhead-api.h"
 

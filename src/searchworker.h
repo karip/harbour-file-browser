@@ -30,7 +30,7 @@ signals: // signals, can be connected from a thread to another
     void errorOccurred(QString message, QString filename);
 
 protected:
-    void run();
+    void run() Q_DECL_OVERRIDE;
 
 private:
     enum CancelStatus {
