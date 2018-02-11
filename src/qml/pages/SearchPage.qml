@@ -168,20 +168,23 @@ Page {
 
             Image {
                 id: listIcon
-                y: Theme.paddingMedium
                 x: Theme.paddingLarge
+                y: Theme.paddingMedium
                 width: 32 * Theme.pixelRatio
                 height: 32 * Theme.pixelRatio
                 source: "../images/small-"+fileIcon+".png"
             }
             // circle shown when item is selected
-            Label {
+            Rectangle {
                 visible: isSelected
-                x: Theme.paddingLarge-Theme.paddingSmall
-                y: Theme.paddingSmall
-                text: "\u25cb"
-                color: Theme.highlightColor
-                font.pixelSize: Theme.fontSizeLarge
+                x: Theme.paddingLarge
+                y: Theme.paddingMedium
+                width: 32 * Theme.pixelRatio
+                height: 32 * Theme.pixelRatio
+                color: "transparent"
+                border.color: Theme.highlightColor
+                border.width: 3 * Theme.pixelRatio
+                radius: width * 0.5
             }
             Label {
                 id: listLabel
