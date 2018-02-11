@@ -103,9 +103,9 @@ Page {
             Rectangle {
                 visible: isSelected
                 anchors.verticalCenter: listLabel.verticalCenter
-                x: Theme.paddingLarge
-                width: Theme.iconSizeSmall
-                height: Theme.iconSizeSmall
+                x: Theme.paddingLarge - 2*Theme.pixelRatio
+                width: Theme.iconSizeSmall + 4*Theme.pixelRatio
+                height: Theme.iconSizeSmall + 4*Theme.pixelRatio
                 color: "transparent"
                 border.color: Theme.highlightColor
                 border.width: 2.25 * Theme.pixelRatio
