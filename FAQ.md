@@ -53,10 +53,6 @@ There is the wonderful Cargo Dock file manager in the Jolla store.
 OpenRepos contains a very powerful native file manager called 
 [Filetug](https://openrepos.net/content/matoking/filetug).
 
-You can also try the Jolla's own file manager called Files,
-which can be installed with 'pkcon install jolla-fileman' 
-in Terminal (requires Developer Mode).
-
 You can also try one of the Android file managers. They
 can access the Jolla file system.
 
