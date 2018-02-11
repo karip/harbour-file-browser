@@ -53,12 +53,16 @@ DockedPanel {
             spacing: Theme.paddingLarge
             IconButton {
                 enabled: dockPanel.enabled
+                icon.width: Theme.iconSizeMedium
+                icon.height: Theme.iconSizeMedium
                 icon.source: displayClose ? "image://theme/icon-m-close"
                                           : "../images/toolbar-select-all.png"
                 onClicked: { displayClose ? closeTriggered() : selectAllTriggered(); }
             }
             IconButton {
                 enabled: dockPanel.enabled
+                icon.width: Theme.iconSizeMedium
+                icon.height: Theme.iconSizeMedium
                 icon.source: "../images/toolbar-cut.png"
                 onClicked: {
                     var files = dockPanel.parent.selectedFiles();
@@ -68,6 +72,8 @@ DockedPanel {
             }
             IconButton {
                 enabled: dockPanel.enabled
+                icon.width: Theme.iconSizeMedium
+                icon.height: Theme.iconSizeMedium
                 icon.source: "../images/toolbar-copy.png"
                 onClicked: {
                     var files = dockPanel.parent.selectedFiles();
@@ -77,11 +83,15 @@ DockedPanel {
             }
             IconButton {
                 enabled: dockPanel.enabled
+                icon.width: Theme.iconSizeMedium
+                icon.height: Theme.iconSizeMedium
                 icon.source: "image://theme/icon-m-delete"
                 onClicked: { deleteTriggered(); }
             }
             IconButton {
                 enabled: dockPanel.enabled
+                icon.width: Theme.iconSizeMedium
+                icon.height: Theme.iconSizeMedium
                 icon.source: "../images/toolbar-properties.png"
                 onClicked: { propertyTriggered(); }
             }
@@ -109,6 +119,8 @@ DockedPanel {
         IconButton {
             enabled: dockPanel.enabled
             anchors.verticalCenter: parent.verticalCenter
+            icon.width: Theme.iconSizeMedium
+            icon.height: Theme.iconSizeMedium
             icon.source: displayClose ? "image://theme/icon-m-close"
                                       : "../images/toolbar-select-all.png"
             onClicked: { displayClose ? closeTriggered() : selectAllTriggered(); }
@@ -117,6 +129,8 @@ DockedPanel {
             id: cutButton
             enabled: dockPanel.enabled
             anchors.verticalCenter: parent.verticalCenter
+            icon.width: Theme.iconSizeMedium
+            icon.height: Theme.iconSizeMedium
             icon.source: "../images/toolbar-cut.png"
             onClicked: {
                 var files = dockPanel.parent.selectedFiles();
@@ -127,6 +141,8 @@ DockedPanel {
         IconButton {
             enabled: dockPanel.enabled
             anchors.verticalCenter: parent.verticalCenter
+            icon.width: Theme.iconSizeMedium
+            icon.height: Theme.iconSizeMedium
             icon.source: "../images/toolbar-copy.png"
             onClicked: {
                 var files = dockPanel.parent.selectedFiles();
@@ -137,12 +153,16 @@ DockedPanel {
         IconButton {
             enabled: dockPanel.enabled
             anchors.verticalCenter: parent.verticalCenter
+            icon.width: Theme.iconSizeMedium
+            icon.height: Theme.iconSizeMedium
             icon.source: "image://theme/icon-m-delete"
             onClicked: { deleteTriggered(); }
         }
         IconButton {
             enabled: dockPanel.enabled
             anchors.verticalCenter: parent.verticalCenter
+            icon.width: Theme.iconSizeMedium
+            icon.height: Theme.iconSizeMedium
             icon.source: "../images/toolbar-properties.png"
             onClicked: { propertyTriggered(); }
         }
