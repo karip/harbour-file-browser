@@ -95,6 +95,8 @@ Page {
                 id: listIcon
                 x: Theme.paddingLarge
                 y: Theme.paddingMedium
+                width: 32 * Theme.pixelRatio
+                height: 32 * Theme.pixelRatio
                 source: "../images/small-"+fileIcon+".png"
             }
             // circle shown when item is selected - +1 and -2 to match the underlying file icon

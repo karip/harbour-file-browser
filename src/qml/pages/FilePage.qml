@@ -166,7 +166,9 @@ Page {
                             source: visible ? fileData.file : "" // access the source only if img is visible
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            height: implicitHeight < 400 && implicitHeight != 0 ? implicitHeight : 400
+                            height: implicitHeight < 400 * Theme.pixelRatio && implicitHeight != 0
+                                    ? implicitHeight * Theme.pixelRatio
+                                    : 400 * Theme.pixelRatio
                             width: parent.width
                             fillMode: Image.PreserveAspectFit
                             asynchronous: true
@@ -176,6 +178,8 @@ Page {
                             anchors.horizontalCenter: parent.horizontalCenter
                             source: "../images/large-"+fileData.icon+".png"
                             visible: !imagePreview.visible && !playButton.visible
+                            width: 128 * Theme.pixelRatio
+                            height: 128 * Theme.pixelRatio
                         }
                         Spacer { // spacing if image or play button is visible
                             id: spacer

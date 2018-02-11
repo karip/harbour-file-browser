@@ -170,6 +170,8 @@ Page {
                 id: listIcon
                 y: Theme.paddingMedium
                 x: Theme.paddingLarge
+                width: 32 * Theme.pixelRatio
+                height: 32 * Theme.pixelRatio
                 source: "../images/small-"+fileIcon+".png"
             }
             // circle shown when item is selected
