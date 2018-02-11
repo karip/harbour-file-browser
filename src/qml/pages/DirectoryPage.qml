@@ -93,8 +93,8 @@ Page {
 
             Image {
                 id: listIcon
+                anchors.verticalCenter: listLabel.verticalCenter
                 x: Theme.paddingLarge
-                y: Theme.paddingMedium
                 width: Theme.iconSizeSmall
                 height: Theme.iconSizeSmall
                 source: "../images/small-"+fileIcon+".png"
@@ -102,8 +102,8 @@ Page {
             // circle shown when item is selected
             Rectangle {
                 visible: isSelected
+                anchors.verticalCenter: listLabel.verticalCenter
                 x: Theme.paddingLarge
-                y: Theme.paddingMedium
                 width: Theme.iconSizeSmall
                 height: Theme.iconSizeSmall
                 color: "transparent"
