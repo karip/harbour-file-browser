@@ -108,7 +108,7 @@ Page {
                 height: Theme.iconSizeSmall
                 color: "transparent"
                 border.color: Theme.highlightColor
-                border.width: 3 * Theme.pixelRatio
+                border.width: 2.25 * Theme.pixelRatio
                 radius: width * 0.5
             }
             Label {

@@ -5,6 +5,8 @@ CoverBackground {
     CoverPlaceholder {
         id: coverPlaceholder
         text: coverText
+        icon.width: Theme.iconSizeLarge
+        icon.height: Theme.iconSizeLarge
         icon.source: "../images/harbour-file-browser.png"
     }
 }
