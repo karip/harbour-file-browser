@@ -1,6 +1,13 @@
 
 # File Browser Release Notes
 
+## Version 1.7.1 (2018-02-11)
+
+Published in Jolla store on 2018-02-12.
+
+ * Added translations for French, Dutch and Greek
+ * Fixed icons for high density screens
+
 ## Version 1.7 (2016-06-27)
 
 Published in Jolla store on 2016-06-28.
