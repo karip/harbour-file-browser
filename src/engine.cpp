@@ -121,8 +121,18 @@ QString Engine::homeFolder() const
 
 QString Engine::sdcardPath() const
 {
+    // from SailfishOS 2.2.0 onwards, /media/sdcard is
+    // a symbolic link instead of a folder. In that case, follow the link
+    // to the actual folder.
+    QString sdcardFolder = "/media/sdcard";
+    QFileInfo fileinfo(sdcardFolder);
+    if (fileinfo.isSymLink()) {
+        sdcardFolder = fileinfo.symLinkTarget();
+    }
+
     // get sdcard dir candidates
-    QDir dir("/media/sdcard");
+    QDir dir(sdcardFolder);
+
     if (!dir.exists())
         return QString();
     dir.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
@@ -136,6 +146,8 @@ QString Engine::sdcardPath() const
     while (i.hasNext()) {
         QString dirname = i.next();
         QString abspath = dir.absoluteFilePath(dirname);
+
+        // check the folder is a mount point
         if (!mps.contains(abspath))
             i.remove();
     }
@@ -148,7 +160,7 @@ QString Engine::sdcardPath() const
     if (sdcards.count() == 1)
         return dir.absoluteFilePath(sdcards.first());
 
-    // if multiple directories, then return "/media/sdcard", which is the parent for them
+    // if multiple directories, then return the sdcard parent folder
     return "/media/sdcard";
 }
 
