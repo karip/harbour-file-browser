@@ -101,5 +101,5 @@ function unicodeArrow()
 
 function unicodeBlackDownPointingTriangle()
 {
-    return "\u25be"; // unicode for down pointing triangle symbol
+    return "\u25bc"; // unicode for down pointing triangle symbol
 }
