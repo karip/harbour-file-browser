@@ -1,6 +1,13 @@
 
 # File Browser Release Notes
 
+## Version 1.7.2 (2018-06-11)
+
+Published in Jolla store on 2018-06-11.
+
+ * Fixed SDCard location for Sailfish 2.2.0
+ * Fixed to start on Sailfish 1 phones
+
 ## Version 1.7.1 (2018-02-11)
 
 Published in Jolla store on 2018-02-12.
