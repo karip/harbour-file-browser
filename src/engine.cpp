@@ -119,9 +119,23 @@ QString Engine::homeFolder() const
     return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 }
 
+static QStringList subdirs(const QString &dirname)
+{
+    QDir dir(dirname);
+    if (!dir.exists())
+        return QStringList();
+    dir.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
+    QStringList list = dir.entryList();
+    QStringList abslist;
+    foreach (QString relpath, list) {
+        abslist.append(dir.absoluteFilePath(relpath));
+    }
+    return abslist;
+}
+
 QString Engine::sdcardPath() const
 {
-    // from SailfishOS 2.2.0 onwards, /media/sdcard is
+    // from SailfishOS 2.2.0 onwards, "/media/sdcard" is
     // a symbolic link instead of a folder. In that case, follow the link
     // to the actual folder.
     QString sdcardFolder = "/media/sdcard";
@@ -130,13 +144,14 @@ QString Engine::sdcardPath() const
         sdcardFolder = fileinfo.symLinkTarget();
     }
 
-    // get sdcard dir candidates
-    QDir dir(sdcardFolder);
+    // get sdcard dir candidates for "/media/sdcard" (or its symlink target)
+    QStringList sdcards = subdirs(sdcardFolder);
 
-    if (!dir.exists())
-        return QString();
-    dir.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
-    QStringList sdcards = dir.entryList();
+    // some users may have a symlink from "/media/sdcard/nemo" (not from "/media/sdcard"), which means
+    // no sdcards are found, so also get candidates directly from "/run/media/nemo" for those users
+    if (sdcardFolder != "/run/media/nemo")
+        sdcards.append(subdirs("/run/media/nemo"));
+
     if (sdcards.isEmpty())
         return QString();
 
@@ -145,10 +160,8 @@ QString Engine::sdcardPath() const
     QMutableStringListIterator i(sdcards);
     while (i.hasNext()) {
         QString dirname = i.next();
-        QString abspath = dir.absoluteFilePath(dirname);
-
-        // check the folder is a mount point
-        if (!mps.contains(abspath))
+        // is it a mount point?
+        if (!mps.contains(dirname))
             i.remove();
     }
 
@@ -158,9 +171,11 @@ QString Engine::sdcardPath() const
 
     // if only one directory, then return it
     if (sdcards.count() == 1)
-        return dir.absoluteFilePath(sdcards.first());
+        return sdcards.first();
 
     // if multiple directories, then return the sdcard parent folder
+    // this works for SFOS<2.2 and SFOS>=2.2, because "/media/sdcard" should exist in both
+    // as a folder or symlink
     return "/media/sdcard";
 }
 
