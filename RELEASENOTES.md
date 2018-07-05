@@ -1,6 +1,12 @@
 
 # File Browser Release Notes
 
+## Version 1.7.3 (2018-07-05)
+
+Published in Jolla store on 2018-07-05.
+
+ * Fixed the SDCard location for users with an unusual sdcard symlink
+
 ## Version 1.7.2 (2018-06-11)
 
 Published in Jolla store on 2018-06-11.
