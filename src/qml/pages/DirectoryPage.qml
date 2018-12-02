@@ -269,10 +269,16 @@ Page {
         if (status === PageStatus.Activating) {
             coverText = Functions.lastPartOfPath(page.dir)+"/";
 
-            // go to Home on startup
+            // go to Home or folder on startup
             if (page.initial) {
                 page.initial = false;
-                Functions.goToHome();
+
+                if(Qt.application.arguments.length > 1) {
+                    Functions.goToFolder(Qt.application.arguments[1])
+                }
+                else {
+                    Functions.goToHome();
+                }
             }
         }
     }

@@ -45,6 +45,11 @@ function goToFolder(folder)
     var path = "";
     for (var i = 1; i < dirs.length; ++i) {
         path += "/"+dirs[i];
+
+        // handle trailing and double slashes
+        if(i > 0 && dirs[i].length === 0)
+            continue;
+
         // animate the last push
         var action = (i < dirs.length-1) ? PageStackAction.Immediate : PageStackAction.Animated;
         pageStack.push(Qt.resolvedUrl("DirectoryPage.qml"), { dir: path }, action);
