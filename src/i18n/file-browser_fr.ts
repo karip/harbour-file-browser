@@ -998,7 +998,7 @@
     <message>
         <location filename="../qml/pages/SearchPage.qml" line="83"/>
         <source>Search %1</source>
-        <translation>Cherche de %1</translation>
+        <translation>Examiner %1</translation>
     </message>
     <message>
         <location filename="../qml/pages/SearchPage.qml" line="141"/>
