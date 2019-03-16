@@ -96,10 +96,10 @@ function formatPathForSearch(path)
 
 function unicodeArrow()
 {
-    return "\u2192"; // unicode for arrow symbol
+    return "\u2192"; // unicode for right pointing arrow symbol (for links)
 }
 
 function unicodeBlackDownPointingTriangle()
 {
-    return "\u25bc"; // unicode for down pointing triangle symbol
+    return "\u25be"; // unicode for down pointing triangle symbol (for top dir dropdown)
 }
