@@ -72,7 +72,6 @@ void Engine::pasteFiles(QString destDirectory)
         return;
     }
 
-    QStringList files = m_clipboardFiles;
     setProgress(0, "");
 
     QDir dest(destDirectory);
@@ -81,23 +80,25 @@ void Engine::pasteFiles(QString destDirectory)
         return;
     }
 
-    foreach (QString filename, files) {
+    // validate that the files can be pasted
+    foreach (QString filename, m_clipboardFiles) {
         QFileInfo fileInfo(filename);
         QString newname = dest.absoluteFilePath(fileInfo.fileName());
 
-        // source and dest filenames are the same?
-        if (filename == newname) {
+        // moving and source and dest filenames are the same?
+        if (!m_clipboardContainsCopy && filename == newname) {
             emit workerErrorOccurred(tr("Can't overwrite itself"), newname);
             return;
         }
 
         // dest is under source? (directory)
-        if (newname.startsWith(filename)) {
+        if (newname.startsWith(filename) && newname != filename) {
             emit workerErrorOccurred(tr("Can't move/copy to itself"), filename);
             return;
         }
     }
 
+    QStringList files = m_clipboardFiles;
     m_clipboardFiles.clear();
     emit clipboardCountChanged();
 

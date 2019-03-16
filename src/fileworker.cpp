@@ -154,6 +154,25 @@ void FileWorker::deleteFiles()
     emit done();
 }
 
+// creates a "Document (2)" numbered name from the given filename
+static QString createNumberedFilename(QString filename)
+{
+    QFileInfo fileinfo(filename);
+    QString suffix = fileinfo.suffix();
+    if (!suffix.isEmpty()) {
+        suffix = "."+suffix;
+    }
+    int dotpos = filename.lastIndexOf('.');
+    QString basename = dotpos >= 0 ? filename.left(dotpos) : filename;
+    int number = 2;
+    QString numberedFilename = QString("%1 (%2)%3").arg(basename).arg(number).arg(suffix);
+    while (QFileInfo::exists(numberedFilename)) {
+        ++number;
+        numberedFilename = QString("%1 (%2)%3").arg(basename).arg(number).arg(suffix);
+    }
+    return numberedFilename;
+}
+
 void FileWorker::copyOrMoveFiles()
 {
     int fileIndex = 0;
@@ -172,6 +191,11 @@ void FileWorker::copyOrMoveFiles()
 
         QFileInfo fileInfo(filename);
         QString newname = dest.absoluteFilePath(fileInfo.fileName());
+
+        // rename destination filename if it exists
+        if (QFileInfo::exists(newname)) {
+            newname = createNumberedFilename(newname);
+        }
 
         // move or copy and stop if errors
         QFile file(filename);
