@@ -52,7 +52,7 @@ Page {
                     color: Theme.highlightColor
                 }
                 Label {
-                    text: "1.7.3" // Version number must be changed manually!
+                    text: "1.7.4" // Version number must be changed manually!
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.highlightColor
                 }
