@@ -173,10 +173,11 @@ Page {
                             fillMode: Image.PreserveAspectFit
                             asynchronous: true
                         }
-                        Image {
+                        HighlightImage {
                             id: icon
                             anchors.horizontalCenter: parent.horizontalCenter
                             source: "../images/large-"+fileData.icon+".png"
+                            color: Theme.primaryColor
                             visible: !imagePreview.visible && !playButton.visible
                             width: 128 * Theme.pixelRatio
                             height: 128 * Theme.pixelRatio

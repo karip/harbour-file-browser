@@ -57,6 +57,7 @@ DockedPanel {
                 icon.height: Theme.iconSizeMedium
                 icon.source: displayClose ? "image://theme/icon-m-close"
                                           : "../images/toolbar-select-all.png"
+                icon.color: Theme.primaryColor
                 onClicked: { displayClose ? closeTriggered() : selectAllTriggered(); }
             }
             IconButton {
@@ -64,6 +65,7 @@ DockedPanel {
                 icon.width: Theme.iconSizeMedium
                 icon.height: Theme.iconSizeMedium
                 icon.source: "../images/toolbar-cut.png"
+                icon.color: Theme.primaryColor
                 onClicked: {
                     var files = dockPanel.parent.selectedFiles();
                     engine.cutFiles(files);
@@ -75,6 +77,7 @@ DockedPanel {
                 icon.width: Theme.iconSizeMedium
                 icon.height: Theme.iconSizeMedium
                 icon.source: "../images/toolbar-copy.png"
+                icon.color: Theme.primaryColor
                 onClicked: {
                     var files = dockPanel.parent.selectedFiles();
                     engine.copyFiles(files);
@@ -86,6 +89,7 @@ DockedPanel {
                 icon.width: Theme.iconSizeMedium
                 icon.height: Theme.iconSizeMedium
                 icon.source: "image://theme/icon-m-delete"
+                icon.color: Theme.primaryColor
                 onClicked: { deleteTriggered(); }
             }
             IconButton {
@@ -93,6 +97,7 @@ DockedPanel {
                 icon.width: Theme.iconSizeMedium
                 icon.height: Theme.iconSizeMedium
                 icon.source: "../images/toolbar-properties.png"
+                icon.color: Theme.primaryColor
                 onClicked: { propertyTriggered(); }
             }
         }

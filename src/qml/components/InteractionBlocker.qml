@@ -9,7 +9,7 @@ Rectangle {
     signal clicked
 
     visible: false
-    color: "#000000"
+    color: Theme.overlayBackgroundColor ? Theme.overlayBackgroundColor : "black"
     opacity: 0.4
 
     MouseArea {

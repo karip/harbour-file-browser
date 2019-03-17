@@ -53,7 +53,7 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            color: "black"
+            color: Theme.overlayBackgroundColor ? Theme.overlayBackgroundColor : "black"
             opacity: 0.7
         }
         BusyIndicator {

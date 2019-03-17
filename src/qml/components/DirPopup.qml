@@ -51,7 +51,7 @@ Item {
         // bg rectangle for context menu so it covers underlying items
         Rectangle {
             id: rect
-            color: "black"
+            color: Theme.overlayBackgroundColor ? Theme.overlayBackgroundColor : "black"
             width: parent.width
             height: _contextMenu ? _contextMenu.height : 0
         }

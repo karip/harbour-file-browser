@@ -166,13 +166,14 @@ Page {
                 color: fileItem.highlightedColor
             }
 
-            Image {
+            HighlightImage {
                 id: listIcon
                 anchors.verticalCenter: listLabel.verticalCenter
                 x: Theme.paddingLarge
                 width: Theme.iconSizeSmall
                 height: Theme.iconSizeSmall
                 source: "../images/small-"+fileIcon+".png"
+                color: Theme.primaryColor
             }
             // circle shown when item is selected
             Rectangle {
