@@ -61,10 +61,24 @@ Page {
                       (engine.clipboardCount > 0 ? " ("+engine.clipboardCount+")" : "")
                 onClicked: {
                     if (remorsePopupActive) return;
-                    progressPanel.showText(engine.clipboardContainsCopy ?
-                                               qsTr("Copying") : qsTr("Moving"))
-                    clearSelectedFiles();
-                    engine.pasteFiles(page.dir);
+                    var existingFiles = engine.listExistingFiles(page.dir);
+                    if (existingFiles.length > 0) {
+                        // show overwrite dialog
+                        var dialog = pageStack.push(Qt.resolvedUrl("OverwriteDialog.qml"),
+                                                    { "files": existingFiles })
+                        dialog.accepted.connect(function() {
+                            progressPanel.showText(engine.clipboardContainsCopy ?
+                                                       qsTr("Copying") : qsTr("Moving"))
+                            clearSelectedFiles();
+                            engine.pasteFiles(page.dir);
+                        })
+                    } else {
+                        // no overwrite dialog
+                        progressPanel.showText(engine.clipboardContainsCopy ?
+                                                   qsTr("Copying") : qsTr("Moving"))
+                        clearSelectedFiles();
+                        engine.pasteFiles(page.dir);
+                    }
                 }
             }
         }

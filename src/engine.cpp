@@ -65,6 +65,37 @@ void Engine::copyFiles(QStringList filenames)
     emit clipboardContainsCopyChanged();
 }
 
+QStringList Engine::listExistingFiles(QString destDirectory)
+{
+    if (m_clipboardFiles.isEmpty()) {
+        return QStringList();
+    }
+    QDir dest(destDirectory);
+    if (!dest.exists()) {
+        return QStringList();
+    }
+
+    QStringList existingFiles;
+    foreach (QString filename, m_clipboardFiles) {
+        QFileInfo fileInfo(filename);
+        QString newname = dest.absoluteFilePath(fileInfo.fileName());
+
+        // source and dest filenames are the same? let pasteFiles() create a numbered copy for it.
+        if (filename == newname) {
+            continue;
+        }
+
+        // dest is under source? (directory) let pasteFiles() return an error.
+        if (newname.startsWith(filename)) {
+            return QStringList();
+        }
+        if (QFile::exists(newname)) {
+            existingFiles.append(fileInfo.fileName());
+        }
+    }
+    return existingFiles;
+}
+
 void Engine::pasteFiles(QString destDirectory)
 {
     if (m_clipboardFiles.isEmpty()) {

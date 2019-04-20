@@ -192,9 +192,20 @@ void FileWorker::copyOrMoveFiles()
         QFileInfo fileInfo(filename);
         QString newname = dest.absoluteFilePath(fileInfo.fileName());
 
-        // rename destination filename if it exists
-        if (QFileInfo::exists(newname)) {
-            newname = createNumberedFilename(newname);
+        if (filename == newname) { // pasting over the source file, so copy a renamed file
+            if (QFileInfo::exists(newname)) {
+                newname = createNumberedFilename(newname);
+            }
+
+        } else {
+            // not pasting over the source file, but the destination already has the file: delete it
+            if (QFileInfo::exists(newname)) {
+                QString errorString = deleteFile(newname);
+                if (!errorString.isEmpty()) {
+                    emit errorOccurred(errorString, filename);
+                    return;
+                }
+            }
         }
 
         // move or copy and stop if errors
@@ -302,13 +313,6 @@ QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirecto
 
 QString FileWorker::copyOverwrite(QString src, QString dest)
 {
-    // delete destination if it exists
-    QFile dfile(dest);
-    if (dfile.exists()) {
-        if (!dfile.remove())
-            return dfile.errorString();
-    }
-
     QFileInfo fileInfo(src);
     if (fileInfo.isSymLink()) {
         // copy symlink by creating a new link

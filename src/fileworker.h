@@ -44,7 +44,7 @@ private:
 
     bool validateFilenames(const QStringList &filenames);
 
-    QString deleteFile(QString filenames);
+    QString deleteFile(QString filename);
     void deleteFiles();
     void copyOrMoveFiles();
     QString copyDirRecursively(QString srcDirectory, QString destDirectory);

@@ -33,6 +33,9 @@ public:
     Q_INVOKABLE void deleteFiles(QStringList filenames);
     Q_INVOKABLE void cutFiles(QStringList filenames);
     Q_INVOKABLE void copyFiles(QStringList filenames);
+    // returns a list of existing files if clipboard files already exist
+    // or an empty list if no existing files
+    Q_INVOKABLE QStringList listExistingFiles(QString destDirectory);
     Q_INVOKABLE void pasteFiles(QString destDirectory);
 
     // cancel asynch methods
