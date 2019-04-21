@@ -29,7 +29,7 @@ Dialog {
             }
             Label {
                 id: dialogLabel
-                text: qsTr("These files or folders already exist.")
+                text: qsTr("These files or folders already exist:")
                 wrapMode: Text.Wrap
                 anchors.top: dialogHeader.bottom
                 anchors.left: parent.left

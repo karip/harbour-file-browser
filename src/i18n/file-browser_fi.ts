@@ -533,8 +533,8 @@
     </message>
     <message>
         <location filename="../qml/pages/OverwriteDialog.qml" line="32"/>
-        <source>These files or folders already exist.</source>
-        <translation>Nämä tiedostot tai hakemistot ovat jo olemassa.</translation>
+        <source>These files or folders already exist:</source>
+        <translation>Nämä tiedostot tai hakemistot ovat jo olemassa:</translation>
     </message>
 </context>
 <context>
