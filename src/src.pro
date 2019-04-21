@@ -12,7 +12,7 @@ SOURCES += jhead/jhead-api.cpp jhead/exif.c jhead/gpsinfo.c jhead/iptc.c jhead/j
            jhead/jpgqguess.c jhead/makernote.c
 HEADERS += jhead/jhead-api.h jhead/jhead.h
 
-SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 i18n.path = /usr/share/harbour-file-browser/i18n
 i18n.files = i18n/file-browser_de.qm \
