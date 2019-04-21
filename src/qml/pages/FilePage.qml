@@ -100,8 +100,8 @@ Page {
                 visible: !fileData.isDir
                 onClicked: {
                     if (!fileData.isSafeToOpen()) {
-                        notificationPanel.showTextWithTimer(qsTr("File can't be opened"),
-                                                   qsTr("This type of file can't be opened."));
+                        notificationPanel.showTextWithTimer(qsTr("File cannot be opened"),
+                                                   qsTr("This type of file cannot be opened."));
                         return;
                     }
                     consoleModel.executeCommand("xdg-open", [ page.file ])

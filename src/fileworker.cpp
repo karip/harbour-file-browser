@@ -266,14 +266,14 @@ QString FileWorker::copyDirRecursively(QString srcDirectory, QString destDirecto
 
     QDir srcDir(srcDirectory);
     if (!srcDir.exists())
-        return tr("Source folder doesn't exist");
+        return tr("Source folder does not exist");
 
     QDir destDir(destDirectory);
     if (!destDir.exists()) {
         QDir d(destDir);
         d.cdUp();
         if (!d.mkdir(destDir.dirName()))
-            return tr("Can't create target folder %1").arg(destDirectory);
+            return tr("Cannot create target folder %1").arg(destDirectory);
     }
 
     // copy files

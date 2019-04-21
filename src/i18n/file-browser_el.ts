@@ -162,7 +162,7 @@
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPage.qml" line="319"/>
-        <source>Trying to move between phone and SD Card? It doesn&apos;t work, try copying.</source>
+        <source>Trying to move between phone and SD Card? It does not work, try copying.</source>
         <translation>Μήπως προσπαθείτε τη μετακίνηση μεταξύ του τηλεφώνου και της κάρτας SD; Δεν δουλεύει, δοκιμάστε την αντιγραφή.</translation>
     </message>
     <message>
@@ -180,12 +180,12 @@
     </message>
     <message>
         <location filename="../engine.cpp" line="121"/>
-        <source>Can&apos;t overwrite itself</source>
+        <source>Cannot overwrite itself</source>
         <translation>Αδύνατη η αντικατάσταση του εαυτού του</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="127"/>
-        <source>Can&apos;t move/copy to itself</source>
+        <source>Cannot move/copy to itself</source>
         <translation>Αδύνατη η μετακίνηση/αντιγραφή στον εαυτό του</translation>
     </message>
     <message>
@@ -205,7 +205,7 @@
     </message>
     <message>
         <location filename="../engine.cpp" line="279"/>
-        <source>Can&apos;t read this type of file</source>
+        <source>Cannot read this type of file</source>
         <translation>Αδύνατη η δημιουργία αυτιού του τύπου αρχείου</translation>
     </message>
     <message>
@@ -418,12 +418,12 @@
     </message>
     <message>
         <location filename="../qml/pages/FilePage.qml" line="103"/>
-        <source>File can&apos;t be opened</source>
+        <source>File cannot be opened</source>
         <translation>Αδύνατο το άνοιγμα του αρχείου</translation>
     </message>
     <message>
         <location filename="../qml/pages/FilePage.qml" line="104"/>
-        <source>This type of file can&apos;t be opened.</source>
+        <source>This type of file cannot be opened.</source>
         <translation>Αδύνατο το άνοιγμα αυτού του τύπου του αρχείου.</translation>
     </message>
     <message>
@@ -510,12 +510,12 @@
     </message>
     <message>
         <location filename="../fileworker.cpp" line="269"/>
-        <source>Source folder doesn&apos;t exist</source>
+        <source>Source folder does not exist</source>
         <translation>Ο φάκελος πηγής δεν υπάρχει</translation>
     </message>
     <message>
         <location filename="../fileworker.cpp" line="276"/>
-        <source>Can&apos;t create target folder %1</source>
+        <source>Cannot create target folder %1</source>
         <translation>Αδύνατη η δημιουργία του φακέλου προορισμού %1</translation>
     </message>
 </context>

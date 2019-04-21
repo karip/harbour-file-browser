@@ -162,7 +162,7 @@
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPage.qml" line="319"/>
-        <source>Trying to move between phone and SD Card? It doesn&apos;t work, try copying.</source>
+        <source>Trying to move between phone and SD Card? It does not work, try copying.</source>
         <translation>需要在手机存储和SD卡之间剪切？试试复制吧。</translation>
     </message>
     <message>
@@ -180,12 +180,12 @@
     </message>
     <message>
         <location filename="../engine.cpp" line="121"/>
-        <source>Can&apos;t overwrite itself</source>
+        <source>Cannot overwrite itself</source>
         <translation>不能复写自己</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="127"/>
-        <source>Can&apos;t move/copy to itself</source>
+        <source>Cannot move/copy to itself</source>
         <translation>不能移动/拷贝到自身</translation>
     </message>
     <message>
@@ -205,7 +205,7 @@
     </message>
     <message>
         <location filename="../engine.cpp" line="279"/>
-        <source>Can&apos;t read this type of file</source>
+        <source>Cannot read this type of file</source>
         <translation>无法读取这种类型的文件</translation>
     </message>
     <message>
@@ -418,12 +418,12 @@
     </message>
     <message>
         <location filename="../qml/pages/FilePage.qml" line="103"/>
-        <source>File can&apos;t be opened</source>
+        <source>File cannot be opened</source>
         <translation>文件无法打开</translation>
     </message>
     <message>
         <location filename="../qml/pages/FilePage.qml" line="104"/>
-        <source>This type of file can&apos;t be opened.</source>
+        <source>This type of file cannot be opened.</source>
         <translation>该类型的文件无法打开。</translation>
     </message>
     <message>
@@ -510,12 +510,12 @@
     </message>
     <message>
         <location filename="../fileworker.cpp" line="269"/>
-        <source>Source folder doesn&apos;t exist</source>
+        <source>Source folder does not exist</source>
         <translation>源目录不存在</translation>
     </message>
     <message>
         <location filename="../fileworker.cpp" line="276"/>
-        <source>Can&apos;t create target folder %1</source>
+        <source>Cannot create target folder %1</source>
         <translation>无法创建目标目录 %1</translation>
     </message>
 </context>

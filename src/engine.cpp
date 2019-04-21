@@ -118,13 +118,13 @@ void Engine::pasteFiles(QString destDirectory)
 
         // moving and source and dest filenames are the same?
         if (!m_clipboardContainsCopy && filename == newname) {
-            emit workerErrorOccurred(tr("Can't overwrite itself"), newname);
+            emit workerErrorOccurred(tr("Cannot overwrite itself"), newname);
             return;
         }
 
         // dest is under source? (directory)
         if (newname.startsWith(filename) && newname != filename) {
-            emit workerErrorOccurred(tr("Can't move/copy to itself"), filename);
+            emit workerErrorOccurred(tr("Cannot move/copy to itself"), filename);
             return;
         }
     }
@@ -276,7 +276,7 @@ QStringList Engine::readFile(QString filename)
 
     // don't read unsafe system files
     if (!fileInfo.isSafeToRead()) {
-        return makeStringList(tr("Can't read this type of file") + "\n" + filename);
+        return makeStringList(tr("Cannot read this type of file") + "\n" + filename);
     }
 
     // check permissions

@@ -162,7 +162,7 @@
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPage.qml" line="319"/>
-        <source>Trying to move between phone and SD Card? It doesn&apos;t work, try copying.</source>
+        <source>Trying to move between phone and SD Card? It does not work, try copying.</source>
         <translation>Cercavi di spostare tra telefono e Scheda SD? Non funiona, prova a copiare.</translation>
     </message>
     <message>
@@ -180,12 +180,12 @@
     </message>
     <message>
         <location filename="../engine.cpp" line="121"/>
-        <source>Can&apos;t overwrite itself</source>
+        <source>Cannot overwrite itself</source>
         <translation>Impossibile sovrascrivere se stesso</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="127"/>
-        <source>Can&apos;t move/copy to itself</source>
+        <source>Cannot move/copy to itself</source>
         <translation>Impossibile spostare/copiare su se stesso</translation>
     </message>
     <message>
@@ -205,7 +205,7 @@
     </message>
     <message>
         <location filename="../engine.cpp" line="279"/>
-        <source>Can&apos;t read this type of file</source>
+        <source>Cannot read this type of file</source>
         <translation>Impossibile leggere questo tipo di file</translation>
     </message>
     <message>
@@ -418,12 +418,12 @@
     </message>
     <message>
         <location filename="../qml/pages/FilePage.qml" line="103"/>
-        <source>File can&apos;t be opened</source>
+        <source>File cannot be opened</source>
         <translation>Il file non può essere aperto</translation>
     </message>
     <message>
         <location filename="../qml/pages/FilePage.qml" line="104"/>
-        <source>This type of file can&apos;t be opened.</source>
+        <source>This type of file cannot be opened.</source>
         <translation>Questo tipo di file non può essere aperto.</translation>
     </message>
     <message>
@@ -510,12 +510,12 @@
     </message>
     <message>
         <location filename="../fileworker.cpp" line="269"/>
-        <source>Source folder doesn&apos;t exist</source>
+        <source>Source folder does not exist</source>
         <translation>La cartella origine non esiste</translation>
     </message>
     <message>
         <location filename="../fileworker.cpp" line="276"/>
-        <source>Can&apos;t create target folder %1</source>
+        <source>Cannot create target folder %1</source>
         <translation>Impossibile creare la cartella destinazione %1</translation>
     </message>
 </context>

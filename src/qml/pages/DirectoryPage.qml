@@ -316,7 +316,7 @@ Page {
             if (progressPanel.open) {
                 progressPanel.hide();
                 if (message === "Unknown error")
-                    filename = qsTr("Trying to move between phone and SD Card? It doesn't work, try copying.");
+                    filename = qsTr("Trying to move between phone and SD Card? It does not work, try copying.");
                 else if (message === "Failure to write block")
                     filename = qsTr("Perhaps the storage is full?");
 
