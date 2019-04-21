@@ -13,7 +13,7 @@ Name:       harbour-file-browser
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    File Browser for Sailfish OS
-Version:    1.7.4
+Version:    1.7.4.1
 Release:    0
 Group:      Qt/Qt
 License:    Public domain
