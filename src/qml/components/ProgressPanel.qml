@@ -80,7 +80,7 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     color: Theme.primaryColor
-                    text: "X"
+                    text: "\u00d7" // times symbol (cross)
                 }
             }
         }
