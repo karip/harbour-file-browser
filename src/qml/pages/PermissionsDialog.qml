@@ -53,7 +53,6 @@ Dialog {
 
             DialogHeader {
                 id: dialogHeader
-                title: qsTr("Change Permissions")
                 acceptText: qsTr("Change")
             }
 

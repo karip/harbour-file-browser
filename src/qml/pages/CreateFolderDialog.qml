@@ -27,7 +27,6 @@ Dialog {
 
             DialogHeader {
                 id: dialogHeader
-                title: qsTr("Create Folder")
                 acceptText: qsTr("Create")
             }
 

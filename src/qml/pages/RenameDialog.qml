@@ -37,7 +37,6 @@ Dialog {
 
             DialogHeader {
                 id: dialogHeader
-                title: qsTr("Rename")
                 acceptText: qsTr("Rename")
             }
 
