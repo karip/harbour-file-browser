@@ -524,17 +524,17 @@
     <message>
         <location filename="../qml/pages/OverwriteDialog.qml" line="27"/>
         <source>Replace?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzen?</translation>
     </message>
     <message>
         <location filename="../qml/pages/OverwriteDialog.qml" line="28"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzen</translation>
     </message>
     <message>
         <location filename="../qml/pages/OverwriteDialog.qml" line="32"/>
         <source>These files or folders already exist:</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Dateien oder Ordner existieren schon:</translation>
     </message>
 </context>
 <context>
