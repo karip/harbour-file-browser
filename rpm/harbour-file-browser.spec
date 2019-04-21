@@ -22,7 +22,7 @@ Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-file-browser.yaml
 AutoReqProv:    0
 Requires:   libsailfishapp
-Requires:   sailfish >= 3.0.0
+Requires:   sailfish-version >= 2.2.0
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)

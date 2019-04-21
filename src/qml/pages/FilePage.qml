@@ -173,14 +173,23 @@ Page {
                             fillMode: Image.PreserveAspectFit
                             asynchronous: true
                         }
-                        HighlightImage {
+                        // HighlightImage replaced with a Loader so that HighlightImage or Image
+                        // can be loaded depending on Sailfish version (lightPrimaryColor is defined on SF3)
+                        Loader {
                             id: icon
                             anchors.horizontalCenter: parent.horizontalCenter
-                            source: "../images/large-"+fileData.icon+".png"
-                            color: Theme.primaryColor
                             visible: !imagePreview.visible && !playButton.visible
                             width: 128 * Theme.pixelRatio
                             height: 128 * Theme.pixelRatio
+                            Component.onCompleted: {
+                                var qml = Theme.lightPrimaryColor ? "../components/MyHighlightImage3.qml"
+                                                                  : "../components/MyHighlightImage2.qml";
+                                setSource(qml, {
+                                    imgsrc: "../images/large-"+fileData.icon+".png",
+                                    imgw: 128 * Theme.pixelRatio,
+                                    imgh: 128 * Theme.pixelRatio
+                                })
+                            }
                         }
                         Spacer { // spacing if image or play button is visible
                             id: spacer

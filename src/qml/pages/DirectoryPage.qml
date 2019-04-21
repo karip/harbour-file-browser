@@ -104,15 +104,23 @@ Page {
                 anchors.fill: parent
                 color: fileItem.highlightedColor
             }
-
-            HighlightImage {
+            // HighlightImage replaced with a Loader so that HighlightImage or Image
+            // can be loaded depending on Sailfish version (lightPrimaryColor is defined on SF3)
+            Loader {
                 id: listIcon
                 anchors.verticalCenter: listLabel.verticalCenter
                 x: Theme.paddingLarge
                 width: Theme.iconSizeSmall
                 height: Theme.iconSizeSmall
-                source: "../images/small-"+fileIcon+".png"
-                color: Theme.primaryColor
+                Component.onCompleted: {
+                    var qml = Theme.lightPrimaryColor ? "../components/MyHighlightImage3.qml"
+                                                      : "../components/MyHighlightImage2.qml";
+                    setSource(qml, {
+                        imgsrc: "../images/small-"+fileIcon+".png",
+                        imgw: Theme.iconSizeSmall,
+                        imgh: Theme.iconSizeSmall
+                    })
+                }
             }
             // circle shown when item is selected
             Rectangle {
