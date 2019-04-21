@@ -37,7 +37,7 @@ Item {
         }
         _contextMenu.sdCardVisible = (sdCardPath !== "");
 
-        _contextMenu.show(rect);
+        _contextMenu.open(rect);
     }
 
     Column {
