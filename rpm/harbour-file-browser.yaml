@@ -1,6 +1,6 @@
 Name: harbour-file-browser
 Summary: File Browser for Sailfish OS
-Version: 1.7.4.1
+Version: 1.8.0
 Release: 0
 Group: Qt/Qt
 URL: https://github.com/karip/harbour-file-browser
@@ -20,7 +20,6 @@ PkgConfigBR:
 NoAutoReqProv: yes
 Requires:
 - libsailfishapp
-- sailfish-version >= 2.2.0
 Files:
 # Do not include whole %{_datadir}/applications as that would include tests too
 # the following defattr will cause two defattrs in .spec file, how to get only one?

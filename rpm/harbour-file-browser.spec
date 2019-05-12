@@ -13,7 +13,7 @@ Name:       harbour-file-browser
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    File Browser for Sailfish OS
-Version:    1.7.4.1
+Version:    1.8.0
 Release:    0
 Group:      Qt/Qt
 License:    Public domain
@@ -22,7 +22,6 @@ Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-file-browser.yaml
 AutoReqProv:    0
 Requires:   libsailfishapp
-Requires:   sailfish-version >= 2.2.0
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)

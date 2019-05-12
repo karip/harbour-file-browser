@@ -1,6 +1,11 @@
 
 # File Browser Release Notes
 
+## Version 1.8.0 (2019-05-12)
+
+ * Added a confirmation dialog for file overwriting
+ * Fixed colors and icons for Sailfish 3 light ambiences
+
 ## Version 1.7.3 (2018-07-05)
 
 Published in Jolla store on 2018-07-05.
