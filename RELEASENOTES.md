@@ -3,6 +3,8 @@
 
 ## Version 1.8.0 (2019-05-12)
 
+Published in Jolla store on 2019-05-13.
+
  * Added a confirmation dialog for file overwriting
  * Fixed colors and icons for Sailfish 3 light ambiences
 
