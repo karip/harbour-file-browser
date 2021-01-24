@@ -1,5 +1,9 @@
 # File Browser for Sailfish OS
 
+**NOTE: This version is not maintained anymore. For a newer version, see [the version 2.0](https://github.com/ichthyosaurus/harbour-file-browser).**
+
+***
+
 A minimal file browser tool to view files on 
 [Sailfish OS](https://sailfishos.org/) and 
 [Jolla phones](http://jolla.com/).
